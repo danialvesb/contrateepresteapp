@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
-import { ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker } from 'react-native'
+
 import axios from 'axios'
 
 
 import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
 
-import { server, showError, showSuccess, instanceAxios } from '../common'
+import { server, showError, showSuccess } from '../common'
 
 const initialState = {
     name: 'sss',
     email: '',
     password: '',
     confirmPassword: '',
+    typeAccount: 0,
     stageNew: false,
-
 }
 
 export default class Auth extends Component {
@@ -30,24 +31,43 @@ export default class Auth extends Component {
         }
     }
 
-    signup = async () => {
-        try {
-            await axios({
-                method: 'post',
-                url: `${server}/signup`,
-                data: {
-                    name: this.state.name,
-                    email: this.state.email,
-                    password: this.state.password
-                },
-            }) 
+    validatePassword = (password, passwordConfirm) => {
 
-            showSuccess('Usuário cadastrado!');
-            this.setState({ ...initialState })
-        } catch(err) {
-            const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
-            showError(error)
+        if ((password === passwordConfirm) )
+        {
+            if (password.length > 7) {
+                return true
+            }
+            showError('A senha deve conter pelo menos 8 caracteres');
+        }else {
+            showError('Senhas não coincidem');
         }
+
+    }
+
+    signup = async () => {
+
+        if (this.validatePassword(this.state.password, this.state.confirmPassword) ){
+            try {
+                await axios({
+                    method: 'post',
+                    url: `${server}/signup`,
+                    data: {
+                        name: this.state.name,
+                        email: this.state.email,
+                        password: this.state.password
+                    },
+                })
+
+                showSuccess('Usuário cadastrado!');
+                this.setState({ ...initialState })
+            } catch(err) {
+                const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
+                showError(error)
+            }
+        }
+
+
     }
 
     signin = async () => {
@@ -71,14 +91,22 @@ export default class Auth extends Component {
         }
     }
 
+     handleChangeOption = (val) => {
+        if (val !== '0') {
+            this.setState({typeAccount: val});
+        }
+    }
+
     render() {
         return (
             <ImageBackground source={backgroundImage} style={styles.background}>
-                <Text style={styles.title}>Tasks</Text>
+                <Text style={styles.title}>
+                    { this.state.stageNew ? 'Criar conta' : '' }
+                </Text>
+                {this.state.stageNew &&
+                    <View style={styles.hr}/>
+                }
                 <View style={styles.formContainer}>
-                    <Text style={styles.subtitle}>
-                        { this.state.stageNew ? 'Crie a sua conta' : 'Informe seus dados' }
-                    </Text>
                     {this.state.stageNew &&
                         <TextInput placeholder='Nome' value={this.state.name}
                             style={styles.input} onChangeText={name => this.setState({ name }) }>
@@ -93,14 +121,24 @@ export default class Auth extends Component {
                     </TextInput>
 
                     {this.state.stageNew &&
-                        <TextInput placeholder='Confirmação de Senha' value={this.state.confirmPassword}
+                        <TextInput placeholder='Confirme sua senha' value={this.state.confirmPassword}
                             style={styles.input} onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}>
                         </TextInput>
+                    }
+                    {this.state.stageNew &&
+                    <View style={styles.dropDown}>
+                        <Picker selectedValue={ this.state.typeAccount}
+                                onValueChange={ this.handleChangeOption }>
+                            <Picker.Item  label='O que você deseja?' value='0' />
+                            <Picker.Item label='Contratar algum serviço' value='1'/>
+                            <Picker.Item label='Quero oferecer serviços' value='2'/>
+                        </Picker>
+                    </View>
                     }
                     <TouchableOpacity onPress={this.signinOrSignup}>
                         <View style={styles.button}>
                             <Text style={styles.buttonText}>
-                                { this.state.stageNew ? 'Registrar' : 'Entrar' }
+                                { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -128,8 +166,12 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 70,
-        marginBottom: 10
+        fontSize: 40,
+        marginBottom: 10,
+        marginLeft: 10,
+        alignSelf: 'flex-start',
+
+
     },
     subtitle: {
         fontFamily: commonStyles.fontFamily,
@@ -141,21 +183,36 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         padding: 20,
         width: '90%'
-    },  
+    },
     input: {
         marginTop: 10,
         backgroundColor: '#FFF',
         padding: 10,
+        borderRadius: 10
+    },
+    dropDown: {
+        marginTop: 10,
+        backgroundColor: '#FFF',
+        padding: 10,
+        borderRadius: 10
+
     },
     button: {
         backgroundColor: '#080',
         marginTop: 10,
         padding: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 10
     },
     buttonText: {
         fontFamily: commonStyles.fontFamily,
         color: '#FFF',
-        fontSize: 20
+        fontSize: 20,
+
+    },
+    hr: {
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        width: '100%'
     }
 })

@@ -8,7 +8,6 @@ export default class AuthOrApp extends Component {
     componentDidMount = async () => {
         const userDataJson = await AsyncStorage.getItem('userData')
         let userData = null
-        
 
         try {
             userData = JSON.parse(userDataJson)
@@ -33,7 +32,7 @@ export default class AuthOrApp extends Component {
         )
     }
 }
- 
+
 //Essa tela decide se existe um token valido e então dereciona para a tela que o usuário requisitou e caso não tenha direciona para a tela de login
 
 const styles = StyleSheet.create({
