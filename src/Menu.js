@@ -1,4 +1,4 @@
-import React, { Component, NativeAppEventEmitter } from 'react';
+import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';

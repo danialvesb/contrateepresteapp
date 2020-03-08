@@ -83,7 +83,7 @@ export default class Auth extends Component {
             })
 
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.access_token}`
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Inicio')
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
