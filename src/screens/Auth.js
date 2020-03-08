@@ -10,9 +10,9 @@ import commonStyles from '../commonStyles'
 import { server, showError, showSuccess } from '../common'
 
 const initialState = {
-    name: 'sss',
-    email: '',
-    password: '',
+    name: '',
+    email: 'daniel2@gmail.com',
+    password: 'daniel123',
     confirmPassword: '',
     typeAccount: 0,
     stageNew: false,

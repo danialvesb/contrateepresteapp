@@ -1,6 +1,6 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 
-import TaskList from './screens/TaskList'
+import OfferWorkList from './screens/OfferWorkList'
 import Auth from './screens/Auth'
 import AuthOrApp from './screens/AuthOrApp'
 
@@ -11,7 +11,7 @@ const mainRoutes = {
     },
     Home: {
         name: 'Home',
-        screen: TaskList
+        screen: OfferWorkList
     },
     AuthOrApp: {
         name: 'AuthOrApp',
