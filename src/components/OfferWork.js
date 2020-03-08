@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import commonStyles from '../commonStyles'
 
 export default props => {
     return (
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         elevation: 2,
         margin: 3,
         height: 200,
-        borderRadius: 8
+        borderRadius: 8,
+
     },
     header: {
         flex: 3,
@@ -56,12 +57,15 @@ const styles = StyleSheet.create({
     textHeader: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#FFF'
+        // backgroundColor: '#FFF',
+        fontFamily: commonStyles.fontFamily,
+
     },
     textHeaderIcon: {
         flex: 1,
         flexDirection: 'column',
         // backgroundColor: '#ffe055'
+        fontFamily: commonStyles.fontFamily,
 
     },
     content: {
@@ -76,6 +80,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         textAlign: 'center',
         fontSize: 30,
+        fontFamily: commonStyles.fontFamily,
 
     },
     footer: {
