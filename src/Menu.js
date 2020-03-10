@@ -29,8 +29,6 @@ function MyDrawer() {
     return (
         <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}>
             <Drawer.Screen name="InÍcio" component={Home}/>
-
-            <Drawer.Screen name="Login" component={ Auth } />
         </Drawer.Navigator>
     );
 }
