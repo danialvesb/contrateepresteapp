@@ -4,28 +4,31 @@ import commonStyles from '../commonStyles';
 
 export default props => {
     return (
-        <View style={styles.header} >
-            <View style={styles.topHeader}>
+        <View style={styles.filters} >
+            <View style={styles.search}>
                 <Text style={styles.title}>Pesquisa</Text>
             </View>
-            <View style={styles.filtersHeader}>
-                <Text style={styles.title}>Cateogria e filtros gerais</Text>
+            <View style={styles.filterSelect}>
+                <Text style={styles.title}>Filtros gerais</Text>
             </View>
         </View >
     )
 }
 
 const styles = StyleSheet.create({
-    header: {
+    filters: {
         flex: 1,
+        flexDirection: 'row'
     },
-    topHeader: {
+    search: {
         flex: 1,
-        backgroundColor: '#000'
+        backgroundColor: 'rgba(128,187,231,0.4)',
+        flexDirection: 'row'
     },
-    filtersHeader: {
+    filterSelect: {
         flex: 1,
-        backgroundColor: '#80bbe7'
+        backgroundColor: '#80bbe7',
+        flexDirection: 'row'
     },
     title: {
         fontFamily: commonStyles.fontFamily,
