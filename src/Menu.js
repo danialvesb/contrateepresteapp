@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { Avatar } from "react-native-elements";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import Home from './screens/Home';
-import Auth from './screens/Auth';
 
 const Drawer = createDrawerNavigator();
 
@@ -37,7 +35,7 @@ function CustomDrawerContent(props) {
     return (
         <DrawerContentScrollView {...props}>
             <View>
-                {!isLogged ?
+                {isLogged ?
                     <Avatar
                         size="large"
                         rounded
@@ -56,6 +54,8 @@ function CustomDrawerContent(props) {
         </DrawerContentScrollView>
     );
 }
+
+
 
 export default () => {
     return <MyDrawer />

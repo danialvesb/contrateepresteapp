@@ -1,27 +1,17 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Header } from 'react-native-elements'
-
-import Filters from '../components/Filters';
 import OfferWorkList from '../components/OfferWorkList';
+import Header from '../components/header/Header';
 
 export default class Home extends Component {
     render() {
         return (
-
             <View style={styles.home}>
-                <View>
-                    <Header
-                        placement="left"
-                        leftComponent={{ icon: 'menu', color: '#fff' }}
-                        centerComponent={{ text: 'Contrate Online', style: { color: '#fff' } }}
-                        rightComponent={{ icon: 'home', color: '#fff' }}
-                    />
+                <View style={styles.header}>
+                    <Header></Header>
                 </View>
 
-                <View style={styles.header}>
-                    <Filters />
-                </View>
+
                 <View style={styles.content}>
                     <OfferWorkList  />
                 </View>
@@ -37,7 +27,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     header: {
-        flex: 1,
+        flex: 3,
     },
     content: {
         flex: 10,
