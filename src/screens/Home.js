@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-
-import Header from '../components/Header';
 import OfferWorkList from '../components/OfferWorkList';
+import Header from '../components/header/Header';
 
 export default class Home extends Component {
     render() {
         return (
             <View style={styles.home}>
                 <View style={styles.header}>
-                    <Header  />
+                    <Header></Header>
                 </View>
+
+
                 <View style={styles.content}>
                     <OfferWorkList  />
                 </View>
@@ -26,10 +27,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     header: {
-        flex: 1,
+        flex: 3,
     },
     content: {
-        flex: 5,
+        flex: 10,
     }
 
 })
