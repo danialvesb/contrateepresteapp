@@ -5,10 +5,12 @@ import Filters from '../Filters';
 import { CustomDrawerContent } from '../../Menu';
 
 export  default () =>
-    <View style={styles.header}>
+    <View style={styles.container}>
         <View style={styles.menu}>
-            <TouchableOpacity>
-                <Icon name="bars" size={25} color="#FFF" />
+            <TouchableOpacity onPress={() => console.log("press!")}>
+                <View style={{margin: 10, }}>
+                    <Icon name="bars" size={30} color="#FFF" />
+                </View>
             </TouchableOpacity>
 
         </View>
@@ -20,14 +22,16 @@ export  default () =>
 
 
 const styles = StyleSheet.create({
-    header: {
-        flex: 10
+    container: {
+        flex: 1,
+
     },
     searchs: {
         flex: 1
     },
     menu: {
         flex: 1,
+        justifyContent: 'center',
         backgroundColor: '#2e1216'
     },
     home: {

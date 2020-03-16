@@ -11,7 +11,6 @@ export default class Home extends Component {
                     <Header></Header>
                 </View>
 
-
                 <View style={styles.content}>
                     <OfferWorkList  />
                 </View>
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     header: {
-        flex: 3,
+        flex: 2,
     },
     content: {
         flex: 10,

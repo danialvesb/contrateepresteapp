@@ -28,6 +28,12 @@ export default class OfferWorkList extends Component {
                                    district='Parque Tremendão'
                                    rating='4,5'
                                    typeOffer='Pintura'/>
+                        <OfferWork name='Daniel Alves Bezerra'
+                                   locale='Goiânia/GO'
+                                   district='Parque Tremendão'
+                                   rating='4,5'
+                                   typeOffer='Pintura'/>
+
                     </ScrollView>
                 </View>
 
