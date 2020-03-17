@@ -25,7 +25,7 @@ const isLogged = async () => {
 
 function MyDrawer() {
     return (
-        <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}>
+        <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}   drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center' }}>
             <Drawer.Screen name="InÍcio" component={Home}  navigation={myDrawer}/>
         </Drawer.Navigator>
     );

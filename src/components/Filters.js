@@ -5,9 +5,6 @@ import commonStyles from '../commonStyles';
 export default props => {
     return (
         <View style={styles.filters} >
-            <View style={styles.search}>
-                <Text style={styles.title}>Pesquisa</Text>
-            </View>
             <View style={styles.filterSelect}>
                 <Text style={styles.title}>Filtros gerais</Text>
             </View>
