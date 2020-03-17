@@ -4,10 +4,10 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Filters from '../Filters';
 import { CustomDrawerContent } from '../../Menu';
 
-export  default () =>
+export  default props =>
     <View style={styles.container}>
         <View style={styles.menu}>
-            <TouchableOpacity onPress={() => console.log("press!")}>
+            <TouchableOpacity onPress={() => props.navigate.openDrawer()}>
                 <View style={{margin: 10, }}>
                     <Icon name="bars" size={30} color="#FFF" />
                 </View>

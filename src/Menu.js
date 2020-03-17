@@ -26,7 +26,7 @@ const isLogged = async () => {
 function MyDrawer() {
     return (
         <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}>
-            <Drawer.Screen name="InÍcio" component={Home}/>
+            <Drawer.Screen name="InÍcio" component={Home}  navigation={myDrawer}/>
         </Drawer.Navigator>
     );
 }
@@ -55,8 +55,8 @@ function CustomDrawerContent(props) {
     );
 }
 
-
-
-export default () => {
+const myDrawer = props => {
     return <MyDrawer />
 }
+
+export default () =>  myDrawer()

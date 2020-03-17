@@ -3,12 +3,11 @@ import { View, StyleSheet } from 'react-native'
 import OfferWorkList from '../components/OfferWorkList';
 import Header from '../components/header/Header';
 
-export default class Home extends Component {
-    render() {
+export  default  function HomeScreen({ navigation }) {
         return (
             <View style={styles.home}>
                 <View style={styles.header}>
-                    <Header></Header>
+                    <Header navigate={navigation}></Header>
                 </View>
 
                 <View style={styles.content}>
@@ -17,7 +16,6 @@ export default class Home extends Component {
 
             </View>
         )
-    }
 }
 
 const styles = StyleSheet.create({
