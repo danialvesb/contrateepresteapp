@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Filters from '../Filters';
 import { CustomDrawerContent } from '../../Menu';
