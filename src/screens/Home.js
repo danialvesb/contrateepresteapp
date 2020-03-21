@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import OfferWorkList from '../components/OfferWorkList';
 import Header from '../components/header/Header';
 
-export  default  function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
         return (
             <View style={styles.home}>
                 <View style={styles.header}>

@@ -1,29 +1,32 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import commonStyles from '../commonStyles'
 
+
+
 export default props => {
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <View style={styles.headerInfors}>
-                    <Text style={styles.textHeader}> { props.name } </Text>
-                    <Text style={styles.textHeader}> { props.locale } </Text>
-                    <Text style={styles.textHeader}> { props.district } </Text>
+        <TouchableOpacity onPress={() => this.navigation.navigate('RequestWorkPage')}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <View style={styles.headerInfors}>
+                        <Text style={styles.textHeader}> { props.name } </Text>
+                        <Text style={styles.textHeader}> { props.locale } </Text>
+                        <Text style={styles.textHeader}> { props.district } </Text>
+                    </View>
+                    <Text style={styles.textHeaderIcon}>
+                        <Icon name="star" size={25} color="rgb(240, 208, 13)" />
+                        { props.rating }
+                    </Text>
                 </View>
-                <Text style={styles.textHeaderIcon}>
-                    <Icon name="star" size={25} color="rgb(240, 208, 13)" />
-                    { props.rating }
-                </Text>
+                <View style={styles.content}>
+
+                    <Text style={styles.textContent}> { props.typeOffer } </Text>
+                </View>
             </View>
-            <View style={styles.content}>
+        </TouchableOpacity>
 
-                <Text style={styles.textContent}> { props.typeOffer } </Text>
-            </View>
-
-
-        </View>
     )
 }
 

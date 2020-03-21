@@ -10,10 +10,10 @@ export  default props => {
             </View>
             <View style={styles.content}>
                 <View style={styles.data}>
-                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Descrição</Text>
-                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Descrição</Text>
-                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Descrição</Text>
-                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Descrição</Text>
+                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Concerto de imoveis</Text>
+                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Goiânia-GO</Text>
+                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Qualificações</Text>
+                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Preço do serviço</Text>
                 </View>
                 <View style={styles.options}>
                     <TouchableOpacity style={{backgroundColor: 'rgba(36,41,46,0.35)', margin: 1, alignItems: 'center', justifyContent: 'center'}}><Text style={{fontSize: 20}}>Solicitar</Text></TouchableOpacity>
@@ -24,8 +24,6 @@ export  default props => {
                 </View>
             </View>
             </View>
-
-
     )
 }
 
