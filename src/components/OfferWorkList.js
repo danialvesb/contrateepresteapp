@@ -11,21 +11,25 @@ export  default  function OfferWorkList({ navigation }) {
             <View style={styles.scrollview}>
                 <ScrollView >
                     <OfferWork name='Daniel Alves Bezerra'
+                               navigation={navigation}
                                locale='Goiânia/GO'
                                district='Parque Tremendão'
                                rating='4,5'
                                typeOffer='Pintura'/>
                     <OfferWork name='Daniel Alves Bezerra'
+                               navigation={navigation}
                                locale='Goiânia/GO'
                                district='Parque Tremendão'
                                rating='4,5'
                                typeOffer='Pintura'/>
                     <OfferWork name='Daniel Alves Bezerra'
+                               navigation={navigation}
                                locale='Goiânia/GO'
                                district='Parque Tremendão'
                                rating='4,5'
                                typeOffer='Pintura'/>
                     <OfferWork name='Daniel Alves Bezerra'
+                               navigation={navigation}
                                locale='Goiânia/GO'
                                district='Parque Tremendão'
                                rating='4,5'

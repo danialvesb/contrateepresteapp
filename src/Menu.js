@@ -55,7 +55,7 @@ function CustomDrawerContent(props) {
     );
 }
 
-const myDrawer = props => {
+const myDrawer = () => {
     return <MyDrawer />
 }
 

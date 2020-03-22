@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Filters from '../Filters';
-import { CustomDrawerContent } from '../../Menu';
 import Search from './Search';
 
 
@@ -10,7 +9,7 @@ export  default props =>
     <View style={styles.container}>
         <View style={styles.menu}>
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <TouchableOpacity onPress={() => props.navigate.openDrawer()} >
+                <TouchableOpacity onPress={() => props.navigation.openDrawer()} >
                     <View style={{margin: 10, }}>
                         <Icon name="bars" size={30} color="#FFF" />
                     </View>

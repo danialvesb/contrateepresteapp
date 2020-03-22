@@ -7,7 +7,7 @@ export default function HomeScreen({ navigation }) {
         return (
             <View style={styles.home}>
                 <View style={styles.header}>
-                    <Header navigate={navigation}></Header>
+                    <Header navigation={navigation}></Header>
                 </View>
 
                 <View style={styles.content}>
