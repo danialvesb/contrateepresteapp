@@ -25,11 +25,11 @@ const headerStyle = () => {
 export  default () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
+            <Stack.Navigator initialRouteName="AuthPage" headerMode='screen'>
                 <Stack.Screen name="Menu" component={ Menu } options={{ headerShown: false }}/>
                 <Stack.Screen name="OfferWork" component={ OfferWork }/>
                 <Stack.Screen name="OfferWorkList" component={ OfferWorkList }/>
-                <Stack.Screen name="AuthPage" component={ Auth } />
+                <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: false }}/>
                 <Stack.Screen name="RequestWork" component={ RequestWork } options={{ headerTitle:'Informações'}}/>
             </Stack.Navigator>
         </NavigationContainer>
