@@ -22,7 +22,6 @@ const headerStyle = () => {
     }
 }
 
-
 export  default () => {
     return (
         <NavigationContainer>
