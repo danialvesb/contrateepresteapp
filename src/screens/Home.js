@@ -11,7 +11,7 @@ export default function HomeScreen({ navigation }) {
                 </View>
 
                 <View style={styles.content}>
-                    <OfferWorkList  />
+                    <OfferWorkList  navigation={navigation}/>
                 </View>
 
             </View>

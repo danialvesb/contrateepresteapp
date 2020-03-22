@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import commonStyles from '../commonStyles'
 
-
-
 export default props => {
     return (
         <TouchableOpacity onPress={() => props.navigation.navigate('RequestWork')}>
@@ -30,7 +28,6 @@ export default props => {
     )
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
@@ -42,7 +39,6 @@ const styles = StyleSheet.create({
         margin: 3,
         height: 200,
         borderRadius: 8,
-
     },
     header: {
         flex: 3,
@@ -62,14 +58,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         // backgroundColor: '#FFF',
         fontFamily: commonStyles.fontFamily,
-
     },
     textHeaderIcon: {
         flex: 1,
         flexDirection: 'column',
         // backgroundColor: '#ffe055'
         fontFamily: commonStyles.fontFamily,
-
     },
     content: {
         flex: 1,
@@ -84,7 +78,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 30,
         fontFamily: commonStyles.fontFamily,
-
     },
     footer: {
         flex: 1,
@@ -92,6 +85,4 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         padding: 5
     }
-
-
 })

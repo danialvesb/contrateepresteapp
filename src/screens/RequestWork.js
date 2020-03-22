@@ -5,9 +5,9 @@ import HeaderRequestWork from '../components/header/HeaderRequestWork';
 export  default props => {
     return (
         <View style={ styles.container }>
-            <View style={styles.header}>
-                <HeaderRequestWork></HeaderRequestWork>
-            </View>
+            {/*<View style={styles.header}>*/}
+            {/*    <HeaderRequestWork></HeaderRequestWork>*/}
+            {/*</View>*/}
             <View style={styles.content}>
                 <View style={styles.data}>
                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Concerto de imoveis</Text>

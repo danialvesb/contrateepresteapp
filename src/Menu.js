@@ -6,7 +6,6 @@ import Home from './screens/Home';
 
 const Drawer = createDrawerNavigator();
 
-
 const isLogged = async () => {
     const userDataJson = await AsyncStorage.getItem('userData')
     let userData = null
@@ -26,7 +25,7 @@ const isLogged = async () => {
 function MyDrawer() {
     return (
         <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}   drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center' }}>
-            <Drawer.Screen name="InÍcio" component={Home}  navigation={myDrawer}/>
+            <Drawer.Screen name="HomeScreen" component={Home} options={{ drawerLabel: 'Início' }}/>
         </Drawer.Navigator>
     );
 }
@@ -55,8 +54,4 @@ function CustomDrawerContent(props) {
     );
 }
 
-const myDrawer = () => {
-    return <MyDrawer />
-}
-
-export default () =>  myDrawer()
+export default () =>  <MyDrawer />
