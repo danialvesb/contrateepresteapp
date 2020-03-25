@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import RequestWorkConfirm from '../components/Modals/RequestWorkConfirm';
+
 
 export  default props => {
     return (
@@ -12,7 +14,9 @@ export  default props => {
                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Preço do serviço</Text>
                 </View>
                 <View style={styles.options}>
-                    <TouchableOpacity style={{backgroundColor: 'rgba(36,41,46,0.35)', margin: 1, alignItems: 'center', justifyContent: 'center'}}><Text style={{fontSize: 20}}>Solicitar</Text></TouchableOpacity>
+                    <View>
+                        <RequestWorkConfirm></RequestWorkConfirm>
+                    </View>
                 </View>
 
                 <View style={styles.description}>
@@ -64,6 +68,9 @@ const styles = StyleSheet.create({
         height: '20%',
         margin: 5,
         borderRadius: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+
 
     },
     description: {

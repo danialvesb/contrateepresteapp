@@ -66,7 +66,6 @@ function CustomDrawerContent(props) {
                         onPress={() => props.navigation.navigate('AuthPage')}
                     />
                 }
-                <TouchableOpacity onPress={() => console.log(getUserData())}><Text>Teste</Text></TouchableOpacity>
             </View>
             <DrawerItemList {...props} />
         </DrawerContentScrollView>
