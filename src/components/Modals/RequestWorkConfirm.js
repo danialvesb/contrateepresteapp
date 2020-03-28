@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {Modal, Text, TouchableOpacity, View, Alert, StyleSheet} from 'react-native';
+import {Modal, Text, TouchableOpacity, View, Alert, StyleSheet, ScrollView} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
+import PhotoCamera from '../Camera/PhotoCamera';
+import {SafeAreaContext} from 'react-native-safe-area-context';
 export default class RequestWorkConfirm extends Component {
     state = {
         modalVisible: false,
@@ -33,8 +36,31 @@ export default class RequestWorkConfirm extends Component {
                         </View>
                         <View style={styles.contentModal}>
                             <View style={styles.dataRequest}>
-                                <View style={styles.files}>
-                                    <Text>Detalhe com Imagens</Text>
+                                <View style={styles.photosList}>
+                                    <View style={{flex: 1}}>
+                                        <Text style={{fontSize: 20, margin: 5}}>Inserir Imagens</Text>
+                                    </View>
+                                    <View style={{flex: 3, backgroundColor: 'blue'}}>
+                                        <ScrollView horizontal={true} style={{flex: 1, backgroundColor: 'blue'}} contentContainerStyle={{flexDirection: 'row'}}>
+                                            <View style={styles.photo}>
+                                                <TouchableOpacity onPress={ () => console.log('press') } style={{margin: 4, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                                    <Icon name="camera" size={50} color='#FFF' />
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.photo}>
+                                                <TouchableOpacity onPress={ () => console.log('press') } style={{margin: 4, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                                    <Icon name="camera" size={50} color='#FFF' />
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.photo}>
+                                                <TouchableOpacity onPress={ () => console.log('press') } style={{margin: 4, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                                    <Icon name="camera" size={50} color='#FFF' />
+                                                </TouchableOpacity>
+                                            </View>
+
+                                        </ScrollView>
+                                    </View>
+
                                 </View>
                                 <View style={styles.description}>
                                     <Text>Resumo do seu serviço</Text>
@@ -98,17 +124,35 @@ const styles = StyleSheet.create({
     },
     dataRequest: {
         flex: 5,
-        backgroundColor: '#ff3049'
+        backgroundColor: '#ff3049',
+        justifyContent: 'center',
     },
     description: {
         flex: 1,
         margin: 10,
         backgroundColor: '#FFF',
     },
-    files: {
+    photosList: {
         flex: 1,
         margin: 10,
         backgroundColor: '#dbff5b',
+        justifyContent: 'center'
+
+
+    },
+    photosListScrool: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#FFF',
+        borderWidth: 0.5,
+    },
+    photo: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 3,
+        backgroundColor: 'black'
     }
 
 
