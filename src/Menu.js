@@ -1,34 +1,51 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Avatar } from "react-native-elements";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import Home from './screens/Home';
+import React, { Component } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Avatar } from "react-native-elements"
+import AsyncStorage from '@react-native-community/async-storage';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
+import Home from './screens/Home'
 
 const Drawer = createDrawerNavigator();
 
+const getUserData = async () => {
+    let userData
+    try {
+        userData = await AsyncStorage.getItem('user_auth_token')
+    }catch(err) {
+
+    }
+    return await  userData
+}
 
 const isLogged = async () => {
-    const userDataJson = await AsyncStorage.getItem('userData')
-    let userData = null
-
+    let userData
     try {
-        userData = JSON.parse(userDataJson)
+        userData = await AsyncStorage.getItem('userData')
     }catch(err) {
         // userData não tem token, inválido
     }
-    if(userData && userData.access_token) {
-        return true
+    if (userData) {
+        this.setState({isLogged: true})
     }else {
-        return false
+        this.setState({isLogged: false})
     }
+
 }
 
-function MyDrawer() {
-    return (
-        <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}   drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center' }}>
-            <Drawer.Screen name="InÍcio" component={Home}  navigation={myDrawer}/>
-        </Drawer.Navigator>
-    );
+const initialState = {
+    userName: '',
+    isLogged: false,
+}
+
+class MyDrawer extends Component {
+
+    render() {
+        return (
+            <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} />}   drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center' }}>
+                <Drawer.Screen name="HomeScreen" component={Home} options={{ drawerLabel: 'Início' }}/>
+            </Drawer.Navigator>
+        )
+    }
 }
 
 function CustomDrawerContent(props) {
@@ -55,8 +72,4 @@ function CustomDrawerContent(props) {
     );
 }
 
-const myDrawer = props => {
-    return <MyDrawer />
-}
-
-export default () =>  myDrawer()
+export default () =>  <MyDrawer />

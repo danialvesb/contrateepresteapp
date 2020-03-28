@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker } from 'react-native'
-
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
 
 
@@ -10,10 +10,10 @@ import commonStyles from '../commonStyles'
 import { server, showError, showSuccess } from '../common'
 
 const initialState = {
-    name: '',
-    email: 'daniel2@gmail.com',
-    password: 'daniel123',
-    confirmPassword: '',
+    name: 'daniel',
+    email: 'daniel@gmail.com',
+    password: '12345678',
+    confirmPassword: '12345678',
     typeAccount: 0,
     stageNew: false,
 }
@@ -69,7 +69,13 @@ export default class Auth extends Component {
 
 
     }
-
+    storeUserData = async user_auth_token => {
+        try {
+            await AsyncStorage.setItem('user_auth_token', user_auth_token)
+        } catch (e) {
+            // saving error
+        }
+    }
     signin = async () => {
         try {
             const res = await axios({
@@ -81,9 +87,9 @@ export default class Auth extends Component {
                 },
                 timeout: 5000
             })
-
+            this.storeUserData(JSON.stringify(res.data))
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.access_token}`
-            this.props.navigation.navigate('Inicio')
+            this.props.navigation.navigate('Menu')
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
