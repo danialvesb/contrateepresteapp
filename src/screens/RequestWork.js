@@ -15,7 +15,7 @@ export  default props => {
                 </View>
                 <View style={styles.options}>
                     <View>
-                        <RequestWorkConfirm></RequestWorkConfirm>
+                        <RequestWorkConfirm navigation={props.navigation}></RequestWorkConfirm>
                     </View>
                 </View>
 

@@ -25,7 +25,7 @@ const headerStyle = () => {
 export  default () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="RequestWork" headerMode='screen'>
+            <Stack.Navigator initialRouteName="AuthPage" headerMode='screen'>
                 <Stack.Screen name="Menu" component={ Menu } options={{ headerShown: false }}/>
                 <Stack.Screen name="OfferWork" component={ OfferWork }/>
                 <Stack.Screen name="OfferWorkList" component={ OfferWorkList }/>
