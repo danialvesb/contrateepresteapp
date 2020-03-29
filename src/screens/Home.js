@@ -22,14 +22,11 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    home: {
-        flex: 1,
-    },
     header: {
         flex: 1,
     },
     content: {
-        marginTop: 0,
+        marginBottom: 30,
         flex: 5,
     }
 
