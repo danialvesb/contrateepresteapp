@@ -14,14 +14,13 @@ export default class App extends React.Component {
         const { search } = this.state;
 
         return (
-            <View>
-                <SearchBar inputStyle={{padding: 0 }}
-                    placeholder="Estou a procura de..."
-                    onChangeText={this.updateSearch}
-                    value={search}
-
-
-                />
+            <View style={{flex: 1}}>
+                <SearchBar
+                    // onChangeText={someMethod}
+                    // onClearText={someMethod}
+                    icon={{ type: 'font-awesome', name: 'search' }}
+                    placeholder='Pesquisar...'
+                    containerStyle={{backgroundColor: 'rgba(36,41,46,0.76)'}}/>
             </View>
 
         );

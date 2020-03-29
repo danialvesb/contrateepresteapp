@@ -1,12 +1,17 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import {View, Text, StyleSheet, Picker} from 'react-native';
 import commonStyles from '../commonStyles';
 
 export default props => {
+    let category = 0
     return (
         <View style={styles.filters} >
-            <View style={styles.filterSelect}>
-                <Text style={styles.title}>Filtros gerais</Text>
+            <View style={styles.dropDown}>
+                <Picker selectedValue={ category} style={{color: '#FFF'}} mode={'dropdown'}>
+                    <Picker.Item label='Categoria' value='0' />
+                    <Picker.Item label='Pintura' value='1'/>
+                    <Picker.Item label='Construção' value='2'/>
+                </Picker>
             </View>
         </View >
     )
@@ -15,7 +20,8 @@ export default props => {
 const styles = StyleSheet.create({
     filters: {
         flex: 1,
-        flexDirection: 'row'
+        backgroundColor: 'rgb(36, 41, 46)',
+
     },
     search: {
         flex: 1,
@@ -24,7 +30,7 @@ const styles = StyleSheet.create({
     },
     filterSelect: {
         flex: 1,
-        backgroundColor: '#80bbe7',
+
         flexDirection: 'row'
     },
     title: {
@@ -40,6 +46,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 10,
         marginBottom: 10
+    },
+    dropDown: {
+        backgroundColor: 'rgba(36,41,46,0.76)',
+        padding: 4,
+    },
 
-    }
 })

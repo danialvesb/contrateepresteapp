@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import OfferWorkList from '../components/OfferWorkList';
 import Header from '../components/header/Header';
+import {Dimensions} from 'react-native';
+
+const { height } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation }) {
         return (
-            <View style={styles.home}>
+            <View style={{ height: height }}>
                 <View style={styles.header}>
                     <Header navigation={navigation}></Header>
                 </View>
@@ -21,13 +24,13 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     home: {
         flex: 1,
-        flexDirection: 'column'
     },
     header: {
-        flex: 2,
+        flex: 1,
     },
     content: {
-        flex: 10,
+        marginTop: 0,
+        flex: 5,
     }
 
 })

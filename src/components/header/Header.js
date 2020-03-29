@@ -30,7 +30,6 @@ export  default props =>
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     searchs: {
         flex: 1
@@ -41,13 +40,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'rgb(36, 41, 46)'
     },
-    home: {
-
-    },
-    search: {
-
-    },
-    selectCategory: {
-
-    }
 })
