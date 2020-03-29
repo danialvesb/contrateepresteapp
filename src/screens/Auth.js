@@ -69,13 +69,14 @@ export default class Auth extends Component {
 
 
     }
-    storeUserData = async user_auth_token => {
-        try {
-            await AsyncStorage.setItem('user_auth_token', user_auth_token)
-        } catch (e) {
-            // saving error
-        }
-    }
+    // storeUserData = async user_auth_token => {
+    //     try {
+    //         await AsyncStorage.setItem('user_auth_token', user_auth_token)
+    //     } catch (e) {
+    //         // saving error
+    //     }
+    // }
+
     signin = async () => {
         try {
             const res = await axios({
@@ -87,7 +88,8 @@ export default class Auth extends Component {
                 },
                 timeout: 5000
             })
-            this.storeUserData(JSON.stringify(res.data))
+            await AsyncStorage.setItem('user_auth_token', JSON.stringify(res.data))
+
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.access_token}`
             this.props.navigation.navigate('Menu')
 
