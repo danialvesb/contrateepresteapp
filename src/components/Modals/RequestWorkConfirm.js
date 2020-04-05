@@ -56,7 +56,7 @@ export default class RequestWorkConfirm extends Component {
 
                                     </View>
                                     <View style={styles.description}>
-                                        <Text>Resumo do seu serviço</Text>
+                                        <Text>Se for preciso pode especificar melhor</Text>
                                         <Textarea
                                             containerStyle={styles.textareaContainer}
                                             style={styles.textarea}
