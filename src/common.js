@@ -9,7 +9,7 @@ function showError(err) {
 }
 
 function showSuccess(msg) {
-    Alert.alert('Sucesso!', msg.message)
+    Alert.alert('Sucesso!', msg)
 }
 
 

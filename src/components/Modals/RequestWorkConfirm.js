@@ -72,7 +72,7 @@ export default class RequestWorkConfirm extends Component {
                                     <TouchableOpacity style={styles.buttonStyle}
                                                       onPress={() => {
                                                           this.setModalVisible(!this.state.modalVisible);
-                                                          showSuccess('Serviço solicitado com sucesso, aguarde o retorno do profissional requisitado')
+                                                          showSuccess('Serviço solicitado com sucesso, aguarde o retorno do profissional requisitado.')
                                                           this.props.navigation.navigate('Menu')
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
