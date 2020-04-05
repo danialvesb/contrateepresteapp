@@ -16,6 +16,11 @@ const initialState = {
     confirmPassword: '12345678',
     typeAccount: 0,
     stageNew: false,
+    userAuthData: {
+        name: 'daniel',
+        email: 'daniel@gmail.com',
+        typeAccount: 0,
+    }
 }
 
 export default class Auth extends Component {
@@ -79,7 +84,7 @@ export default class Auth extends Component {
 
     signin = async () => {
         try {
-            const res = await axios({
+            const resAuth = await axios({
                 method: 'post',
                 url: `${server}/auth/login`,
                 data: {
@@ -88,9 +93,10 @@ export default class Auth extends Component {
                 },
                 timeout: 5000
             })
-            await AsyncStorage.setItem('user_auth_token', JSON.stringify(res.data))
+            await AsyncStorage.setItem('user_auth_token', JSON.stringify(resAuth.data))
+            // await AsyncStorage.setItem('user_auth_data', JSON.stringify(res.data)) Pegar dados do usuário logado
 
-            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.access_token}`
+            axios.defaults.headers.common['Authorization'] = `bearer ${resAuth.data.access_token}`
             this.props.navigation.navigate('Menu')
 
         }catch(err) {

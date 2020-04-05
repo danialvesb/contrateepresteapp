@@ -30,7 +30,7 @@ class MyDrawer extends Component {
 
     render() {
         return (
-            <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} isLogged={this.state.isLogged} />}   drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center' }}>
+            <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} isLogged={this.state.isLogged} />} drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center'}}>
                 <Drawer.Screen name="HomeScreen" component={Home} options={{ drawerLabel: 'Início' }}/>
             </Drawer.Navigator>
         )
@@ -50,21 +50,30 @@ async function logout() {
 
 function CustomDrawerContent(props) {
     return (
-        <DrawerContentScrollView {...props}>
+        <DrawerContentScrollView {...props} >
             <View style={styles.profile}>
                 {props.isLogged ?
-                    <Avatar
-                        size="large"
-                        rounded
-                        title="MT"
-                        // onPress={() => props.navigation.navigate('ManagerProfile')}
-                        activeOpacity={0.7}
-                        containerStyle={{alignSelf: 'center', margin: 5}}
-                    /> :
-                    <DrawerItem
-                        label="Entre na sua conta"
-                        onPress={() => props.navigation.navigate('AuthPage')}
-                    />
+                    <View>
+                        <View>
+                            <Avatar
+                                size="large"
+                                rounded
+                                title="MT"
+                                // onPress={() => props.navigation.navigate('ManagerProfile')}
+                                activeOpacity={0.7}
+                                containerStyle={{alignSelf: 'center', margin: 5}}/>
+                        </View>
+                        <View>
+
+                        </View>
+                    </View>
+                    :
+                    <View>
+                        <DrawerItem
+                            label="Entre na sua conta"
+                            onPress={() => props.navigation.navigate('AuthPage')}
+                        />
+                    </View>
 
                 }
             </View>
