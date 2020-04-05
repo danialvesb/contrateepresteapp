@@ -5,7 +5,7 @@ import commonStyles from '../commonStyles'
 
 export default props => {
     return (
-        <TouchableOpacity onPress={() => props.navigation.navigate('RequestWork')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('RequestWork', { data: props.data})}>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headerInfors}>

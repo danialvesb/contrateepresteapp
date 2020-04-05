@@ -3,20 +3,30 @@ import { View, StyleSheet, ScrollView} from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import AsyncStorage from '@react-native-community/async-storage';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 import OfferWork from './OfferWork'
 import axios from 'axios';
 import {server, showError, showSuccess} from '../common';
 
 const initialState = {
-    offersData: []
+    offersData: [],
+    spinner: true
 }
 
 export  default class OfferWorkList extends Component {
     componentDidMount = async () => {
-        this.getData()
+
+        setTimeout(() => {
+            let resp = this.getData()
+            if (resp)
+                this.setState({
+                    spinner: !this.state.spinner
+                });
+        }, 1000);
 
     }
+    com
+
     state = {
         ...initialState
     }
@@ -32,7 +42,13 @@ export  default class OfferWorkList extends Component {
 
     render() {
         return (
+
             <View style={styles.container}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'Carregando...'}
+                    textStyle={styles.spinnerTextStyle}
+                />
                 <View style={styles.scrollview}>
                     <ScrollView >
                         {
@@ -42,10 +58,10 @@ export  default class OfferWorkList extends Component {
                                     locale={`${item.city} / ${ item.uf}`}
                                     district={item.district}
                                     rating={item.rating}
-                                    typeOffer={item.title}/>
+                                    typeOffer={item.title}
+                                    data={item}/>
                             ))
                         }
-
 
                     </ScrollView>
                 </View>
@@ -53,48 +69,11 @@ export  default class OfferWorkList extends Component {
         )
     }
 }
-// export  default  function OfferWorkList({ navigation }) {
-//     return (
-//         <View style={styles.container}>
-//             <View style={styles.scrollview}>
-//                 <ScrollView >
-//                     <OfferWork name='Daniel Alves Bezerra'
-//                                navigation={navigation}
-//                                locale='Goiânia/GO'
-//                                district='Parque Tremendão'
-//                                rating='4,5'
-//                                typeOffer='Pintura'/>
-//                     <OfferWork name='Daniel Alves Bezerra'
-//                                navigation={navigation}
-//                                locale='Goiânia/GO'
-//                                district='Parque Tremendão'
-//                                rating='4,5'
-//                                typeOffer='Pintura'/>
-//                     <OfferWork name='Daniel Alves Bezerra'
-//                                navigation={navigation}
-//                                locale='Goiânia/GO'
-//                                district='Parque Tremendão'
-//                                rating='4,5'
-//                                typeOffer='Pintura'/>
-//                     <OfferWork name='Daniel Alves Bezerra'
-//                                navigation={navigation}
-//                                locale='Goiânia/GO'
-//                                district='Parque Tremendão'
-//                                rating='4,5'
-//                                typeOffer='Pintura'/>
-//                     <OfferWork name='Daniel Alves Bezerra'
-//                                navigation={navigation}
-//                                locale='Goiânia/GO'
-//                                district='Parque Tremendão'
-//                                rating='4,5'
-//                                typeOffer='Pintura'/>
-//                 </ScrollView>
-//             </View>
-//         </View>
-//     )
-// }
 
 const styles = StyleSheet.create({
+    spinnerTextStyle: {
+        color: '#FFF'
+    },
     container: {
         flex: 1
     },
