@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 
     },
     data: {
-        borderWidth: 0.5,
+        // borderWidth: 0.5,
         borderColor: 'rgb(36, 41, 46)',
         width: '70%',
         height: '70%',
@@ -65,16 +65,14 @@ const styles = StyleSheet.create({
     },
     options: {
         flex: 2,
-        borderWidth: 0.5,
-        borderColor: 'rgb(36, 41, 46)',
+        // borderWidth: 0.5,
+        // borderColor: 'rgb(36, 41, 46)',
         width: '70%',
         height: '20%',
         margin: 5,
         borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
-
-
     },
     description: {
 
@@ -84,7 +82,6 @@ const styles = StyleSheet.create({
         height: '20%',
         margin: 5,
         borderRadius: 4,
+    },
 
-
-    }
 })

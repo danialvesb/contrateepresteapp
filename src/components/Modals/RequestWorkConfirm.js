@@ -35,7 +35,7 @@ export default class RequestWorkConfirm extends Component {
                     <ScrollView>
                         <View  style={styles.modal}>
                             <View style={styles.headerModal}>
-                                <Text style={{color: '#b07888', margin: 5, fontSize: 20}}>Solicitação de serviço</Text>
+                                <Text style={{margin: 5, fontSize: 20}}>Solicitação de serviço</Text>
                             </View>
                             <View style={styles.contentModal}>
                                 <View style={styles.dataRequest}>
@@ -93,8 +93,9 @@ export default class RequestWorkConfirm extends Component {
                 <TouchableOpacity
                     onPress={() => {
                         this.setModalVisible(true);
-                    }}>
-                    <Text style={{fontSize: 20}}>Solicitar</Text>
+                    }}
+                    style={styles.buttonStyle}>
+                    <Text style={{fontSize: 15, color: '#FFF'}}>Solicite</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -103,7 +104,7 @@ export default class RequestWorkConfirm extends Component {
 
 const styles = StyleSheet.create({
     headerModal: {
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgb(201,203,211)',
         alignItems: 'flex-start',
         flex: 1,
         borderTopLeftRadius: 15,
@@ -113,8 +114,8 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 30,
         borderRadius: 15,
-        elevation: 2,
-        backgroundColor: '#addeff',
+        backgroundColor: 'rgb(237, 239, 247)',
+        elevation:4,
     },
     contentModal: {
         flex: 10,
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
     },
     dataRequest: {
         flex: 5,
-
         justifyContent: 'center',
     },
     description: {
@@ -139,7 +139,6 @@ const styles = StyleSheet.create({
     photosList: {
         flex: 1,
         margin: 10,
-
         justifyContent: 'center'
     },
     photosListScrool: {

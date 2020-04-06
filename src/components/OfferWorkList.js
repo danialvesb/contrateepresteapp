@@ -22,7 +22,7 @@ export  default class OfferWorkList extends Component {
                 this.setState({
                     spinner: !this.state.spinner
                 });
-        }, 1000);
+        }, 5000);
 
     }
     com
