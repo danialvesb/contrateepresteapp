@@ -5,7 +5,7 @@ import commonStyles from '../commonStyles'
 
 export default props => {
     return (
-        <TouchableOpacity onPress={() => props.navigation.navigate('RequestWork')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('RequestWork', { data: props.data})}>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headerInfors}>
@@ -35,10 +35,17 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         alignItems: 'center',
         paddingVertical: 10,
-        elevation: 2,
         margin: 3,
         height: 200,
-        borderRadius: 8,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+
+        elevation: 1,
     },
     header: {
         flex: 3,
