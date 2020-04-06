@@ -53,12 +53,13 @@ export  default class OfferWorkList extends Component {
                     <ScrollView >
                         {
                             this.state.offersData.map((item, index) => (
-                                <OfferWork name={item.name}
+                                <OfferWork key={item.id}
+                                    name={item.name}
                                     navigation={this.props.navigation}
                                     locale={`${item.city} / ${ item.uf}`}
                                     district={item.district}
                                     rating={item.rating}
-                                    typeOffer={item.title}
+                                    typeOffer={item.service_title}
                                     data={item}/>
                             ))
                         }

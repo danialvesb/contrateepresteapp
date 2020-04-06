@@ -11,7 +11,7 @@ export  default function RequestWork({ route, navigation }) {
         <View style={ styles.container }>
             <View style={styles.content}>
                 <View style={styles.data}>
-                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ data.title }</Text>
+                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ data.service_title }</Text>
                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ `${data.city} / ${data.uf} ` }</Text>
                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Qualificações</Text>
                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>V/H: { data.amount }</Text>

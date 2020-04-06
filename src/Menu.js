@@ -63,9 +63,10 @@ function CustomDrawerContent(props) {
                                 activeOpacity={0.7}
                                 containerStyle={{alignSelf: 'center', margin: 5}}/>
                         </View>
-                        <View>
-
+                        <View style={{alignSelf: 'center', margin: 5, padding: 15}}>
+                            <TouchableOpacity onPress={ () => logout() }><Text style={{fontSize: 15}}>Sair</Text></TouchableOpacity>
                         </View>
+
                     </View>
                     :
                     <View>
@@ -77,9 +78,6 @@ function CustomDrawerContent(props) {
 
                 }
             </View>
-            <View style={{alignSelf: 'center', margin: 5, padding: 15}}>
-                <TouchableOpacity onPress={ () => logout() }><Text style={{fontSize: 15}}>Sair</Text></TouchableOpacity>
-            </View>
 
             <DrawerItemList {...props} />
         </DrawerContentScrollView>
@@ -90,6 +88,6 @@ export default () =>  <MyDrawer />
 
 const styles = StyleSheet.create({
     profile: {
-        backgroundColor: 'blue'
+
     }
 })
