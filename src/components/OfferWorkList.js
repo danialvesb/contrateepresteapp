@@ -3,29 +3,29 @@ import { View, StyleSheet, ScrollView} from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import AsyncStorage from '@react-native-community/async-storage';
-import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from 'react-native-loading-spinner-overlay'
 import OfferWork from './OfferWork'
-import axios from 'axios';
-import {server, showError, showSuccess} from '../common';
+import axios from 'axios'
+import {server, showError, showSuccess} from '../common'
 
 const initialState = {
     offersData: [],
-    spinner: true
+    spinner: false
 }
 
 export  default class OfferWorkList extends Component {
-    componentDidMount = async () => {
+    // componentDidMount = async () => {
+    //
+    //     setTimeout(() => {
+    //         let resp = this.getData()
+    //         if (resp)
+    //             this.setState({
+    //                 spinner: !this.state.spinner
+    //             });
+    //     }, 5000);
+    //
+    // }
 
-        setTimeout(() => {
-            let resp = this.getData()
-            if (resp)
-                this.setState({
-                    spinner: !this.state.spinner
-                });
-        }, 5000);
-
-    }
-    com
 
     state = {
         ...initialState
@@ -46,7 +46,6 @@ export  default class OfferWorkList extends Component {
             <View style={styles.container}>
                 <Spinner
                     visible={this.state.spinner}
-                    textContent={'Carregando...'}
                     textStyle={styles.spinnerTextStyle}
                 />
                 <View style={styles.scrollview}>
