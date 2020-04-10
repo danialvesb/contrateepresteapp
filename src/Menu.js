@@ -32,7 +32,7 @@ class MyDrawer extends Component {
     render() {
         return (
             <DrawerNav.Navigator isLogged={this.state.isLogged}  drawerContent={props => <DrawerContent {...props} isLogged={this.state.isLogged} />}>
-                <DrawerNav.Screen name="HomeScreen" component={Home}/>
+                <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
             </DrawerNav.Navigator>
         )
     }
@@ -57,83 +57,48 @@ function DrawerContent(props) {
                     {
                         props.isLogged ?
                         <View style={styles.userInfoSection}>
-                            <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={60}/>
+                            <TouchableOpacity>
+                                <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
+                            </TouchableOpacity>
                             <Title style={styles.title}>Dawid Urbaniak</Title>
-                            <Caption style={styles.caption}>@trensik</Caption>
+                            <Caption style={styles.caption}>Prestador</Caption>
                         </View>
                         :
                         <View style={styles.userInfoSection}>
                             <DrawerItem
                                 icon={({ color, size }) => (
                                     <Icon
-                                        name="account-outline"
+                                        name="user"
                                         color={color}
                                         size={size}
                                     />
                                 )}
-                                label="Entrar"
+                                label="Entre ou Cadastre-se"
                                 onPress={() => {props.navigation.navigate('AuthPage')}}
                             />
                         </View>
                         }
 
-                    <Drawer.Section style={styles.drawerSection}>
+                    <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
                         <DrawerItem
-                            icon={({ color, size }) => (
+                            icon={({ color, size, }) => (
                                 <Icon
-                                    name="account-outline"
+                                    name="wechat"
                                     color={color}
                                     size={size}
                                 />
                             )}
-                            label="Conversas"
-                            onPress={() => {}}
-
-                            />
-                        <DrawerItem
-                            icon={({ color, size }) => (
-                                <Icon name="tune" color={color} size={size} />
-                            )}
-                            label="Ofertar Serviço"
-                            onPress={() => {}}
-                        />
-                        <DrawerItem
-                            icon={({ color, size }) => (
-                                <Icon
-                                    name="bookmark-outline"
-                                    color={color}
-                                    size={size}
-                                />
-                            )}
-                            label="Solicitações Feitas"
-                            onPress={() => {}}
-                        />
-                        <DrawerItem
-                            icon={({ color, size }) => (
-                                <Icon
-                                    name="bookmark-outline"
-                                    color={color}
-                                    size={size}
-                                />
-                            )}
-                            label="Chamados"
-                            onPress={() => {}}
-                        />
+                            label="Conversas" onPress={() => {}}/>
+                        <DrawerItem label="Ofertar Serviço" onPress={() => {}}/>
+                        <DrawerItem label="Solicitações Feitas" onPress={() => {}}/>
+                        <DrawerItem label="Chamados" onPress={() => {}}/>
 
 
                     </Drawer.Section>
-                    <Drawer.Section title="Preferences">
+                    <Drawer.Section title="Preferências">
                         <TouchableRipple onPress={() => {}}>
                             <View style={styles.preference}>
-                                <Text>Dark Theme</Text>
-                                <View pointerEvents="none">
-                                    <Switch value={false} />
-                                </View>
-                            </View>
-                        </TouchableRipple>
-                        <TouchableRipple onPress={() => {}}>
-                            <View style={styles.preference}>
-                                <Text>RTL</Text>
+                                <Text>Notificações</Text>
                                 <View pointerEvents="none">
                                     <Switch value={false} />
                                 </View>

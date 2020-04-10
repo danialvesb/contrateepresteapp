@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker } from 'react-native'
+import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
 
@@ -8,12 +8,14 @@ import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
 
 import { server, showError, showSuccess } from '../common'
+import {Avatar, Caption, Title} from 'react-native-paper';
 
 const initialState = {
     name: 'daniel',
     email: 'daniel@gmail.com',
     password: '12345678',
     confirmPassword: '12345678',
+    mobile: '',
     typeAccount: 0,
     stageNew: false,
     userAuthData: {
@@ -114,68 +116,69 @@ export default class Auth extends Component {
     render() {
         return (
             <ImageBackground source={backgroundImage} style={styles.background}>
-                <Text style={styles.title}>
-                    { this.state.stageNew ? 'Criar conta' : '' }
-                </Text>
-                {this.state.stageNew &&
-                    <View style={styles.hr}/>
-                }
-                <View style={styles.formContainer}>
-                    {this.state.stageNew &&
+                <View style={[this.state.stageNew ? styles.formContainerResgister : styles.formContainer]}>
+                    <ScrollView>
+                        {this.state.stageNew &&
                         <TextInput placeholder='Nome' value={this.state.name}
-                            style={styles.input} onChangeText={name => this.setState({ name }) }>
+                                   style={styles.input} onChangeText={name => this.setState({ name }) }>
                         </TextInput>
-                    }
-                    <TextInput placeholder='E-mail' value={this.state.email}
-                        style={styles.input} onChangeText={email => this.setState({ email }) }>
-                    </TextInput>
+                        }
+                        <TextInput placeholder='E-mail' value={this.state.email}
+                                   style={styles.input} onChangeText={email => this.setState({ email }) }>
+                        </TextInput>
 
-                    <TextInput placeholder='Senha' value={this.state.password}
-                        style={styles.input} onChangeText={password => this.setState({ password }) } secureTextEntry={true}>
-                    </TextInput>
+                        <TextInput placeholder='Senha' value={this.state.password}
+                                   style={styles.input} onChangeText={password => this.setState({ password }) } secureTextEntry={true}>
+                        </TextInput>
 
-                    {this.state.stageNew &&
+                        {this.state.stageNew &&
                         <TextInput placeholder='Confirme sua senha' value={this.state.confirmPassword}
-                            style={styles.input} onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}>
+                                   style={styles.input} onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}>
                         </TextInput>
-                    }
-                    {this.state.stageNew &&
-                    <View style={styles.dropDown}>
-                        <Picker selectedValue={ this.state.typeAccount}
-                                onValueChange={ this.handleChangeOption }>
-                            <Picker.Item  label='O que você deseja?' value='0' />
-                            <Picker.Item label='Contratar algum serviço' value='1'/>
-                            <Picker.Item label='Quero oferecer serviços' value='2'/>
-                        </Picker>
-                    </View>
-                    }
-                    <TouchableOpacity onPress={this.signinOrSignup}>
-                        <View style={styles.button}>
-                            <Text style={styles.buttonText}>
-                                { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
-                            </Text>
+                        }
+                        {this.state.stageNew &&
+                        <TextInput placeholder='Celular' value={this.state.mobile} textContentType='emailAddress'
+                                   style={styles.input} onChangeText={mobile => this.setState({ mobile }) }>
+                        </TextInput>
+                        }
+
+                        {this.state.stageNew &&
+                        <View style={styles.dropDown}>
+                            <Picker selectedValue={ this.state.typeAccount}
+                                    onValueChange={ this.handleChangeOption }>
+                                <Picker.Item  label='O que você deseja ser?' value='0' />
+                                <Picker.Item label='Contratar algum serviço' value='1'/>
+                                <Picker.Item label='Quero oferecer serviços' value='2'/>
+                            </Picker>
                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
-                        <Text style={styles.buttonText}>
-                            { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
-                        </Text>
-                    </TouchableOpacity>
+                        }
+                        <TouchableOpacity onPress={this.signinOrSignup}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>
+                                    { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
+                            <Text style={styles.buttonText}>
+                                { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
+                            </Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
-
-
             </ImageBackground>
+
+
         )
     }
 }
 
 const styles = StyleSheet.create({
     background: {
-        flex: 1,
         width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center'
-
     },
     title: {
         fontFamily: commonStyles.fontFamily,
@@ -184,8 +187,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 10,
         alignSelf: 'flex-start',
-
-
     },
     subtitle: {
         fontFamily: commonStyles.fontFamily,
@@ -194,15 +195,28 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     formContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: 'rgba(0,0,0,0.62)',
         padding: 20,
-        width: '90%'
+        width: '90%',
+        borderRadius: 10,
     },
+    formContainerResgister: {
+        backgroundColor: 'rgba(0,0,0,0.62)',
+        padding: 20,
+        width: '90%',
+        borderRadius: 10,
+        height: '100%',
+        justifyContent: 'flex-end'
+    },
+
     input: {
         marginTop: 10,
         backgroundColor: '#FFF',
         padding: 10,
         borderRadius: 10
+    },
+    userInfoSection: {
+        paddingLeft: 20,
     },
     dropDown: {
         marginTop: 10,

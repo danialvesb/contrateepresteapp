@@ -14,17 +14,17 @@ const initialState = {
 }
 
 export  default class OfferWorkList extends Component {
-    // componentDidMount = async () => {
-    //
-    //     setTimeout(() => {
-    //         let resp = this.getData()
-    //         if (resp)
-    //             this.setState({
-    //                 spinner: !this.state.spinner
-    //             });
-    //     }, 5000);
-    //
-    // }
+    componentDidMount = async () => {
+
+        setTimeout(() => {
+            let resp = this.getData()
+            if (resp)
+                this.setState({
+                    spinner: !this.state.spinner,
+                });
+        }, 5000);
+
+    }
 
 
     state = {
@@ -44,10 +44,10 @@ export  default class OfferWorkList extends Component {
         return (
 
             <View style={styles.container}>
-                <Spinner
-                    visible={this.state.spinner}
-                    textStyle={styles.spinnerTextStyle}
-                />
+                {/*<Spinner*/}
+                {/*    visible={this.state.spinner}*/}
+                {/*    textStyle={styles.spinnerTextStyle}*/}
+                {/*/>*/}
                 <View style={styles.scrollview}>
                     <ScrollView >
                         {
