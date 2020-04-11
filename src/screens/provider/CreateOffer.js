@@ -62,7 +62,7 @@ export default class CreateOffer extends Component {
                             {/*        </View>*/}
                             {/*    ))*/}
                             {/*}*/}
-                            <TouchableOpacity style={styles.service}>
+                            <TouchableOpacity style={styles.serviceSelected}>
                                 <View>
                                     <Avatar.Image
                                         source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg'}}
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: '100%',
-        backgroundColor: '#626262',
+        backgroundColor: '#FFF',
     },
     container: {
         flex: 1,
@@ -214,15 +214,50 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 10,
         padding: 10,
-        backgroundColor: 'blue',
+        backgroundColor: '#fff',
         width: 250,
         height: 150,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
     },
+    serviceSelected: {
+        flex: 1,
+        flexDirection: 'row',
+        margin: 10,
+        padding: 10,
+        backgroundColor: '#4bfff5',
+        width: 250,
+        height: 150,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
+    },
+
     photosList: {
         flex: 1,
-        backgroundColor: '#24292e',
+        backgroundColor: '#fff',
         width: '100%',
         height: '100%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
+
 
     },
     photo: {
@@ -234,18 +269,21 @@ const styles = StyleSheet.create({
 
     amount: {
         flex: 1,
+        margin: 10,
     },
     description: {
         flex: 1,
+        margin: 10,
     },
     servicesHeaderText: {
         fontSize: 15,
-        color: '#FFF',
+        margin: 10,
     },
     textInput: {
         fontSize: 15,
         color: '#FFF',
-        borderWidth: 1
+        borderWidth: 1,
+        borderRadius: 3
     },
     textareaContainer: {
         height: 100,
