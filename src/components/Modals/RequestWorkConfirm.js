@@ -65,7 +65,7 @@ export default class RequestWorkConfirm extends Component {
                                             maxLength={50}
                                             placeholder={'Descrição'}
                                             placeholderTextColor={'#c7c7c7'}
-                                            underlineColorAndroid={'transparent'}                                        />
+                                            underlineColorAndroid={'transparent'}/>
                                     </View>
                                 </View>
                                 <View style={styles.optionsModal}>

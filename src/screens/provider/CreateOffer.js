@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput} from 'react-native';
 import axios from 'axios';
-import {server, showError} from '../../common';
+import {server, showError, showSuccess} from '../../common';
 import Work from '../../components/Work';
 import {Avatar, Caption, Title} from 'react-native-paper';
 import Search from '../../components/header/Search';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Textarea from 'react-native-textarea';
 
 const initialState = {
     services: [],
@@ -150,10 +151,33 @@ export default class CreateOffer extends Component {
 
                     </View>
                     <View style={styles.amount}>
+                        <View>
+                            <Text style={styles.servicesHeaderText}>Definir preço do serviço</Text>
+                        </View>
+                        <View>
+                            <TextInput style={styles.textInput} placeholder='Preço'/>
+                        </View>
 
                     </View>
                     <View style={styles.description}>
+                        <View>
+                            <Text style={styles.servicesHeaderText}>Descrição</Text>
+                        </View>
 
+                        <Textarea
+                            containerStyle={styles.textareaContainer}
+                            style={styles.textarea}
+                            // onChangeText={this.onChange}
+                            // defaultValue={this.state.text}
+                            maxLength={50}
+                            placeholder={'Descrição'}
+                            placeholderTextColor={'#c7c7c7'}
+                            underlineColorAndroid={'transparent'}/>
+                    </View>
+                    <View>
+                        <TouchableOpacity style={styles.buttonStyle}>
+                            <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
+                        </TouchableOpacity>
                     </View>
 
                 </ScrollView>
@@ -218,5 +242,23 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#FFF',
     },
+    textInput: {
+        fontSize: 15,
+        color: '#FFF',
+        borderWidth: 1
+    },
+    textareaContainer: {
+        height: 100,
+        padding: 5,
+        backgroundColor: '#F5FCFF',
+    },
+    buttonStyle: {
+        width: 100,
+        backgroundColor: 'rgba(36,41,46,0.76)',
+        padding: 10,
+        margin: 5,
+        borderRadius: 10
+    }
+
 
 });
