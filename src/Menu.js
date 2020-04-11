@@ -74,7 +74,7 @@ function DrawerContent(props) {
                                     />
                                 )}
                                 label="Entre ou Cadastre-se"
-                                onPress={() => {props.navigation.navigate('AuthPage')}}
+                                onPress={() => { props.navigation.navigate('AuthPage') }}
                             />
                         </View>
                         }
@@ -89,9 +89,9 @@ function DrawerContent(props) {
                                 />
                             )}
                             label="Conversas" onPress={() => {}}/>
-                        <DrawerItem label="Ofertar Serviço" onPress={() => {}}/>
-                        <DrawerItem label="Solicitações Feitas" onPress={() => {}}/>
-                        <DrawerItem label="Chamados" onPress={() => {}}/>
+                        <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                        <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                        <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
 
 
                     </Drawer.Section>

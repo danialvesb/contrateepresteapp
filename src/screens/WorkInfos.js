@@ -4,7 +4,7 @@ import RequestWorkConfirm from '../components/Modals/RequestWorkConfirm';
 
 
 
-export  default function RequestWork({ route, navigation }) {
+export  default function WorkInfos({ route, navigation }) {
     const { data } = route.params;
 
     return (

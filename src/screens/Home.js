@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import OfferWorkList from '../components/OfferWorkList';
+import WorksList from '../components/WorksList';
 import Header from '../components/header/Header';
 import {Dimensions} from 'react-native';
 
@@ -14,7 +14,7 @@ export default function HomeScreen({ navigation }) {
                 </View>
 
                 <View style={styles.content}>
-                    <OfferWorkList  navigation={navigation}/>
+                    <WorksList navigation={navigation}/>
                 </View>
 
             </View>

@@ -19,7 +19,7 @@ export default class App extends React.Component {
                     // onChangeText={someMethod}
                     // onClearText={someMethod}
                     icon={{ type: 'font-awesome', name: 'search' }}
-                    placeholder='Pesquisar...'
+                    placeholder={this.props.title}
                     containerStyle={{backgroundColor: 'rgba(36,41,46,0.76)'}}/>
             </View>
 
