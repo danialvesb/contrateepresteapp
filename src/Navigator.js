@@ -35,7 +35,7 @@ export  default () => {
                 <Stack.Screen name="WorkInfosPage" component={ WorkInfos } options={{ headerTitle:'Informações'}}/>
                 <Stack.Screen name="CreateOfferPage" component={ CreateOffer } options={{ headerShown: true }}/>
                 <Stack.Screen name="SolicitationsStatusPage" component={ Solicitations } options={{ headerShown: true }}/>
-                <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: false }}/>
+                <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true }}/>
                 <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true }}/>
             </Stack.Navigator>
         </NavigationContainer>

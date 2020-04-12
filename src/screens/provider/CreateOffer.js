@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput} from 'react-native';
 import axios from 'axios';
 import {server, showError, showSuccess} from '../../common';
-import Work from '../../components/Work';
 import {Avatar, Caption, Title} from 'react-native-paper';
 import Search from '../../components/header/Search';
 import Icon from 'react-native-vector-icons/FontAwesome';

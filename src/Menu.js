@@ -91,7 +91,7 @@ function DrawerContent(props) {
                             label="Conversas" onPress={() => {}}/>
                         <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
                         <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
-                        <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                        <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
 
 
                     </Drawer.Section>
