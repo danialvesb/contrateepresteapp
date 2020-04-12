@@ -122,27 +122,7 @@ export default class CreateOffer extends Component {
                             <ScrollView horizontal={true} style={styles.scroolServices}>
                                 <View style={styles.photo}>
                                     <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#FFF'/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.photo}>
-                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#FFF'/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.photo}>
-                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#FFF'/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.photo}>
-                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#FFF'/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.photo}>
-                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#FFF'/>
+                                        <Icon name="camera" size={80} color='#ddd'/>
                                     </TouchableOpacity>
                                 </View>
 
@@ -197,7 +177,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: '100%',
-        backgroundColor: '#c9cbd3',
+
     },
     scroolServices: {
         flex: 1,
@@ -241,7 +221,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
-        elevation: 1,
+        elevation: 3,
     },
 
     photosList: {
@@ -257,19 +237,25 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
         elevation: 1,
-
-
     },
     photo: {
         flex: 1,
         margin: 5,
         padding: 5,
-        backgroundColor: '#c9cbd3'
     },
 
     amount: {
         flex: 1,
         margin: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
+
     },
     description: {
         flex: 1,
@@ -281,9 +267,10 @@ const styles = StyleSheet.create({
     },
     textInput: {
         fontSize: 15,
-        color: '#FFF',
-        borderWidth: 1,
-        borderRadius: 3
+        color: '#000000',
+        borderBottomWidth: 1,
+        borderRadius: 3,
+        padding: 0,
     },
     textareaContainer: {
         height: 100,

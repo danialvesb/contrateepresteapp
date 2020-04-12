@@ -40,14 +40,14 @@ export default class RequestWorkConfirm extends Component {
                             <View style={styles.contentModal}>
                                 <View style={styles.dataRequest}>
                                     <View style={styles.photosList}>
-                                        <View style={{flex: 1}}>
-                                            <Text style={{fontSize: 20, margin: 5}}>Inserir Imagens</Text>
+                                        <View>
+                                            <Text style={styles.servicesHeaderText}>Inserir Imagens</Text>
                                         </View>
-                                        <View style={{flex: 3}}>
-                                            <ScrollView horizontal={true} style={{flex: 1}} contentContainerStyle={{flexDirection: 'row'}}>
+                                        <View>
+                                            <ScrollView horizontal={true} style={styles.scroolServices}>
                                                 <View style={styles.photo}>
-                                                    <TouchableOpacity onPress={ () => console.log('press') } style={{margin: 4, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                                        <Icon name="camera" size={50} color='#FFF' />
+                                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
+                                                        <Icon name="camera" size={80} color='#ddd'/>
                                                     </TouchableOpacity>
                                                 </View>
 
@@ -138,23 +138,32 @@ const styles = StyleSheet.create({
     },
     photosList: {
         flex: 1,
-        margin: 10,
-        justifyContent: 'center'
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '100%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
     },
-    photosListScrool: {
+    scroolServices: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#FFF',
-        borderWidth: 0.5,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#FFF',
     },
     photo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 3,
-        backgroundColor: 'black',
-        borderRadius: 5
+        flex: 1,
+        margin: 5,
+        padding: 5,
+    },
+    servicesHeaderText: {
+        fontSize: 15,
+        margin: 10,
     },
     textareaContainer: {
         height: 180,
