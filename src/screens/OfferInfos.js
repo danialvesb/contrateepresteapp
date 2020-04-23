@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
-import RequestWorkConfirm from '../components/Modals/RequestWorkConfirm';
+import RequestOfferConfirm from '../components/Modals/RequestOfferConfirm';
 
 
 
-export  default function WorkInfos({ route, navigation }) {
+export  default function OfferInfos({ route, navigation }) {
     const { data } = route.params;
 
     return (
@@ -18,7 +18,7 @@ export  default function WorkInfos({ route, navigation }) {
                 </View>
                 <View style={styles.options}>
                     <View>
-                        <RequestWorkConfirm navigation={navigation} data={data}></RequestWorkConfirm>
+                        <RequestOfferConfirm navigation={navigation} data={data}></RequestOfferConfirm>
                     </View>
                 </View>
 

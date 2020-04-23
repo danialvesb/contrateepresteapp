@@ -9,10 +9,13 @@ export default class RequestsWorks extends Component {
                 <ScrollView style={styles.scrool}>
                     <View style={styles.header}>
                         <View style={styles.details}>
-                            <Text>Nome do cliente aqui</Text>
+                            <Text>Nome do cliente:</Text>
                         </View>
                         <View style={styles.details}>
-                            <Text>Cidade/Estado do cliente</Text>
+                            <Text>Cidade/Estado:</Text>
+                        </View>
+                        <View style={styles.details}>
+                            <Text>Bairro:</Text>
                         </View>
                     </View>
                     <View style={styles.content}>
@@ -68,6 +71,7 @@ const styles = StyleSheet.create({
     details: {
         flex: 1,
         margin: 5,
+        borderBottomWidth: 1
     },
     content: {
         flex: 1,

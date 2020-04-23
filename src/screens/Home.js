@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import WorksList from '../components/WorksList';
+import WorksList from '../components/OffersList';
 import Header from '../components/header/Header';
 import {Dimensions} from 'react-native';
 

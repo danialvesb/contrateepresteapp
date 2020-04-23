@@ -6,7 +6,7 @@ import Textarea from 'react-native-textarea';
 import PhotoCamera from '../Camera/PhotoCamera';
 import {showSuccess} from '../../common';
 
-export default class RequestWorkConfirm extends Component {
+export default class RequestOfferConfirm extends Component {
     state = {
         modalVisible: false,
     };

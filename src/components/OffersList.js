@@ -4,7 +4,7 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay'
-import Work from './Work'
+import Offer from './Offer'
 import axios from 'axios'
 import {server, showError, showSuccess} from '../common'
 
@@ -13,7 +13,7 @@ const initialState = {
     spinner: false
 }
 
-export  default class WorksList extends Component {
+export  default class OffersList extends Component {
     componentDidMount = async () => {
 
         setTimeout(() => {
@@ -52,7 +52,7 @@ export  default class WorksList extends Component {
                     <ScrollView >
                         {
                             this.state.offersData.map((item, index) => (
-                                <Work key={item.id}
+                                <Offer key={item.id}
                                     name={item.name}
                                     navigation={this.props.navigation}
                                     locale={`${item.city} / ${ item.uf}`}
