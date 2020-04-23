@@ -11,12 +11,12 @@ import { server, showError, showSuccess } from '../common'
 import {Avatar, Caption, Title} from 'react-native-paper';
 
 const initialState = {
-    name: 'daniel',
-    email: 'daniel@gmail.com',
-    password: '12345678',
-    confirmPassword: '12345678',
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
     mobile: '',
-    typeAccount: 0,
+    typeAccount: null,
     stageNew: false,
     userAuthData: {
         name: 'daniel',
@@ -62,7 +62,8 @@ export default class Auth extends Component {
                     data: {
                         name: this.state.name,
                         email: this.state.email,
-                        password: this.state.password
+                        password: this.state.password,
+                        groups_id: this.state.typeAccount
                     },
                 })
 
@@ -147,8 +148,8 @@ export default class Auth extends Component {
                             <Picker selectedValue={ this.state.typeAccount}
                                     onValueChange={ this.handleChangeOption }>
                                 <Picker.Item  label='O que você deseja ser?' value='0' />
-                                <Picker.Item label='Contratar algum serviço' value='1'/>
-                                <Picker.Item label='Quero oferecer serviços' value='2'/>
+                                <Picker.Item label='Contratar algum serviço' value='2'/>
+                                <Picker.Item label='Quero oferecer serviços' value='1'/>
                             </Picker>
                         </View>
                         }
@@ -206,7 +207,9 @@ const styles = StyleSheet.create({
         width: '90%',
         borderRadius: 10,
         height: '100%',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        marginTop: 40
+
     },
 
     input: {

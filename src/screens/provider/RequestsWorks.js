@@ -17,7 +17,12 @@ export default class RequestsWorks extends Component {
                     </View>
                     <View style={styles.content}>
                         <View style={styles.description}>
-                            <Text>Descrição da Solicitação</Text>
+                            <Text>Descrição da Solicitação:</Text>
+                            <View style={styles.descriptionContent}>
+                                <Text>
+                                    Olá gostaria que você fizesse um orçamento
+                                </Text>
+                            </View>
                         </View>
                         <View style={styles.photosList}>
                             <View>
@@ -35,10 +40,10 @@ export default class RequestsWorks extends Component {
                             </View>
                         </View>
                         <View style={styles.footer}>
-                            <TouchableOpacity style={styles.buttonStyle}>
-                                <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Confirmar</Text>
+                            <TouchableOpacity style={styles.buttonStyleAcept}>
+                                <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Aceitar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonStyle}>
+                            <TouchableOpacity style={styles.buttonStyleRecuse}>
                                 <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Negar</Text>
                             </TouchableOpacity>
                         </View>
@@ -80,8 +85,15 @@ const styles = StyleSheet.create({
     description: {
         flex: 1,
         margin: 5,
-        width: '100%',
+        width: '98%',
         height: 150,
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 5,
+        borderColor: 'rgba(2,1,1,0.23)',
+    },
+    descriptionContent: {
+        margin: 10,
 
     },
     footer: {
@@ -124,11 +136,18 @@ const styles = StyleSheet.create({
         fontSize: 15,
         margin: 10,
     },
-    buttonStyle: {
+    buttonStyleAcept: {
         width: '50%',
-        backgroundColor: 'rgba(36,41,46,0.76)',
+        backgroundColor: 'rgba(28,116,72,0.76)',
         padding: 10,
         margin: 1,
     },
+    buttonStyleRecuse: {
+        width: '50%',
+        backgroundColor: 'rgba(191,12,48,0.76)',
+        padding: 10,
+        margin: 1,
+    },
+
 
 })
