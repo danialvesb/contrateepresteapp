@@ -57,7 +57,7 @@ function DrawerContent(props) {
                     {
                         props.isLogged ?
                         <View style={styles.userInfoSection}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
                                 <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                             </TouchableOpacity>
                             <Title style={styles.title}>Dawid Urbaniak</Title>

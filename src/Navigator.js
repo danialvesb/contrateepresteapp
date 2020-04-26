@@ -10,6 +10,7 @@ import CreateOffer from './screens/provider/CreateOffer'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation';
+import Profile from './screens/Profile';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ export  default () => {
                 <Stack.Screen name="SolicitationStatusPage" component={ Solicitation } options={{ headerShown: true }}/>
                 <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true }}/>
                 <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true }}/>
+                <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
             </Stack.Navigator>
         </NavigationContainer>
     )
