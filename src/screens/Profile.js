@@ -31,7 +31,7 @@ export default class Profile extends Component{
             await AsyncStorage.removeItem('user_auth_token');
             // await AsyncStorage.setItem('user_auth_data', JSON.stringify(res.data)) Pegar dados do usuário logado
 
-            axios.defaults.headers.common['Authorization'] = `bearer ${resAuth.data.access_token}`
+            axios.defaults.headers.common['Authorization'] = ``
             this.props.navigation.navigate('Menu')
 
         }catch(err) {
