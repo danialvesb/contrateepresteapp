@@ -3,8 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
-import { showError } from './common';
-import {useTheme, Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch,} from 'react-native-paper'
+import {useTheme, Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch,} from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const DrawerNav = createDrawerNavigator();
@@ -28,7 +27,6 @@ class MyDrawer extends Component {
             this.setState({ isLogged: false })
         }
     }
-
     render() {
         return (
             <DrawerNav.Navigator isLogged={this.state.isLogged}  drawerContent={props => <DrawerContent {...props} isLogged={this.state.isLogged} />}>
@@ -37,18 +35,6 @@ class MyDrawer extends Component {
         )
     }
 }
-
-async function logout() {
-    try {
-        await AsyncStorage.removeItem('user_auth_token')
-    } catch(e) {
-        // remove error
-    }
-
-    console.log('Done.')
-
-}
-
 function DrawerContent(props) {
     return (
         <DrawerContentScrollView {...props} >
@@ -78,7 +64,6 @@ function DrawerContent(props) {
                             />
                         </View>
                         }
-
                     <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
                         <DrawerItem
                             icon={({ color, size, }) => (
@@ -92,9 +77,8 @@ function DrawerContent(props) {
                         <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
                         <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
                         <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
-
-
                     </Drawer.Section>
+
                     <Drawer.Section title="Preferências">
                         <TouchableRipple onPress={() => {}}>
                             <View style={styles.preference}>
@@ -108,11 +92,9 @@ function DrawerContent(props) {
                 </View>
                 <DrawerItemList {...props} />
             </View>
-
         </DrawerContentScrollView>
     );
 }
-
 
 export default () =>  <MyDrawer />
 
