@@ -8,7 +8,6 @@ import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
 
 import { server, showError, showSuccess } from '../common'
-import {Avatar, Caption, Title} from 'react-native-paper';
 
 const initialState = {
     name: '',
@@ -39,7 +38,6 @@ export default class Auth extends Component {
     }
 
     validatePassword = (password, passwordConfirm) => {
-
         if ((password === passwordConfirm) )
         {
             if (password.length > 7) {
@@ -49,11 +47,9 @@ export default class Auth extends Component {
         }else {
             showError('Senhas não coincidem');
         }
-
     }
 
     signup = async () => {
-
         if (this.validatePassword(this.state.password, this.state.confirmPassword) ){
             try {
                 await axios({
@@ -74,8 +70,6 @@ export default class Auth extends Component {
                 showError(error)
             }
         }
-
-
     }
     // storeUserData = async user_auth_token => {
     //     try {
@@ -84,7 +78,6 @@ export default class Auth extends Component {
     //         // saving error
     //     }
     // }
-
     signin = async () => {
         try {
             const resAuth = await axios({
@@ -168,8 +161,6 @@ export default class Auth extends Component {
                     </ScrollView>
                 </View>
             </ImageBackground>
-
-
         )
     }
 }
@@ -209,9 +200,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'flex-end',
         marginTop: 40
-
     },
-
     input: {
         marginTop: 10,
         backgroundColor: '#FFF',
@@ -226,7 +215,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         padding: 10,
         borderRadius: 10
-
     },
     button: {
         backgroundColor: '#080',
@@ -239,7 +227,6 @@ const styles = StyleSheet.create({
         fontFamily: commonStyles.fontFamily,
         color: '#FFF',
         fontSize: 20,
-
     },
     hr: {
         borderBottomColor: '#FFF',

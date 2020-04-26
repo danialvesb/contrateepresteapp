@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Caption} from 'react-native-paper';
+import axios from 'axios';
+import {server, showError} from '../common';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
     name: 'Daniel Alves',
@@ -16,6 +19,25 @@ const initialState = {
 export default class Profile extends Component{
     state = {
         ...initialState
+    }
+
+    logout = async () => {
+        try {
+            const resAuth = await axios({
+                method: 'post',
+                url: `${server}/auth/logout`,
+                timeout: 5000
+            })
+            await AsyncStorage.removeItem('user_auth_token');
+            // await AsyncStorage.setItem('user_auth_data', JSON.stringify(res.data)) Pegar dados do usuário logado
+
+            axios.defaults.headers.common['Authorization'] = `bearer ${resAuth.data.access_token}`
+            this.props.navigation.navigate('Menu')
+
+        }catch(err) {
+            const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
+            showError(error)
+        }
     }
 
     render(): React.ReactNode {
@@ -42,12 +64,10 @@ export default class Profile extends Component{
                         <TouchableOpacity style={styles.buttonStyleAcept}>
                             <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Editar informações</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonStyleRecuse}>
+                        <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => { this.logout() }}>
                             <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Sair</Text>
                         </TouchableOpacity>
                     </View>
-
-
                 </ScrollView>
             </View>
         )
@@ -104,5 +124,4 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 1,
     },
-
 })
