@@ -12,8 +12,8 @@ import {Avatar, Caption, Title} from 'react-native-paper';
 
 const initialState = {
     name: '',
-    email: '',
-    password: '',
+    email: 'daniel@gmail.com',
+    password: '12345678',
     confirmPassword: '',
     mobile: '',
     typeAccount: null,
