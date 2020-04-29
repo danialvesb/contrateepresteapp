@@ -5,28 +5,40 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import Home from './screens/Home'
 import {useTheme, Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch,} from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
+import {server, showError} from './common';
 
 const DrawerNav = createDrawerNavigator();
 
 const initialState = {
     userName: '',
-    isLogged: false,
+    isLogged: null,
 }
 
 class MyDrawer extends Component {
     state = {
         ...initialState
     }
-    componentDidUpdate = async () => {
-        const userData = await AsyncStorage.getItem('user_auth_token')
-        const userDataJson = JSON.parse(userData)
-
-        if (userDataJson && userDataJson.access_token) {
+    async meValidateToken() {
+        const access_token = await AsyncStorage.getItem('access_token')
+        const responseRec = await axios({
+            method: 'post',
+            url: `${server}/auth/me`,
+            headers: {
+                'Authorization': `bearer ${access_token}`
+            },
+            timeout: 5000
+        })
+        if (responseRec.data.id) {
             this.setState({ isLogged: true })
         }else {
             this.setState({ isLogged: false })
         }
     }
+    componentDidMount = async () => {
+        await this.meValidateToken()
+    }
+
     render() {
         return (
             <DrawerNav.Navigator isLogged={this.state.isLogged}  drawerContent={props => <DrawerContent {...props} isLogged={this.state.isLogged} />}>

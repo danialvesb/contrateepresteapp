@@ -19,12 +19,10 @@ export default props => {
                     </Text>
                 </View>
                 <View style={styles.content}>
-
                     <Text style={styles.textContent}> { props.typeOffer } </Text>
                 </View>
             </View>
         </TouchableOpacity>
-
     )
 }
 

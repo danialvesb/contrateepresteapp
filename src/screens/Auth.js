@@ -71,13 +71,10 @@ export default class Auth extends Component {
             }
         }
     }
-    // storeUserData = async user_auth_token => {
-    //     try {
-    //         await AsyncStorage.setItem('user_auth_token', user_auth_token)
-    //     } catch (e) {
-    //         // saving error
-    //     }
-    // }
+    callback() {
+        this.setState({ isLogged: true })
+    }
+
     signin = async () => {
         try {
             const resAuth = await axios({
@@ -89,11 +86,10 @@ export default class Auth extends Component {
                 },
                 timeout: 5000
             })
-            await AsyncStorage.setItem('user_auth_token', JSON.stringify(resAuth.data))
-            // await AsyncStorage.setItem('user_auth_data', JSON.stringify(res.data)) Pegar dados do usuário logado
-
+            await AsyncStorage.setItem('access_token', resAuth.data.access_token)
             axios.defaults.headers.common['Authorization'] = `bearer ${resAuth.data.access_token}`
-            this.props.navigation.navigate('Menu')
+            this.props.navigation.navigate('Menu', { callback: this.callback() })
+
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`

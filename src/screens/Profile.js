@@ -23,16 +23,19 @@ export default class Profile extends Component{
 
     logout = async () => {
         try {
+            const access_token = await AsyncStorage.getItem('access_token')
             const resAuth = await axios({
                 method: 'post',
                 url: `${server}/auth/logout`,
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
                 timeout: 5000
             })
-            await AsyncStorage.removeItem('user_auth_token');
-            // await AsyncStorage.setItem('user_auth_data', JSON.stringify(res.data)) Pegar dados do usuário logado
-
+            await AsyncStorage.removeItem('access_token');
             axios.defaults.headers.common['Authorization'] = ``
             this.props.navigation.navigate('Menu')
+            this.forceUpdate()
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`

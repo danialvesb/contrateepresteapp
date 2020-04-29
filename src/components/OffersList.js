@@ -9,23 +9,18 @@ import axios from 'axios'
 import {server, showError, showSuccess} from '../common'
 
 const initialState = {
-    offersData: [],
-    spinner: false
+    offersData: null,
+    spinner: true
 }
 
 export  default class OffersList extends Component {
     componentDidMount = async () => {
-
-        setTimeout(() => {
-            let resp = this.getData()
-            if (resp)
-                this.setState({
-                    spinner: !this.state.spinner,
-                });
-        }, 5000);
-
+        let resp = await this.getData()
+        if (resp)
+            this.setState({
+                spinner: false,
+            })
     }
-
 
     state = {
         ...initialState
@@ -33,8 +28,14 @@ export  default class OffersList extends Component {
 
     getData = async () => {
         try {
-            const resp = await axios.get(`${server}/services/offers/`)
-            this.setState({ offersData: resp.data })
+            const responseReq = await axios.get(`${server}/services/offers/`)
+            if (responseReq.data) {
+                this.setState({ offersData: responseReq.data})
+                return true
+            }else {
+                this.setState({offersData: false})
+                return false
+            }
         } catch(err) {
             showError(err)
         }
@@ -42,27 +43,25 @@ export  default class OffersList extends Component {
 
     render() {
         return (
-
             <View style={styles.container}>
-                {/*<Spinner*/}
-                {/*    visible={this.state.spinner}*/}
-                {/*    textStyle={styles.spinnerTextStyle}*/}
-                {/*/>*/}
+                <Spinner
+                    visible={this.state.spinner}
+                    textStyle={styles.spinnerTextStyle}
+                />
                 <View style={styles.scrollview}>
                     <ScrollView >
-                        {
+                        {this.state.offersData &&
                             this.state.offersData.map((item, index) => (
                                 <Offer key={item.id}
                                     name={item.name}
                                     navigation={this.props.navigation}
-                                    locale={`${item.city} / ${ item.uf}`}
+                                    locale={`${item.city} / ${item.uf}`}
                                     district={item.district}
                                     rating={item.rating}
                                     typeOffer={item.service_title}
                                     data={item}/>
                             ))
                         }
-
                     </ScrollView>
                 </View>
             </View>
