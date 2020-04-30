@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 import {server} from './common';
 const DrawerNav = createDrawerNavigator();
+
 const initialState = {
     userName: '',
     isLogged: false
