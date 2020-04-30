@@ -71,9 +71,6 @@ export default class Auth extends Component {
             }
         }
     }
-    callback() {
-        this.setState({ isLogged: true })
-    }
 
     signin = async () => {
         try {
@@ -88,8 +85,7 @@ export default class Auth extends Component {
             })
             await AsyncStorage.setItem('access_token', resAuth.data.access_token)
             axios.defaults.headers.common['Authorization'] = `bearer ${resAuth.data.access_token}`
-            this.props.navigation.navigate('Menu', { callback: this.callback() })
-
+            this.props.navigation.navigate('Menu', { isLogged: false })
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`

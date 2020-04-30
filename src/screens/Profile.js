@@ -20,7 +20,6 @@ export default class Profile extends Component{
     state = {
         ...initialState
     }
-
     logout = async () => {
         try {
             const access_token = await AsyncStorage.getItem('access_token')
@@ -32,10 +31,9 @@ export default class Profile extends Component{
                 },
                 timeout: 5000
             })
-            await AsyncStorage.removeItem('access_token');
+            await AsyncStorage.removeItem('access_token')
             axios.defaults.headers.common['Authorization'] = ``
             this.props.navigation.navigate('Menu')
-            this.forceUpdate()
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
@@ -43,12 +41,12 @@ export default class Profile extends Component{
         }
     }
 
-    render(): React.ReactNode {
+    render() {
         return (
             <View style={styles.containerStyle}>
                 <ScrollView>
                     <View style={styles.headerStyle}>
-                        <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
+                        <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg'}} size={80}/>
                     </View>
                     <View style={styles.contentStyle}>
                         <View style={styles.containerStyleText}>

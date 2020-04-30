@@ -3,21 +3,91 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
-import {useTheme, Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch,} from 'react-native-paper'
+import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
-import {server, showError} from './common';
-
+import {server} from './common';
 const DrawerNav = createDrawerNavigator();
-
 const initialState = {
     userName: '',
-    isLogged: null,
+    isLogged: false
 }
 
 class MyDrawer extends Component {
     state = {
-        ...initialState
+        ...initialState,
+    }
+    componentDidMount = async () => {
+        await this.meValidateToken()
+
+    }
+
+    render() {
+        return (
+            <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props})}>
+                <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
+            </DrawerNav.Navigator>
+        )
+    }
+
+    drawerContent(props) {
+        return (
+            <DrawerContentScrollView {...props} >
+                <View style={styles.drawerContent}>
+                    <View style={styles.profile}>
+                        { this.state.isLogged ?
+                            <View style={styles.userInfoSection}>
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
+                                    <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
+                                </TouchableOpacity>
+                                <Title style={styles.title}>Dawid Urbaniak</Title>
+                                <Caption style={styles.caption}>Prestador</Caption>
+                            </View>
+                            :
+                            <View style={styles.userInfoSection}>
+                                <DrawerItem
+                                    icon={({ color, size }) => (
+                                        <Icon
+                                            name="user"
+                                            color={color}
+                                            size={size}
+                                        />
+                                    )}
+                                    label="Entre ou Cadastre-se"
+                                    onPress={() => { props.navigation.navigate('AuthPage') }}
+                                />
+                            </View>
+                        }
+                        <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
+                            <DrawerItem
+                                icon={({ color, size, }) => (
+                                    <Icon
+                                        name="wechat"
+                                        color={color}
+                                        size={size}
+                                    />
+                                )}
+                                label="Conversas" onPress={() => {}}/>
+                            <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                            <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                            <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
+                        </Drawer.Section>
+
+                        <Drawer.Section title="Preferências">
+                            <TouchableRipple onPress={() => {}}>
+                                <View style={styles.preference}>
+                                    <Text>Notificações</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={false} />
+                                    </View>
+                                </View>
+                            </TouchableRipple>
+                        </Drawer.Section>
+                    </View>
+                    <DrawerItemList {...props} />
+                </View>
+            </DrawerContentScrollView>
+        )
     }
     async meValidateToken() {
         const access_token = await AsyncStorage.getItem('access_token')
@@ -33,79 +103,9 @@ class MyDrawer extends Component {
             this.setState({ isLogged: true })
         }else {
             this.setState({ isLogged: false })
+            await AsyncStorage.removeItem('access_token')
         }
     }
-    componentDidMount = async () => {
-        await this.meValidateToken()
-    }
-
-    render() {
-        return (
-            <DrawerNav.Navigator isLogged={this.state.isLogged}  drawerContent={props => <DrawerContent {...props} isLogged={this.state.isLogged} />}>
-                <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
-            </DrawerNav.Navigator>
-        )
-    }
-}
-function DrawerContent(props) {
-    return (
-        <DrawerContentScrollView {...props} >
-            <View  style={styles.drawerContent}>
-                <View style={styles.profile}>
-                    {
-                        props.isLogged ?
-                        <View style={styles.userInfoSection}>
-                            <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
-                                <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
-                            </TouchableOpacity>
-                            <Title style={styles.title}>Dawid Urbaniak</Title>
-                            <Caption style={styles.caption}>Prestador</Caption>
-                        </View>
-                        :
-                        <View style={styles.userInfoSection}>
-                            <DrawerItem
-                                icon={({ color, size }) => (
-                                    <Icon
-                                        name="user"
-                                        color={color}
-                                        size={size}
-                                    />
-                                )}
-                                label="Entre ou Cadastre-se"
-                                onPress={() => { props.navigation.navigate('AuthPage') }}
-                            />
-                        </View>
-                        }
-                    <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
-                        <DrawerItem
-                            icon={({ color, size, }) => (
-                                <Icon
-                                    name="wechat"
-                                    color={color}
-                                    size={size}
-                                />
-                            )}
-                            label="Conversas" onPress={() => {}}/>
-                        <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
-                        <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
-                        <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
-                    </Drawer.Section>
-
-                    <Drawer.Section title="Preferências">
-                        <TouchableRipple onPress={() => {}}>
-                            <View style={styles.preference}>
-                                <Text>Notificações</Text>
-                                <View pointerEvents="none">
-                                    <Switch value={false} />
-                                </View>
-                            </View>
-                        </TouchableRipple>
-                    </Drawer.Section>
-                </View>
-                <DrawerItemList {...props} />
-            </View>
-        </DrawerContentScrollView>
-    );
 }
 
 export default () =>  <MyDrawer />
