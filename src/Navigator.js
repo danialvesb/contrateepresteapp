@@ -11,7 +11,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
-import StackNavigator from '@react-navigation/stack/src/navigators/createStackNavigator';
 
 const Stack = createStackNavigator()
 const headerStyle = () => {
