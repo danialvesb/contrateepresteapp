@@ -11,9 +11,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
+
 const Stack = createStackNavigator()
-import axios from 'axios'
-import AsyncStorage from '@react-native-community/async-storage';
 
 const headerStyle = () => {
     return ({ scene, previous, navigation }) => {
@@ -27,30 +26,7 @@ const headerStyle = () => {
     }
 }
 
-// axios.interceptors.request.use(async (config) => {
-//     if (
-//         !config.url.endsWith('login') ||
-//         !config.url.endsWith('refresh') ||
-//         !config.url.endsWith('signup')
-//     ) {
-//         const userTokenExpiration = new Date(await AsyncStorage.getItem('userTokenExpiration'));
-//         const today = new Date();
-//         if (today > userTokenExpiration) {
-//             // refresh the token here
-//             const userRefreshToken = await AsyncStorage.getItem('userRefreshToken');
-//         } else {
-//             const userToken = await AsyncStorage.getItem('userToken');
-//             config.headers.Authorization = `Bearer ${userToken}`;
-//         }
-//     }
-//
-//     return config;
-// }, (error) => {
-//     // I cand handle a request with errors here
-//     return Promise.reject(error);
-// })
-
-export  default () => {
+const AppStack = () =>{
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
@@ -68,3 +44,14 @@ export  default () => {
         </NavigationContainer>
     )
 }
+const AuthStack = () => {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
+                <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
+
+export default SwitchNavigator

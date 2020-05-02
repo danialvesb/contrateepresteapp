@@ -30,19 +30,15 @@ export default class Auth extends Component {
     }
 
     signinOrSignup = () => {
-        if(this.state.stageNew) {
-            this.signup()
-        }else {
-            this.signin()
-        }
+        this.state.stageNew ? this.signup() : this.signin()
     }
 
     validatePassword = (password, passwordConfirm) => {
         if ((password === passwordConfirm) )
         {
-            if (password.length > 7) {
+            if (password.length > 7)
                 return true
-            }
+
             showError('A senha deve conter pelo menos 8 caracteres');
         }else {
             showError('Senhas não coincidem');
@@ -84,8 +80,7 @@ export default class Auth extends Component {
                 timeout: 5000
             })
             await AsyncStorage.setItem('access_token', resAuth.data.access_token)
-            axios.defaults.headers.common['Authorization'] = `bearer ${resAuth.data.access_token}`
-            this.props.navigation.navigate('Menu', { isLogged: false })
+            await this.props.navigation.navigate('Menu')
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`

@@ -33,7 +33,6 @@ export default class Profile extends Component{
                 timeout: 5000
             })
             await AsyncStorage.removeItem('access_token')
-            axios.defaults.headers.common['Authorization'] = ``
             this.setState({isLogged: true})
             this.props.navigation.navigate('Menu')
 

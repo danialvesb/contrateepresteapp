@@ -7,20 +7,19 @@ import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'r
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 import {server} from './common';
-const DrawerNav = createDrawerNavigator();
 
+const DrawerNav = createDrawerNavigator();
 const initialState = {
     userName: '',
     isLogged: false
 }
 
-class MyDrawer extends Component {
+export default class Menu extends Component {
     state = {
         ...initialState,
     }
     componentDidMount = async () => {
         await this.meValidateToken()
-
     }
 
     render() {
@@ -48,11 +47,7 @@ class MyDrawer extends Component {
                             <View style={styles.userInfoSection}>
                                 <DrawerItem
                                     icon={({ color, size }) => (
-                                        <Icon
-                                            name="user"
-                                            color={color}
-                                            size={size}
-                                        />
+                                        <Icon name="user" color={color} size={size}/>
                                     )}
                                     label="Entre ou Cadastre-se"
                                     onPress={() => { props.navigation.navigate('AuthPage') }}
@@ -62,11 +57,7 @@ class MyDrawer extends Component {
                         <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
                             <DrawerItem
                                 icon={({ color, size, }) => (
-                                    <Icon
-                                        name="wechat"
-                                        color={color}
-                                        size={size}
-                                    />
+                                    <Icon name="wechat" color={color} size={size}/>
                                 )}
                                 label="Conversas" onPress={() => {}}/>
                             <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
@@ -108,8 +99,6 @@ class MyDrawer extends Component {
         }
     }
 }
-
-export default () =>  <MyDrawer />
 
 const styles = StyleSheet.create({
     drawerContent: {
