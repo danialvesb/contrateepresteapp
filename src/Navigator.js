@@ -11,9 +11,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
+import StackNavigator from '@react-navigation/stack/src/navigators/createStackNavigator';
 
 const Stack = createStackNavigator()
-
 const headerStyle = () => {
     return ({ scene, previous, navigation }) => {
         const { options } = scene.descriptor;
@@ -26,7 +26,7 @@ const headerStyle = () => {
     }
 }
 
-const AppStack = () =>{
+export default () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
@@ -44,14 +44,3 @@ const AppStack = () =>{
         </NavigationContainer>
     )
 }
-const AuthStack = () => {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
-                <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
-
-export default SwitchNavigator
