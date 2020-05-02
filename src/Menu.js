@@ -1,93 +1,141 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { Avatar } from "react-native-elements"
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
-import {showError} from './common';
+import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
+import {server} from './common';
 
-const Drawer = createDrawerNavigator();
-
+const DrawerNav = createDrawerNavigator();
 const initialState = {
     userName: '',
-    isLogged: false,
+    isLogged: false
 }
 
-class MyDrawer extends Component {
+export default class Menu extends Component {
     state = {
-        ...initialState
+        ...initialState,
     }
-    componentDidUpdate = async () => {
-        const userData = await AsyncStorage.getItem('user_auth_token')
-        const userDataJson = JSON.parse(userData)
-
-        if (userDataJson && userDataJson.access_token) {
-            this.setState({ isLogged: true })
-        }else {
-            this.setState({ isLogged: false })
-        }
+    componentDidMount = async () => {
+        await this.meValidateToken()
     }
 
     render() {
         return (
-            <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props} isLogged={this.state.isLogged} />} drawerStyle={{ backgroundColor: '#FFF', width: 300, flexDirection: 'row', textAlign: 'center'}}>
-                <Drawer.Screen name="HomeScreen" component={Home} options={{ drawerLabel: 'Início' }}/>
-            </Drawer.Navigator>
+            <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props})}>
+                <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
+            </DrawerNav.Navigator>
         )
     }
-}
 
-async function logout() {
-    try {
-        await AsyncStorage.removeItem('user_auth_token')
-    } catch(e) {
-        // remove error
+    drawerContent(props) {
+        return (
+            <DrawerContentScrollView {...props} >
+                <View style={styles.drawerContent}>
+                    <View style={styles.profile}>
+                        { this.state.isLogged ?
+                            <View style={styles.userInfoSection}>
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
+                                    <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
+                                </TouchableOpacity>
+                                <Title style={styles.title}>Dawid Urbaniak</Title>
+                                <Caption style={styles.caption}>Prestador</Caption>
+                            </View>
+                            :
+                            <View style={styles.userInfoSection}>
+                                <DrawerItem
+                                    icon={({ color, size }) => (
+                                        <Icon name="user" color={color} size={size}/>
+                                    )}
+                                    label="Entre ou Cadastre-se"
+                                    onPress={() => { props.navigation.navigate('AuthPage') }}
+                                />
+                            </View>
+                        }
+                        <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
+                            <DrawerItem
+                                icon={({ color, size, }) => (
+                                    <Icon name="wechat" color={color} size={size}/>
+                                )}
+                                label="Conversas" onPress={() => {}}/>
+                            <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                            <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                            <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
+                        </Drawer.Section>
+
+                        <Drawer.Section title="Preferências">
+                            <TouchableRipple onPress={() => {}}>
+                                <View style={styles.preference}>
+                                    <Text>Notificações</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={false} />
+                                    </View>
+                                </View>
+                            </TouchableRipple>
+                        </Drawer.Section>
+                    </View>
+                    <DrawerItemList {...props} />
+                </View>
+            </DrawerContentScrollView>
+        )
     }
-
-    console.log('Done.')
-
+    async meValidateToken() {
+        const access_token = await AsyncStorage.getItem('access_token')
+        const responseRec = await axios({
+            method: 'post',
+            url: `${server}/auth/me`,
+            headers: {
+                'Authorization': `bearer ${access_token}`
+            },
+            timeout: 5000
+        })
+        if (responseRec.data.id) {
+            this.setState({ isLogged: true })
+        }else {
+            this.setState({ isLogged: false })
+            await AsyncStorage.removeItem('access_token')
+        }
+    }
 }
-
-function CustomDrawerContent(props) {
-    return (
-        <DrawerContentScrollView {...props} >
-            <View style={styles.profile}>
-                {props.isLogged ?
-                    <View>
-                        <View>
-                            <Avatar
-                                size="large"
-                                rounded
-                                title="MT"
-                                // onPress={() => props.navigation.navigate('ManagerProfile')}
-                                activeOpacity={0.7}
-                                containerStyle={{alignSelf: 'center', margin: 5}}/>
-                        </View>
-                        <View style={{alignSelf: 'center', margin: 5, padding: 15}}>
-                            <TouchableOpacity onPress={ () => logout() }><Text style={{fontSize: 15}}>Sair</Text></TouchableOpacity>
-                        </View>
-
-                    </View>
-                    :
-                    <View>
-                        <DrawerItem
-                            label="Entre na sua conta"
-                            onPress={() => props.navigation.navigate('AuthPage')}
-                        />
-                    </View>
-
-                }
-            </View>
-
-            <DrawerItemList {...props} />
-        </DrawerContentScrollView>
-    );
-}
-
-export default () =>  <MyDrawer />
 
 const styles = StyleSheet.create({
-    profile: {
-
-    }
+    drawerContent: {
+        flex: 1,
+    },
+    userInfoSection: {
+        paddingLeft: 20,
+    },
+    title: {
+        marginTop: 20,
+        fontWeight: 'bold',
+    },
+    caption: {
+        fontSize: 14,
+        lineHeight: 14,
+    },
+    row: {
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    section: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 15,
+    },
+    paragraph: {
+        fontWeight: 'bold',
+        marginRight: 3,
+    },
+    drawerSection: {
+        marginTop: 15,
+    },
+    preference: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+    },
 })

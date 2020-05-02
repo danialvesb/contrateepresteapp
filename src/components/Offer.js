@@ -5,7 +5,7 @@ import commonStyles from '../commonStyles'
 
 export default props => {
     return (
-        <TouchableOpacity onPress={() => props.navigation.navigate('RequestWork', { data: props.data})}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('OfferInfosPage', { data: props.data})}>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headerInfors}>
@@ -19,12 +19,10 @@ export default props => {
                     </Text>
                 </View>
                 <View style={styles.content}>
-
                     <Text style={styles.textContent}> { props.typeOffer } </Text>
                 </View>
             </View>
         </TouchableOpacity>
-
     )
 }
 
@@ -44,7 +42,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
-
         elevation: 1,
     },
     header: {

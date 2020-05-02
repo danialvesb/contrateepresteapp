@@ -7,7 +7,7 @@ export default props => {
     return (
         <View style={styles.filters} >
             <View style={styles.dropDown}>
-                <Picker selectedValue={ category} style={{color: '#FFF'}} mode={'dropdown'}>
+                <Picker selectedValue={ category} style={{color: '#FFF'}} mode={'dropdown'} pickerStyleType>
                     <Picker.Item label='Categoria' value='0' />
                     <Picker.Item label='Pintura' value='1'/>
                     <Picker.Item label='Construção' value='2'/>

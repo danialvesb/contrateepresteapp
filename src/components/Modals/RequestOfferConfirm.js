@@ -2,24 +2,86 @@ import React, {Component} from 'react';
 import {Modal, Text, TextInput, TouchableOpacity, View, Alert, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Textarea from 'react-native-textarea';
+import axios from 'axios'
 
 import PhotoCamera from '../Camera/PhotoCamera';
-import {showSuccess} from '../../common';
+import {server, showError, showSuccess} from '../../common';
 
-export default class RequestWorkConfirm extends Component {
+const initialState = {
+    me: {},
+    modalVisible: false,
+    status: "pending",
+    message: 'Descrição aqui',
+    owner_id: '',
+    offer_id: '',
+    files: "/"
+
+}
+
+export default class RequestOfferConfirm extends Component {
     state = {
-        modalVisible: false,
+        ...initialState
     };
+
+    componentDidMount = async () => {
+        await this.me()
+    }
+
+    async me() {
+        try {
+            const req = await axios({
+                method: 'post',
+                url: `${server}/auth/me`,
+                timeout: 5000,
+            })
+
+            this.setState({me: req.data})
+
+            const dataStateOffer = {
+                owner_id: ''+this.state.me.id,
+                offer_id: ''+this.props.data.id,
+                files: "/"
+            }
+            this.setState({owner_id: this.state.me.id, offer_id: this.props.data.id})
+
+        }catch(err) {
+            const error = err.message
+            showError(error)
+        }
+    }
+
+    async requestOffe() {
+        try {
+            const req = await axios({
+                method: 'post',
+                data: {
+                    status: this.state.status,
+                    message: this.state.message,
+                    owner_id: this.state.owner_id,
+                    offer_id: this.state.offer_id,
+                    files: this.state.files
+                },
+                url: `${server}/services/offers/solicitations`,
+                timeout: 5000,
+            })
+
+            this.setModalVisible(!this.state.modalVisible);
+            showSuccess('Serviço solicitado com sucesso, aguarde o retorno do profissional requisitado.')
+            this.props.navigation.navigate('Menu')
+
+        }catch(err) {
+            const error = err.message
+            showError(error)
+        }
+    }
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
-
     confirmRequest() {
         this.setModalVisible({modalVisible: false})
 
     }
-
     render() {
         return (
             <View style={{flex: 1}}>
@@ -40,14 +102,14 @@ export default class RequestWorkConfirm extends Component {
                             <View style={styles.contentModal}>
                                 <View style={styles.dataRequest}>
                                     <View style={styles.photosList}>
-                                        <View style={{flex: 1}}>
-                                            <Text style={{fontSize: 20, margin: 5}}>Inserir Imagens</Text>
+                                        <View>
+                                            <Text style={styles.servicesHeaderText}>Inserir Imagens</Text>
                                         </View>
-                                        <View style={{flex: 3}}>
-                                            <ScrollView horizontal={true} style={{flex: 1}} contentContainerStyle={{flexDirection: 'row'}}>
+                                        <View>
+                                            <ScrollView horizontal={true} style={styles.scroolServices}>
                                                 <View style={styles.photo}>
-                                                    <TouchableOpacity onPress={ () => console.log('press') } style={{margin: 4, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                                        <Icon name="camera" size={50} color='#FFF' />
+                                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
+                                                        <Icon name="camera" size={80} color='#ddd'/>
                                                     </TouchableOpacity>
                                                 </View>
 
@@ -60,20 +122,18 @@ export default class RequestWorkConfirm extends Component {
                                         <Textarea
                                             containerStyle={styles.textareaContainer}
                                             style={styles.textarea}
-                                            // onChangeText={this.onChange}
-                                            // defaultValue={this.state.text}
+                                            onChangeText={message => this.setState({ message }) }
+                                            defaultValue={this.state.message}
                                             maxLength={50}
                                             placeholder={'Descrição'}
                                             placeholderTextColor={'#c7c7c7'}
-                                            underlineColorAndroid={'transparent'}                                        />
+                                            underlineColorAndroid={'transparent'}/>
                                     </View>
                                 </View>
                                 <View style={styles.optionsModal}>
                                     <TouchableOpacity style={styles.buttonStyle}
                                                       onPress={() => {
-                                                          this.setModalVisible(!this.state.modalVisible);
-                                                          showSuccess('Serviço solicitado com sucesso, aguarde o retorno do profissional requisitado.')
-                                                          this.props.navigation.navigate('Menu')
+                                                          this.requestOffe()
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
                                     </TouchableOpacity>
@@ -138,23 +198,32 @@ const styles = StyleSheet.create({
     },
     photosList: {
         flex: 1,
-        margin: 10,
-        justifyContent: 'center'
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '100%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
     },
-    photosListScrool: {
+    scroolServices: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#FFF',
-        borderWidth: 0.5,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#FFF',
     },
     photo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 3,
-        backgroundColor: 'black',
-        borderRadius: 5
+        flex: 1,
+        margin: 5,
+        padding: 5,
+    },
+    servicesHeaderText: {
+        fontSize: 15,
+        margin: 10,
     },
     textareaContainer: {
         height: 180,
