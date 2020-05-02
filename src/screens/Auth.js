@@ -44,6 +44,17 @@ export default class Auth extends Component {
             showError('Senhas não coincidem');
         }
     }
+    async me() {
+        const access_token = await AsyncStorage.getItem('access_token')
+        const responseRec = await axios({
+            method: 'post',
+            url: `${server}/auth/me`,
+            headers: {
+                'Authorization': `bearer ${access_token}`
+            },
+        })
+        return responseRec.data
+    }
 
     signup = async () => {
         if (this.validatePassword(this.state.password, this.state.confirmPassword) ){
@@ -79,7 +90,8 @@ export default class Auth extends Component {
                 },
             })
             await AsyncStorage.setItem('access_token', resAuth.data.access_token)
-            await this.props.navigation.navigate('Menu', {isLogged: true })
+            const me = await this.me()
+            await this.props.navigation.navigate('Menu', {isLogged: true, user: me })
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`

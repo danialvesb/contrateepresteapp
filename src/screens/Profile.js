@@ -25,9 +25,6 @@ export default class Profile extends Component{
     componentDidMount = async () => {
         await this.me()
     }
-    componentWillUnmount = async () => {
-        console.log('teste')
-    }
 
     logout = async () => {
         try {

@@ -20,18 +20,18 @@ export default class Menu extends Component {
     }
 
     drawerContent(props) {
-        const { user } = this.props.route.params
         const { isLogged } = this.props.route.params
+        const { user } = this.props.route.params
         return (
             <DrawerContentScrollView {...props} >
                 <View style={styles.drawerContent}>
                     <View style={styles.profile}>
                         { isLogged ?
                             <View style={styles.userInfoSection}>
-                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), {user} }}>
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), { user } }}>
                                     <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                                 </TouchableOpacity>
-                                <Title style={styles.title}>sss</Title>
+                                <Title style={styles.title}>{user.name}</Title>
                                 <Caption style={styles.caption}>Prestador</Caption>
                             </View>
                             :
@@ -72,22 +72,6 @@ export default class Menu extends Component {
             </DrawerContentScrollView>
         )
     }
-    // async meValidateToken() {
-    //     const access_token = await AsyncStorage.getItem('access_token')
-    //     const responseRec = await axios({
-    //         method: 'post',
-    //         url: `${server}/auth/me`,
-    //         headers: {
-    //             'Authorization': `bearer ${access_token}`
-    //         },
-    //     })
-    //     if (responseRec.data.id) {
-    //         this.setState({ isLogged: true, user: responseRec.data })
-    //     }else {
-    //         this.setState({ isLogged: false })
-    //         await AsyncStorage.removeItem('access_token')
-    //     }
-    // }
 }
 
 const styles = StyleSheet.create({
