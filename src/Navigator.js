@@ -11,35 +11,59 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import {server} from './common';
+import {Component} from 'react';
 
 const Stack = createStackNavigator()
-const headerStyle = () => {
-    return ({ scene, previous, navigation }) => {
-        const { options } = scene.descriptor;
-        const title =
-            options.headerTitle !== undefined
-                ? options.headerTitle
-                : options.title !== undefined
-                ? options.title
-                : scene.route.name
-    }
+const initialState = {
+    isLogged: {},
+    user: {}
 }
 
-export default () => {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
-                <Stack.Screen name="Menu" component={ Menu } options={{ headerShown: false }}/>
-                <Stack.Screen name="Offer" component={ Offer }/>
-                <Stack.Screen name="OffersList" component={ OffersList }/>
-                <Stack.Screen name="OfferInfosPage" component={ OfferInfos } options={{ headerTitle:'Informações'}}/>
-                <Stack.Screen name="CreateOfferPage" component={ CreateOffer } options={{ headerShown: true, headerTitle: 'Criar oferta de serviço'}}/>
-                <Stack.Screen name="SolicitationsStatusPage" component={ Solicitations } options={{ headerShown: true, headerTitle: 'Status das solicitações' }}/>
-                <Stack.Screen name="SolicitationStatusPage" component={ Solicitation } options={{ headerShown: true }}/>
-                <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true, headerTitle: 'Chamados de serviços' }}/>
-                <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
-                <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+export default class Navigator extends Component{
+    state = {
+        ...initialState,
+    }
+
+    componentDidMount = async () => {
+        await this.meValidateToken()
+    }
+
+    render() {
+        return (
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
+                    <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
+                    <Stack.Screen name="Offer" component={ Offer }/>
+                    <Stack.Screen name="OffersList" component={ OffersList }/>
+                    <Stack.Screen name="OfferInfosPage" component={ OfferInfos } options={{ headerTitle:'Informações'}}/>
+                    <Stack.Screen name="CreateOfferPage" component={ CreateOffer } options={{ headerShown: true, headerTitle: 'Criar oferta de serviço'}}/>
+                    <Stack.Screen name="SolicitationsStatusPage" component={ Solicitations } options={{ headerShown: true, headerTitle: 'Status das solicitações' }}/>
+                    <Stack.Screen name="SolicitationStatusPage" component={ Solicitation } options={{ headerShown: true }}/>
+                    <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true, headerTitle: 'Chamados de serviços' }}/>
+                    <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
+                    <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        )
+    }
+
+    async meValidateToken() {
+        const access_token = await AsyncStorage.getItem('access_token')
+        const responseRec = await axios({
+            method: 'post',
+            url: `${server}/auth/me`,
+            headers: {
+                'Authorization': `bearer ${access_token}`
+            },
+        })
+        if (responseRec.data.id) {
+            this.setState({isLogged: true, user: responseRec.data})
+        }else {
+            await AsyncStorage.removeItem('access_token')
+            this.setState({isLogged: false})
+        }
+    }
 }

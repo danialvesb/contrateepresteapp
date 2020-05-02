@@ -14,7 +14,7 @@ const initialState = {
     uf: 'Goiás',
     district: 'Parque tremendão',
     typeAccount: 'Prestador',
-    isLogged: false
+    isLogged: false,
 }
 
 export default class Profile extends Component{
@@ -33,8 +33,8 @@ export default class Profile extends Component{
                 timeout: 5000
             })
             await AsyncStorage.removeItem('access_token')
-            this.setState({isLogged: true})
-            this.props.navigation.navigate('Menu')
+            this.setState({isLogged: true, user: resAuth.data})
+            this.props.navigation.navigate('Menu',  {isLogged: false})
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
@@ -51,7 +51,7 @@ export default class Profile extends Component{
                     </View>
                     <View style={styles.contentStyle}>
                         <View style={styles.containerStyleText}>
-                            <Text style={styles.labelStyleText}>{ this.state.name }</Text>
+                            <Text style={styles.labelStyleText}>Teste</Text>
                         </View>
                         <View style={styles.containerStyleCaption}>
                             <Caption style={styles.labelStyleCaption}>{ this.state.email }</Caption>

@@ -80,7 +80,7 @@ export default class Auth extends Component {
                 timeout: 5000
             })
             await AsyncStorage.setItem('access_token', resAuth.data.access_token)
-            await this.props.navigation.navigate('Menu')
+            await this.props.navigation.navigate('Menu', {isLogged: true})
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`

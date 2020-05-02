@@ -10,17 +10,16 @@ import {server} from './common';
 
 const DrawerNav = createDrawerNavigator();
 const initialState = {
-    userName: '',
-    isLogged: false
+
 }
 
 export default class Menu extends Component {
     state = {
         ...initialState,
     }
-    componentDidMount = async () => {
-        await this.meValidateToken()
-    }
+    // componentDidMount = async () => {
+    //     await this.meValidateToken()
+    // }
 
     render() {
         return (
@@ -31,16 +30,18 @@ export default class Menu extends Component {
     }
 
     drawerContent(props) {
+        const { isLogged } = this.props.route.params
+        const { user } = this.props.route.params
         return (
             <DrawerContentScrollView {...props} >
                 <View style={styles.drawerContent}>
                     <View style={styles.profile}>
-                        { this.state.isLogged ?
+                        { isLogged===true ?
                             <View style={styles.userInfoSection}>
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
                                     <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                                 </TouchableOpacity>
-                                <Title style={styles.title}>Dawid Urbaniak</Title>
+                                <Title style={styles.title}>{ user.name}</Title>
                                 <Caption style={styles.caption}>Prestador</Caption>
                             </View>
                             :
@@ -81,23 +82,22 @@ export default class Menu extends Component {
             </DrawerContentScrollView>
         )
     }
-    async meValidateToken() {
-        const access_token = await AsyncStorage.getItem('access_token')
-        const responseRec = await axios({
-            method: 'post',
-            url: `${server}/auth/me`,
-            headers: {
-                'Authorization': `bearer ${access_token}`
-            },
-            timeout: 5000
-        })
-        if (responseRec.data.id) {
-            this.setState({ isLogged: true })
-        }else {
-            this.setState({ isLogged: false })
-            await AsyncStorage.removeItem('access_token')
-        }
-    }
+    // async meValidateToken() {
+    //     const access_token = await AsyncStorage.getItem('access_token')
+    //     const responseRec = await axios({
+    //         method: 'post',
+    //         url: `${server}/auth/me`,
+    //         headers: {
+    //             'Authorization': `bearer ${access_token}`
+    //         },
+    //     })
+    //     if (responseRec.data.id) {
+    //         this.setState({ isLogged: true, user: responseRec.data })
+    //     }else {
+    //         this.setState({ isLogged: false })
+    //         await AsyncStorage.removeItem('access_token')
+    //     }
+    // }
 }
 
 const styles = StyleSheet.create({
