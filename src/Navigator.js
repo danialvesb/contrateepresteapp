@@ -18,8 +18,8 @@ import {Component} from 'react';
 
 const Stack = createStackNavigator()
 const initialState = {
-    isLogged: {},
-    user: {}
+    isLogged: false,
+    user: false
 }
 
 export default class Navigator extends Component{
@@ -44,7 +44,7 @@ export default class Navigator extends Component{
                     <Stack.Screen name="SolicitationStatusPage" component={ Solicitation } options={{ headerShown: true }}/>
                     <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true, headerTitle: 'Chamados de serviços' }}/>
                     <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
-                    <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
+                    <Stack.Screen name="ProfilePage" component={ Profile } initialParams={{ user: this.state.user }} options={{ headerShown: true, headerTitle: 'Perfil' }}/>
                 </Stack.Navigator>
             </NavigationContainer>
         )

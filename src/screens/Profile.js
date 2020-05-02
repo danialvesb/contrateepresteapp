@@ -15,12 +15,20 @@ const initialState = {
     district: 'Parque tremendão',
     typeAccount: 'Prestador',
     isLogged: false,
+    user: {}
 }
 
 export default class Profile extends Component{
     state = {
         ...initialState
     }
+    componentDidMount = async () => {
+        await this.me()
+    }
+    componentWillUnmount = async () => {
+        console.log('teste')
+    }
+
     logout = async () => {
         try {
             const access_token = await AsyncStorage.getItem('access_token')
@@ -34,7 +42,7 @@ export default class Profile extends Component{
             })
             await AsyncStorage.removeItem('access_token')
             this.setState({isLogged: true, user: resAuth.data})
-            this.props.navigation.navigate('Menu',  {isLogged: false})
+            this.props.navigation.navigate('Menu',  { isLogged: false })
 
         }catch(err) {
             const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
@@ -51,14 +59,14 @@ export default class Profile extends Component{
                     </View>
                     <View style={styles.contentStyle}>
                         <View style={styles.containerStyleText}>
-                            <Text style={styles.labelStyleText}>Teste</Text>
+                            <Text style={styles.labelStyleText}>{ this.state.user.name }</Text>
                         </View>
                         <View style={styles.containerStyleCaption}>
-                            <Caption style={styles.labelStyleCaption}>{ this.state.email }</Caption>
-                            <Caption style={styles.labelStyleCaption}>{ this.state.mobile }</Caption>
-                            <Caption style={styles.labelStyleCaption}>{ this.state.city }</Caption>
-                            <Caption style={styles.labelStyleCaption}>{ this.state.uf }</Caption>
-                            <Caption style={styles.labelStyleCaption}>{ this.state.district }</Caption>
+                            <Caption style={styles.labelStyleCaption}>{ this.state.user.email }</Caption>
+                            <Caption style={styles.labelStyleCaption}>{ this.state.user.mobile }</Caption>
+                            <Caption style={styles.labelStyleCaption}>{ this.state.user.city }</Caption>
+                            <Caption style={styles.labelStyleCaption}>{ this.state.user.uf }</Caption>
+                            <Caption style={styles.labelStyleCaption}>{ this.state.user.district }</Caption>
                             <Caption style={styles.labelStyleCaption}>{ this.state.typeAccount }</Caption>
                         </View>
                     </View>
@@ -73,6 +81,22 @@ export default class Profile extends Component{
                 </ScrollView>
             </View>
         )
+    }
+    async me() {
+        const access_token = await AsyncStorage.getItem('access_token')
+        const responseRec = await axios({
+            method: 'post',
+            url: `${server}/auth/me`,
+            headers: {
+                'Authorization': `bearer ${access_token}`
+            },
+        })
+        if (responseRec.data.id) {
+            this.setState({ user: responseRec.data })
+        }else {
+            await AsyncStorage.removeItem('access_token')
+            this.setState({isLogged: false})
+        }
     }
 }
 

@@ -9,18 +9,8 @@ import axios from 'axios';
 import {server} from './common';
 
 const DrawerNav = createDrawerNavigator();
-const initialState = {
-
-}
 
 export default class Menu extends Component {
-    state = {
-        ...initialState,
-    }
-    // componentDidMount = async () => {
-    //     await this.meValidateToken()
-    // }
-
     render() {
         return (
             <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props})}>
@@ -30,18 +20,18 @@ export default class Menu extends Component {
     }
 
     drawerContent(props) {
-        const { isLogged } = this.props.route.params
         const { user } = this.props.route.params
+        const { isLogged } = this.props.route.params
         return (
             <DrawerContentScrollView {...props} >
                 <View style={styles.drawerContent}>
                     <View style={styles.profile}>
-                        { isLogged===true ?
+                        { isLogged ?
                             <View style={styles.userInfoSection}>
-                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), {user} }}>
                                     <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                                 </TouchableOpacity>
-                                <Title style={styles.title}>{ user.name}</Title>
+                                <Title style={styles.title}>sss</Title>
                                 <Caption style={styles.caption}>Prestador</Caption>
                             </View>
                             :
