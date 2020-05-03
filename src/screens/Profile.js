@@ -64,7 +64,7 @@ export default class Profile extends Component{
                             <Caption style={styles.labelStyleCaption}>{ this.state.user.city }</Caption>
                             <Caption style={styles.labelStyleCaption}>{ this.state.user.uf }</Caption>
                             <Caption style={styles.labelStyleCaption}>{ this.state.user.district }</Caption>
-                            <Caption style={styles.labelStyleCaption}>{ this.state.typeAccount }</Caption>
+                            <Caption style={styles.labelStyleCaption}>{ this.state.user.group }</Caption>
                         </View>
                     </View>
                     <View style={styles.footer}>

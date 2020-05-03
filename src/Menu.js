@@ -32,7 +32,7 @@ export default class Menu extends Component {
                                     <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                                 </TouchableOpacity>
                                 <Title style={styles.title}>{user.name}</Title>
-                                <Caption style={styles.caption}>Prestador</Caption>
+                                <Caption style={styles.caption}>{user.group}</Caption>
                             </View>
                             :
                             <View style={styles.userInfoSection}>
@@ -45,7 +45,7 @@ export default class Menu extends Component {
                                 />
                             </View>
                         }
-                        <Drawer.Section style={styles.drawerSection}  title={user.group}>
+                        <Drawer.Section style={styles.drawerSection}>
                             <DrawerItem
                                 icon={({ color, size, }) => (
                                     <Icon name="wechat" color={color} size={size}/>
