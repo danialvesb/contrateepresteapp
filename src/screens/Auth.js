@@ -10,11 +10,11 @@ import commonStyles from '../commonStyles'
 import { server, showError, showSuccess } from '../common'
 
 const initialState = {
-    name: '',
+    name: 'Teste',
     email: 'daniel@gmail.com',
     password: '12345678',
-    confirmPassword: '',
-    mobile: '',
+    confirmPassword: '12345678',
+    mobile: '12345678',
     typeAccount: null,
     stageNew: false,
     userAuthData: {
@@ -61,7 +61,10 @@ export default class Auth extends Component {
             try {
                 await axios({
                     method: 'post',
-                    url: `${server}/signup`,
+                    url: `${server}/auth/signup`,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     data: {
                         name: this.state.name,
                         email: this.state.email,
@@ -71,7 +74,7 @@ export default class Auth extends Component {
                 })
 
                 showSuccess('Usuário cadastrado!');
-                this.setState({ ...initialState })
+                this.setState({stageNew: false})
             } catch(err) {
                 const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
                 showError(error)

@@ -4,7 +4,6 @@ import RequestOfferConfirm from '../components/Modals/RequestOfferConfirm';
 
 export  default function OfferInfos({ route, navigation }) {
     const { data } = route.params
-
     return (
         <View style={ styles.container }>
             <View style={styles.content}>

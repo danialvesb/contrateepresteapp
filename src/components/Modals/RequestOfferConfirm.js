@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import PhotoCamera from '../Camera/PhotoCamera';
 import {server, showError, showSuccess} from '../../common';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
     me: {},
@@ -29,19 +30,16 @@ export default class RequestOfferConfirm extends Component {
 
     async me() {
         try {
+            const access_token = await AsyncStorage.getItem('access_token')
             const req = await axios({
                 method: 'post',
                 url: `${server}/auth/me`,
-                timeout: 5000,
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
             })
 
             this.setState({me: req.data})
-
-            const dataStateOffer = {
-                owner_id: ''+this.state.me.id,
-                offer_id: ''+this.props.data.id,
-                files: "/"
-            }
             this.setState({owner_id: this.state.me.id, offer_id: this.props.data.id})
 
         }catch(err) {
