@@ -22,7 +22,7 @@ const initialState = {
 export default class RequestOfferConfirm extends Component {
     state = {
         ...initialState
-    };
+    }
 
     componentDidMount = async () => {
         await this.me()
