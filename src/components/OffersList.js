@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, ScrollView} from 'react-native'
-import moment from 'moment'
 import 'moment/locale/pt-br'
-import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay'
 import Offer from './Offer'
 import axios from 'axios'
-import {server, showError, showSuccess} from '../common'
+import {server, showError} from '../common'
 
 const initialState = {
     offersData: null,
@@ -14,16 +12,16 @@ const initialState = {
 }
 
 export  default class OffersList extends Component {
+    state = {
+        ...initialState
+    }
+
     componentDidMount = async () => {
         let resp = await this.getData()
         if (resp)
             this.setState({
                 spinner: false,
             })
-    }
-
-    state = {
-        ...initialState
     }
 
     getData = async () => {
@@ -49,7 +47,7 @@ export  default class OffersList extends Component {
                     textStyle={styles.spinnerTextStyle}
                 />
                 <View style={styles.scrollview}>
-                    <ScrollView >
+                    <ScrollView>
                         {this.state.offersData &&
                             this.state.offersData.map((item, index) => (
                                 <Offer key={item.id}

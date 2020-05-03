@@ -34,7 +34,7 @@ export default class Navigator extends Component{
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="SolicitationsStatusPage" headerMode='screen'>
+                <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
                     <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
                     <Stack.Screen name="Offer" component={ Offer }/>
                     <Stack.Screen name="OffersList" component={ OffersList }/>
@@ -59,7 +59,6 @@ export default class Navigator extends Component{
                 'Authorization': `bearer ${access_token}`
             },
         })
-
         if (responseRec.data.id) {
             this.setState({isLogged: true, user: responseRec.data})
         }else {
