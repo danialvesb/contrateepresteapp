@@ -45,7 +45,7 @@ export default class Menu extends Component {
                                 />
                             </View>
                         }
-                        <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
+                        <Drawer.Section style={styles.drawerSection}  title={user.group}>
                             <DrawerItem
                                 icon={({ color, size, }) => (
                                     <Icon name="wechat" color={color} size={size}/>

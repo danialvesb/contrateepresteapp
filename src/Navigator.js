@@ -59,10 +59,11 @@ export default class Navigator extends Component{
                 'Authorization': `bearer ${access_token}`
             },
         })
+
         if (responseRec.data.id) {
             this.setState({isLogged: true, user: responseRec.data})
         }else {
-            await AsyncStorage.removeItem('access_token')
+            console.log(responseRec.data)
             this.setState({isLogged: false})
         }
     }
