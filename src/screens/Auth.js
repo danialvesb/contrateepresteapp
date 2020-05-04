@@ -11,7 +11,7 @@ import { server, showError, showSuccess } from '../common'
 
 const initialState = {
     name: 'Teste',
-    email: 'daniel@gmail.com',
+    email: 'bschaden@example.net',
     password: '12345678',
     confirmPassword: '12345678',
     mobile: '12345678',
@@ -19,9 +19,10 @@ const initialState = {
     stageNew: false,
     userAuthData: {
         name: 'daniel',
-        email: 'daniel@gmail.com',
+        email: 'bschaden@example.net',
         typeAccount: 0,
-    }
+    },
+    user: {}
 }
 
 export default class Auth extends Component {
@@ -52,8 +53,9 @@ export default class Auth extends Component {
             headers: {
                 'Authorization': `bearer ${access_token}`
             },
+            timeout: 5000
         })
-        return responseRec.data
+        this.setState({user: responseRec.data})
     }
 
     signup = async () => {
@@ -87,18 +89,20 @@ export default class Auth extends Component {
             const resAuth = await axios({
                 method: 'post',
                 url: `${server}/auth/login`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 data: {
                     email: this.state.email,
                     password: this.state.password
                 },
             })
             await AsyncStorage.setItem('access_token', resAuth.data.access_token)
-            const me = await this.me()
-            await this.props.navigation.navigate('Menu', {isLogged: true, user: me })
+            await this.me()
+            await this.props.navigation.navigate('Menu', {isLogged: true, user: this.state.user })
 
         }catch(err) {
-            const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
-            showError(error)
+            showError(err.message)
         }
     }
 

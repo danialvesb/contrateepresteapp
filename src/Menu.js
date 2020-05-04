@@ -22,6 +22,7 @@ export default class Menu extends Component {
     drawerContent(props) {
         const { isLogged } = this.props.route.params
         const { user } = this.props.route.params
+
         return (
             <DrawerContentScrollView {...props} >
                 <View style={styles.drawerContent}>
@@ -31,7 +32,7 @@ export default class Menu extends Component {
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), { user } }}>
                                     <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                                 </TouchableOpacity>
-                                <Title style={styles.title}>{user.name}</Title>
+                                <Title style={styles.title}>{ user.name}</Title>
                                 <Caption style={styles.caption}>{user.group}</Caption>
                             </View>
                             :

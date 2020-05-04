@@ -4,8 +4,6 @@ import Solicitation from './Solicitation';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {server} from '../../common';
-import Offer from '../../components/Offer';
-
 
 const initialState = {
     me: {},
@@ -21,7 +19,6 @@ export default class Solicitations extends Component {
     }
 
     render() {
-        console.log('o estado está'+JSON.stringify(this.state.data))
         return (
             <View style={styles.container}>
                 <View  style={styles.scrollview}>

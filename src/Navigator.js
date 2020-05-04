@@ -19,7 +19,7 @@ import {Component} from 'react';
 const Stack = createStackNavigator()
 const initialState = {
     isLogged: false,
-    user: false
+    user: {}
 }
 
 export default class Navigator extends Component{
@@ -52,18 +52,23 @@ export default class Navigator extends Component{
 
     async meValidateToken() {
         const access_token = await AsyncStorage.getItem('access_token')
-        const responseRec = await axios({
-            method: 'post',
-            url: `${server}/auth/me`,
-            headers: {
-                'Authorization': `bearer ${access_token}`
-            },
-        })
-        if (responseRec.data.id) {
-            this.setState({isLogged: true, user: responseRec.data})
-        }else {
-            this.setState({isLogged: false})
-            await AsyncStorage.removeItem('access_token')
-        }
+            if (access_token) {
+                try {
+                    const responseRec = await axios({
+                        method: 'post',
+                        url: `${server}/auth/me`,
+                        headers: {
+                            'Authorization': `bearer ${access_token}`
+                        },
+                    })
+                    this.setState({isLogged: true, user: responseRec.data})
+                }catch(err) {
+
+                    this.setState({isLogged: false})
+                    if (access_token)
+                        await AsyncStorage.removeItem('access_token')
+                }
+            }
+
     }
 }

@@ -19,7 +19,6 @@ export default props => {
                             <Caption style={styles.caption}>Iniciar conversa</Caption>
                         </TouchableOpacity>
                     }
-
                 </View>
                 <View style={styles.rigth}>
                     <Text>{props.data.type_service}</Text>
