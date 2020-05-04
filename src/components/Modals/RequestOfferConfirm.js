@@ -5,7 +5,7 @@ import Textarea from 'react-native-textarea';
 import axios from 'axios'
 
 import PhotoCamera from '../Camera/PhotoCamera';
-import {server, showError, showSuccess} from '../../common';
+import {server, showError, showSuccessRequest, showMessage} from '../../common';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
@@ -21,7 +21,8 @@ const initialState = {
 
 export default class RequestOfferConfirm extends Component {
     state = {
-        ...initialState
+        ...initialState,
+        isLogged: false
     }
 
     componentDidMount = async () => {
@@ -31,20 +32,20 @@ export default class RequestOfferConfirm extends Component {
     async me() {
         try {
             const access_token = await AsyncStorage.getItem('access_token')
-            const req = await axios({
-                method: 'post',
-                url: `${server}/auth/me`,
-                headers: {
-                    'Authorization': `bearer ${access_token}`
-                },
-            })
-
-            this.setState({me: req.data})
-            this.setState({owner_id: this.state.me.id, offer_id: this.props.data.id})
-
+            if (access_token) {
+                const req = await axios({
+                    method: 'post',
+                    url: `${server}/auth/me`,
+                    headers: {
+                        'Authorization': `bearer ${access_token}`
+                    },
+                })
+                req.status === 200 ? this.state.isLogged = true : this.state.isLogged = false
+                this.setState({me: req.data})
+                this.setState({owner_id: this.state.me.id, offer_id: this.props.data.id})
+            }
         }catch(err) {
-            const error = err.message
-            showError(error)
+            console.log(err.getMessage())
         }
     }
 
@@ -68,7 +69,7 @@ export default class RequestOfferConfirm extends Component {
             })
 
             this.setModalVisible(!this.state.modalVisible);
-            showSuccess('Serviço solicitado com sucesso, aguarde o retorno do profissional requisitado.')
+            showSuccessRequest('Serviço solicitado com sucesso!', 'Aguarde o retorno do profissional requisitado.')
             this.props.navigation.navigate('Menu')
 
         }catch(err) {
@@ -77,8 +78,13 @@ export default class RequestOfferConfirm extends Component {
         }
     }
 
-    setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+    setModalVisible(modalVisible) {
+        if (this.state.isLogged) {
+            this.setState({modalVisible});
+        }else {
+            showMessage('Para solicitar o serviço você deve está logado!')
+            this.props.navigation.navigate('AuthPage')
+        }
     }
     confirmRequest() {
         this.setModalVisible({modalVisible: false})
@@ -140,7 +146,7 @@ export default class RequestOfferConfirm extends Component {
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.buttonStyle}
                                                       onPress={() => {
-                                                          this.setModalVisible(!this.state.modalVisible);
+                                                          this.setModalVisible(!this.state.modalVisible)
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Cancelar</Text>
                                     </TouchableOpacity>
