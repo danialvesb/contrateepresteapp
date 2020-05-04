@@ -48,8 +48,9 @@ export default class RequestOfferConfirm extends Component {
         }
     }
 
-    async requestOffe() {
+    async requestOffer() {
         try {
+            const access_token = await AsyncStorage.getItem('access_token')
             const req = await axios({
                 method: 'post',
                 data: {
@@ -58,6 +59,9 @@ export default class RequestOfferConfirm extends Component {
                     owner_id: this.state.owner_id,
                     offer_id: this.state.offer_id,
                     files: this.state.files
+                },
+                headers: {
+                    'Authorization': `bearer ${access_token}`
                 },
                 url: `${server}/services/offers/solicitations`,
                 timeout: 5000,
@@ -78,7 +82,6 @@ export default class RequestOfferConfirm extends Component {
     }
     confirmRequest() {
         this.setModalVisible({modalVisible: false})
-
     }
     render() {
         return (
@@ -131,7 +134,7 @@ export default class RequestOfferConfirm extends Component {
                                 <View style={styles.optionsModal}>
                                     <TouchableOpacity style={styles.buttonStyle}
                                                       onPress={() => {
-                                                          this.requestOffe()
+                                                          this.requestOffer()
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
                                     </TouchableOpacity>
