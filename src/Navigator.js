@@ -53,7 +53,7 @@ export default class Navigator extends Component{
         auth.setNewContext = setNewContext
         this.setState({auth: auth})
 
-        await this.meValidateToken()
+        await this.meValidateToken(setNewContext)
 
     }
 
@@ -80,7 +80,7 @@ export default class Navigator extends Component{
         )
     }
 
-    async meValidateToken() {
+    async meValidateToken(setNewContext) {
         const access_token = await AsyncStorage.getItem('access_token')
             if (access_token) {
                 try {
@@ -93,7 +93,8 @@ export default class Navigator extends Component{
                     })
                     const authNew = {
                         isLogged: true,
-                        user: responseRec.data
+                        user: responseRec.data,
+                        setNewContext: setNewContext
                     }
                     this.setState({
                         auth: authNew
