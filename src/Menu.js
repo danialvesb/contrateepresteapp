@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
 import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
+import { UserConsumer } from './Navigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const DrawerNav = createDrawerNavigator();
@@ -10,15 +11,22 @@ const DrawerNav = createDrawerNavigator();
 export default class Menu extends Component {
     render() {
         return (
-            <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props})}>
-                <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
-            </DrawerNav.Navigator>
+            <UserConsumer>
+                { value => {
+                    console.log(value)
+                    return (
+                        <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props,  value})} >
+                            <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
+                        </DrawerNav.Navigator>
+                        )
+                }}
+            </UserConsumer>
         )
     }
 
     drawerContent(props) {
-        const { isLogged } = this.props.route.params
-        const { user } = this.props.route.params
+        const user = props.value.auth.user
+        const isLogged = props.value.auth.isLogged
 
         return (
             <DrawerContentScrollView {...props} >

@@ -8,6 +8,7 @@ import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
 
 import { server, showError, showSuccess } from '../common'
+import { UserConsumer } from '../Navigator'
 
 const initialState = {
     name: 'Teste',
@@ -17,21 +18,25 @@ const initialState = {
     mobile: '12345678',
     typeAccount: null,
     stageNew: false,
-    userAuthData: {
-        name: 'daniel',
-        email: 'bschaden@example.net',
-        typeAccount: 0,
-    },
-    user: {}
+    user: {},
+    auth: {
+        isLogged: false,
+        user: {},
+    }
 }
+
 
 export default class Auth extends Component {
     state = {
         ...initialState
     }
 
-    signinOrSignup = () => {
-        this.state.stageNew ? this.signup() : this.signin()
+     signinOrSignup = async (value) => {
+        if(this.state.stageNew) {
+            await this.signup()
+        }else {
+            await this.signin(value)
+        }
     }
 
     validatePassword = (password, passwordConfirm) => {
@@ -84,7 +89,7 @@ export default class Auth extends Component {
         }
     }
 
-    signin = async () => {
+    signin = async value => {
         try {
             const resAuth = await axios({
                 method: 'post',
@@ -99,7 +104,17 @@ export default class Auth extends Component {
             })
             await AsyncStorage.setItem('access_token', resAuth.data.access_token)
             await this.me()
-            await this.props.navigation.navigate('Menu', {isLogged: true, user: this.state.user })
+
+            const authNew = {
+                isLogged: true,
+                user: this.state.user,
+            }
+
+            this.setState({
+                auth: authNew
+            })
+            value.auth.setNewContext(this.state.auth)
+            await this.props.navigation.navigate('Menu')
 
         }catch(err) {
             showError(err.message)
@@ -113,59 +128,68 @@ export default class Auth extends Component {
     }
 
     render() {
+        const { auth } = this.state
+        console.log('Login auth'+JSON.stringify(auth))
         return (
-            <ImageBackground source={backgroundImage} style={styles.background}>
-                <View style={[this.state.stageNew ? styles.formContainerResgister : styles.formContainer]}>
-                    <ScrollView>
-                        {this.state.stageNew &&
-                        <TextInput placeholder='Nome' value={this.state.name}
-                                   style={styles.input} onChangeText={name => this.setState({ name }) }>
-                        </TextInput>
-                        }
-                        <TextInput placeholder='E-mail' value={this.state.email}
-                                   style={styles.input} onChangeText={email => this.setState({ email }) }>
-                        </TextInput>
+            <UserConsumer>
+                { value => {
+                    return (
+                        <ImageBackground source={backgroundImage} style={styles.background}>
+                            <View style={[this.state.stageNew ? styles.formContainerResgister : styles.formContainer]}>
+                                <ScrollView>
+                                    {this.state.stageNew &&
+                                    <TextInput placeholder='Nome' value={this.state.name}
+                                               style={styles.input} onChangeText={name => this.setState({ name }) }>
+                                    </TextInput>
+                                    }
+                                    <TextInput placeholder='E-mail' value={this.state.email}
+                                               style={styles.input} onChangeText={email => this.setState({ email }) }>
+                                    </TextInput>
 
-                        <TextInput placeholder='Senha' value={this.state.password}
-                                   style={styles.input} onChangeText={password => this.setState({ password }) } secureTextEntry={true}>
-                        </TextInput>
+                                    <TextInput placeholder='Senha' value={this.state.password}
+                                               style={styles.input} onChangeText={password => this.setState({ password }) } secureTextEntry={true}>
+                                    </TextInput>
 
-                        {this.state.stageNew &&
-                        <TextInput placeholder='Confirme sua senha' value={this.state.confirmPassword}
-                                   style={styles.input} onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}>
-                        </TextInput>
-                        }
-                        {this.state.stageNew &&
-                        <TextInput placeholder='Celular' value={this.state.mobile} textContentType='emailAddress'
-                                   style={styles.input} onChangeText={mobile => this.setState({ mobile }) }>
-                        </TextInput>
-                        }
+                                    {this.state.stageNew &&
+                                    <TextInput placeholder='Confirme sua senha' value={this.state.confirmPassword}
+                                               style={styles.input} onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}>
+                                    </TextInput>
+                                    }
+                                    {this.state.stageNew &&
+                                    <TextInput placeholder='Celular' value={this.state.mobile} textContentType='emailAddress'
+                                               style={styles.input} onChangeText={mobile => this.setState({ mobile }) }>
+                                    </TextInput>
+                                    }
 
-                        {this.state.stageNew &&
-                        <View style={styles.dropDown}>
-                            <Picker selectedValue={ this.state.typeAccount}
-                                    onValueChange={ this.handleChangeOption }>
-                                <Picker.Item  label='O que você deseja ser?' value='0' />
-                                <Picker.Item label='Contratar algum serviço' value='2'/>
-                                <Picker.Item label='Quero oferecer serviços' value='1'/>
-                            </Picker>
-                        </View>
-                        }
-                        <TouchableOpacity onPress={this.signinOrSignup}>
-                            <View style={styles.button}>
-                                <Text style={styles.buttonText}>
-                                    { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
-                                </Text>
+                                    {this.state.stageNew &&
+                                    <View style={styles.dropDown}>
+                                        <Picker selectedValue={ this.state.typeAccount}
+                                                onValueChange={ this.handleChangeOption }>
+                                            <Picker.Item  label='O que você deseja ser?' value='0' />
+                                            <Picker.Item label='Contratar algum serviço' value='2'/>
+                                            <Picker.Item label='Quero oferecer serviços' value='1'/>
+                                        </Picker>
+                                    </View>
+                                    }
+                                    <TouchableOpacity onPress={ () => { this.signinOrSignup(value) } }>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
+                                        <Text style={styles.buttonText}>
+                                            { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
+                                        </Text>
+                                    </TouchableOpacity>
+                                </ScrollView>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
-                            <Text style={styles.buttonText}>
-                                { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
-                            </Text>
-                        </TouchableOpacity>
-                    </ScrollView>
-                </View>
-            </ImageBackground>
+                        </ImageBackground>
+                    )
+                }
+                }
+            </UserConsumer>
         )
     }
 }
