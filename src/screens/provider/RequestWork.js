@@ -9,13 +9,13 @@ export default props => {
                 <View style={styles.content}>
                     <View style={styles.header}>
                         <View style={styles.details}>
-                            <Text>Nome do cliente:</Text>
+                            <Text>Nome do cliente: {props.data.customer}</Text>
                         </View>
                         <View style={styles.details}>
-                            <Text>Cidade/Estado:</Text>
+                            <Text>{props.data.city_customer}/{props.data.uf_customer}</Text>
                         </View>
                         <View style={styles.details}>
-                            <Text>Bairro:</Text>
+                            <Text>Bairro: {props.data.district_customer}</Text>
                         </View>
                     </View>
 
@@ -23,7 +23,7 @@ export default props => {
                         <Text>Descrição da Solicitação:</Text>
                         <View style={styles.descriptionContent}>
                             <Text>
-                                Olá gostaria que você fizesse um orçamento
+                                {props.data.solicitation_message}
                             </Text>
                         </View>
                     </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(2,1,1,0.23)',
     },
     descriptionContent: {
-        margin: 10,
+        margin: 3,
 
     },
     footer: {

@@ -5,7 +5,8 @@ import Textarea from 'react-native-textarea';
 import axios from 'axios'
 
 import PhotoCamera from '../Camera/PhotoCamera';
-import {server, showError, showSuccess} from '../../common';
+import {server, showError, showSuccessRequest, showMessage} from '../../common';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
     me: {},
@@ -20,8 +21,9 @@ const initialState = {
 
 export default class RequestOfferConfirm extends Component {
     state = {
-        ...initialState
-    };
+        ...initialState,
+        isLogged: false
+    }
 
     componentDidMount = async () => {
         await this.me()
@@ -29,29 +31,27 @@ export default class RequestOfferConfirm extends Component {
 
     async me() {
         try {
-            const req = await axios({
-                method: 'post',
-                url: `${server}/auth/me`,
-                timeout: 5000,
-            })
-
-            this.setState({me: req.data})
-
-            const dataStateOffer = {
-                owner_id: ''+this.state.me.id,
-                offer_id: ''+this.props.data.id,
-                files: "/"
+            const access_token = await AsyncStorage.getItem('access_token')
+            if (access_token) {
+                const req = await axios({
+                    method: 'post',
+                    url: `${server}/auth/me`,
+                    headers: {
+                        'Authorization': `bearer ${access_token}`
+                    },
+                })
+                req.status === 200 ? this.state.isLogged = true : this.state.isLogged = false
+                this.setState({me: req.data})
+                this.setState({owner_id: this.state.me.id, offer_id: this.props.data.id})
             }
-            this.setState({owner_id: this.state.me.id, offer_id: this.props.data.id})
-
         }catch(err) {
-            const error = err.message
-            showError(error)
+            console.log(err.getMessage())
         }
     }
 
-    async requestOffe() {
+    async requestOffer() {
         try {
+            const access_token = await AsyncStorage.getItem('access_token')
             const req = await axios({
                 method: 'post',
                 data: {
@@ -61,12 +61,15 @@ export default class RequestOfferConfirm extends Component {
                     offer_id: this.state.offer_id,
                     files: this.state.files
                 },
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
                 url: `${server}/services/offers/solicitations`,
                 timeout: 5000,
             })
 
             this.setModalVisible(!this.state.modalVisible);
-            showSuccess('Serviço solicitado com sucesso, aguarde o retorno do profissional requisitado.')
+            showSuccessRequest('Serviço solicitado com sucesso!', 'Aguarde o retorno do profissional requisitado.')
             this.props.navigation.navigate('Menu')
 
         }catch(err) {
@@ -75,12 +78,16 @@ export default class RequestOfferConfirm extends Component {
         }
     }
 
-    setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+    setModalVisible(modalVisible) {
+        if (this.state.isLogged) {
+            this.setState({modalVisible});
+        }else {
+            showMessage('Para solicitar o serviço você deve está logado!')
+            this.props.navigation.navigate('AuthPage')
+        }
     }
     confirmRequest() {
         this.setModalVisible({modalVisible: false})
-
     }
     render() {
         return (
@@ -133,13 +140,13 @@ export default class RequestOfferConfirm extends Component {
                                 <View style={styles.optionsModal}>
                                     <TouchableOpacity style={styles.buttonStyle}
                                                       onPress={() => {
-                                                          this.requestOffe()
+                                                          this.requestOffer()
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.buttonStyle}
                                                       onPress={() => {
-                                                          this.setModalVisible(!this.state.modalVisible);
+                                                          this.setModalVisible(!this.state.modalVisible)
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Cancelar</Text>
                                     </TouchableOpacity>

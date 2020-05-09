@@ -1,12 +1,9 @@
 import React from 'react'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import RequestOfferConfirm from '../components/Modals/RequestOfferConfirm';
 
-
-
 export  default function OfferInfos({ route, navigation }) {
-    const { data } = route.params;
-
+    const { data } = route.params
     return (
         <View style={ styles.container }>
             <View style={styles.content}>
@@ -26,7 +23,7 @@ export  default function OfferInfos({ route, navigation }) {
                     <Text style={{fontSize: 15 , color: 'rgba(36,41,46,0.76)', flex: 5}}>{data.description}</Text>
                 </View>
             </View>
-            </View>
+        </View>
     )
 }
 
@@ -53,10 +50,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         flexDirection: 'row',
         flexWrap: 'wrap'
-
     },
     data: {
-        // borderWidth: 0.5,
         borderColor: 'rgb(36, 41, 46)',
         width: '70%',
         height: '70%',
@@ -65,8 +60,6 @@ const styles = StyleSheet.create({
     },
     options: {
         flex: 2,
-        // borderWidth: 0.5,
-        // borderColor: 'rgb(36, 41, 46)',
         width: '70%',
         height: '20%',
         margin: 5,
@@ -75,7 +68,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     description: {
-
         borderWidth: 0.5,
         borderColor: 'rgb(36, 41, 46)',
         width: '70%',
@@ -83,5 +75,4 @@ const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 4,
     },
-
 })

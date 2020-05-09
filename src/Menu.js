@@ -1,47 +1,44 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
 import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
+import { UserConsumer } from './Navigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import axios from 'axios';
-import {server} from './common';
 
 const DrawerNav = createDrawerNavigator();
-const initialState = {
-    userName: '',
-    isLogged: false
-}
 
 export default class Menu extends Component {
-    state = {
-        ...initialState,
-    }
-    componentDidMount = async () => {
-        await this.meValidateToken()
-    }
-
     render() {
         return (
-            <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props})}>
-                <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
-            </DrawerNav.Navigator>
+            <UserConsumer>
+                { value => {
+                    console.log(value)
+                    return (
+                        <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props,  value})} >
+                            <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
+                        </DrawerNav.Navigator>
+                        )
+                }}
+            </UserConsumer>
         )
     }
 
     drawerContent(props) {
+        const user = props.value.auth.user
+        const isLogged = props.value.auth.isLogged
+
         return (
             <DrawerContentScrollView {...props} >
                 <View style={styles.drawerContent}>
                     <View style={styles.profile}>
-                        { this.state.isLogged ?
+                        { isLogged ?
                             <View style={styles.userInfoSection}>
-                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage') }}>
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), { user } }}>
                                     <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
                                 </TouchableOpacity>
-                                <Title style={styles.title}>Dawid Urbaniak</Title>
-                                <Caption style={styles.caption}>Prestador</Caption>
+                                <Title style={styles.title}>{ user.name}</Title>
+                                <Caption style={styles.caption}>{user.group}</Caption>
                             </View>
                             :
                             <View style={styles.userInfoSection}>
@@ -54,7 +51,7 @@ export default class Menu extends Component {
                                 />
                             </View>
                         }
-                        <Drawer.Section style={styles.drawerSection}  title="Prestador/Cliente">
+                        <Drawer.Section style={styles.drawerSection}>
                             <DrawerItem
                                 icon={({ color, size, }) => (
                                     <Icon name="wechat" color={color} size={size}/>
@@ -80,23 +77,6 @@ export default class Menu extends Component {
                 </View>
             </DrawerContentScrollView>
         )
-    }
-    async meValidateToken() {
-        const access_token = await AsyncStorage.getItem('access_token')
-        const responseRec = await axios({
-            method: 'post',
-            url: `${server}/auth/me`,
-            headers: {
-                'Authorization': `bearer ${access_token}`
-            },
-            timeout: 5000
-        })
-        if (responseRec.data.id) {
-            this.setState({ isLogged: true })
-        }else {
-            this.setState({ isLogged: false })
-            await AsyncStorage.removeItem('access_token')
-        }
     }
 }
 
