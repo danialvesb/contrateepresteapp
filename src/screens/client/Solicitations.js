@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import {ScrollView, View, StyleSheet} from 'react-native';
-import Solicitation from './Solicitation';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import {server} from '../../common';
+import {ScrollView, View, StyleSheet} from 'react-native'
+import Solicitation from './Solicitation'
+import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios'
+import {server} from '../../common'
 
 const initialState = {
     me: {},

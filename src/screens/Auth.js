@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker, ScrollView} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker, ScrollView} from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
-import { Input } from 'react-native-elements';
+import { Input } from 'react-native-elements'
 
 import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
@@ -45,9 +45,9 @@ export default class Auth extends Component {
             if (password.length > 7)
                 return true
 
-            showError('A senha deve conter pelo menos 8 caracteres');
+            showError('A senha deve conter pelo menos 8 caracteres')
         }else {
-            showError('Senhas não coincidem');
+            showError('Senhas não coincidem')
         }
     }
     async me() {
@@ -80,7 +80,7 @@ export default class Auth extends Component {
                     },
                 })
 
-                showSuccess('Usuário cadastrado!');
+                showSuccess('Usuário cadastrado!')
                 this.setState({stageNew: false})
             } catch(err) {
                 const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
@@ -123,7 +123,7 @@ export default class Auth extends Component {
 
      handleChangeOption = (val) => {
         if (val !== '0') {
-            this.setState({typeAccount: val});
+            this.setState({typeAccount: val})
         }
     }
 

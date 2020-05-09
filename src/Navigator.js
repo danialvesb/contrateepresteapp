@@ -11,9 +11,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import {server} from './common';
+import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios'
+import {server} from './common'
 
 
 const Stack = createStackNavigator()

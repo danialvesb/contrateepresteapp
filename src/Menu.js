@@ -6,14 +6,13 @@ import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'r
 import { UserConsumer } from './Navigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const DrawerNav = createDrawerNavigator();
+const DrawerNav = createDrawerNavigator()
 
 export default class Menu extends Component {
     render() {
         return (
             <UserConsumer>
                 { value => {
-                    console.log(value)
                     return (
                         <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props,  value})} >
                             <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>

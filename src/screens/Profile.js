@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native';
-import {Avatar, Caption} from 'react-native-paper';
-import axios from 'axios';
-import {server, showError} from '../common';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, { Component } from 'react'
+import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native'
+import {Avatar, Caption} from 'react-native-paper'
+import axios from 'axios'
+import {server, showError} from '../common'
+import AsyncStorage from '@react-native-community/async-storage'
 import { UserConsumer } from '../Navigator'
 
 const initialState = {
