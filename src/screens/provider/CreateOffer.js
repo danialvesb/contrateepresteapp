@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
     services: [],
-    qtdServicesSelected: 0,
+    selectedServiceId: 0,
     spinner: false,
     data: {
         service: null,
@@ -49,6 +49,7 @@ export default class CreateOffer extends Component {
 
     render() {
         return (
+
             <View style={styles.container}>
                 <ScrollView style={styles.scrool}>
                     <View style={styles.services}>
@@ -58,10 +59,9 @@ export default class CreateOffer extends Component {
                         <ScrollView horizontal={true} style={styles.scroolServices}>
                             {
                                 this.state.services.map((item, index) => (
-                                    <CardService key={item.id} data={item} qtdServicesSelected={this.state.qtdServicesSelected}></CardService>
+                                    <CardService key={item.id} data={item} selectedServiceId={this.state.selectedServiceId} setSelect={() => {this.setState({selectedServiceId: item.id})}} />
                                 ))
                             }
-
                         </ScrollView>
                     </View>
                     <View style={styles.servicesHeaderText}>

@@ -12,14 +12,14 @@ export  default class CardService extends Component{
     }
     render() {
         return (
-            <TouchableOpacity style={[this.state.selected ? styles.serviceSelected : styles.service]} onPress={() => { this.setState({selected: !this.state.selected}) }}>
+            <TouchableOpacity style={[this.props.selectedServiceId == this.props.data.id ? styles.serviceSelected : styles.service]} onPress={() => { this.props.setSelect() }}>
                 <View>
                     <Avatar.Image
                         source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg'}}
                         size={80}/>
                 </View>
                 <View>
-                    <Text style={[this.state.selected ? styles.colorWhite : styles.colorBlack]}>{this.props.data.title}</Text>
+                    <Text style={[this.props.selectedServiceId == this.props.data.id ? styles.colorWhite : styles.colorBlack]}>{this.props.data.title}</Text>
                 </View>
             </TouchableOpacity>
 
