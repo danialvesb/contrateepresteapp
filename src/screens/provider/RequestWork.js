@@ -18,9 +18,10 @@ export default props => {
                             <Text>Bairro: {props.data.district_customer}</Text>
                         </View>
                     </View>
-
-                    <View style={styles.description}>
+                    <View style={styles.labelDescription}>
                         <Text>Descrição da Solicitação:</Text>
+                    </View>
+                    <View style={styles.description}>
                         <View style={styles.descriptionContent}>
                             <Text>
                                 {props.data.solicitation_message}
@@ -93,6 +94,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 5,
         borderColor: 'rgba(2,1,1,0.23)',
+    },
+    labelDescription: {
+        margin: 5,
     },
     descriptionContent: {
         margin: 3,

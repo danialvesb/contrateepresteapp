@@ -37,21 +37,6 @@ export default props => {
                     <TouchableOpacity style={styles.itemFIleScrool}>
                         <Icon name="clock-o" color='#FFC925' size={80}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
                 </ScrollView>
             </View>
             <View style={styles.buttons}>
