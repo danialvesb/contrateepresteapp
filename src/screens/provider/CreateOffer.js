@@ -78,7 +78,6 @@ export default class CreateOffer extends Component {
 
                             </ScrollView>
                         </View>
-
                     </View>
                     <View style={styles.servicesHeaderText}>
                         <Text>Definir preço do serviço</Text>
