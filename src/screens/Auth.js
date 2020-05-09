@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
-
+import { Input } from 'react-native-elements';
 
 import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
@@ -138,27 +138,56 @@ export default class Auth extends Component {
                             <View style={[this.state.stageNew ? styles.formContainerResgister : styles.formContainer]}>
                                 <ScrollView>
                                     {this.state.stageNew &&
-                                    <TextInput placeholder='Nome' value={this.state.name}
-                                               style={styles.input} onChangeText={name => this.setState({ name }) }>
-                                    </TextInput>
+                                        <View style={styles.inputContainer}>
+                                            <Input
+                                                placeholder="Nome"
+                                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                                                onChangeText={name => this.setState({ name }) }
+                                                leftIconContainerStyle={styles.leftIconContainerStyle}
+                                                value={this.state.name}
+                                                />
+                                        </View>
                                     }
-                                    <TextInput placeholder='E-mail' value={this.state.email}
-                                               style={styles.input} onChangeText={email => this.setState({ email }) }>
-                                    </TextInput>
-
-                                    <TextInput placeholder='Senha' value={this.state.password}
-                                               style={styles.input} onChangeText={password => this.setState({ password }) } secureTextEntry={true}>
-                                    </TextInput>
+                                    <View style={styles.inputContainer}>
+                                        <Input
+                                            placeholder="E-mail"
+                                            leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
+                                            onChangeText={email => this.setState({ email }) }
+                                            leftIconContainerStyle={styles.leftIconContainerStyle}
+                                            value={this.state.email}
+                                        />
+                                    </View>
+                                    <View style={styles.inputContainer}>
+                                        <Input
+                                            placeholder="Senha"
+                                            leftIcon={{ type: 'react-native-vector-icons', name: 'lock-outline'}}
+                                            onChangeText={password => this.setState({ password }) } secureTextEntry={true}
+                                            leftIconContainerStyle={styles.leftIconContainerStyle}
+                                            value={this.state.password}
+                                        />
+                                    </View>
 
                                     {this.state.stageNew &&
-                                    <TextInput placeholder='Confirme sua senha' value={this.state.confirmPassword}
-                                               style={styles.input} onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}>
-                                    </TextInput>
+                                        <View style={styles.inputContainer}>
+                                            <Input
+                                                placeholder="Confirme sua senha"
+                                                leftIcon={{ type: 'react-native-vector-icons', name: 'lock-outline' }}
+                                                onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}
+                                                leftIconContainerStyle={styles.leftIconContainerStyle}
+                                                value={this.state.confirmPassword}
+                                            />
+                                        </View>
                                     }
                                     {this.state.stageNew &&
-                                    <TextInput placeholder='Celular' value={this.state.mobile} textContentType='emailAddress'
-                                               style={styles.input} onChangeText={mobile => this.setState({ mobile }) }>
-                                    </TextInput>
+                                        <View style={styles.inputContainer}>
+                                            <Input
+                                                placeholder="Celular"
+                                                leftIcon={{ type: 'font-awesome', name: 'mobile-phone' }}
+                                                onChangeText={mobile => this.setState({ mobile }) }
+                                                leftIconContainerStyle={styles.leftIconContainerStyle}
+                                                value={this.state.mobile}
+                                            />
+                                        </View>
                                     }
 
                                     {this.state.stageNew &&
@@ -236,6 +265,13 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10
     },
+    inputContainer: {
+        marginTop: 10,
+        backgroundColor: '#FFF',
+        padding: 0,
+        marginLeft: 0,
+        borderRadius: 10
+    },
     userInfoSection: {
         paddingLeft: 20,
     },
@@ -261,5 +297,9 @@ const styles = StyleSheet.create({
         borderBottomColor: '#FFF',
         borderBottomWidth: 1,
         width: '100%'
+    },
+    leftIconContainerStyle: {
+        marginLeft: 0,
+        padding: 0
     }
 })
