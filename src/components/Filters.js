@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
         padding: 4,
         width: "100%",
         height: 45,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
         justifyContent: "center",
         shadowColor: "#000",
         shadowOffset: {

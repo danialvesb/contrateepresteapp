@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, ScrollView} from 'react-native'
+import { View, StyleSheet, ScrollView, RefreshControl} from 'react-native'
 import 'moment/locale/pt-br'
 import Spinner from 'react-native-loading-spinner-overlay'
 import Offer from './Offer'
@@ -8,7 +8,9 @@ import {server, showError} from '../common'
 
 const initialState = {
     offersData: null,
-    spinner: true
+    spinner: true,
+    refreshing: false,
+    setRefreshing: 0
 }
 
 export  default class OffersList extends Component {
@@ -38,6 +40,12 @@ export  default class OffersList extends Component {
             showError(err)
         }
     }
+    onRefresh = async () => {
+        this.setState({refreshing: true})
+        await this.getData()
+        this.setState({refreshing: false})
+
+    }
 
     render() {
         return (
@@ -47,7 +55,10 @@ export  default class OffersList extends Component {
                     textStyle={styles.spinnerTextStyle}
                 />
                 <View style={styles.scrollview}>
-                    <ScrollView>
+                    <ScrollView
+                        refreshControl={
+                            <RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.onRefresh()} />
+                        }>
                         {this.state.offersData &&
                             this.state.offersData.map((item, index) => (
                                 <Offer key={item.id}
