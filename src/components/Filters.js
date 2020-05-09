@@ -7,8 +7,8 @@ export default props => {
     return (
         <View style={styles.filters} >
             <View style={styles.dropDown}>
-                <Picker selectedValue={ category} style={{color: '#FFF'}} mode={'dropdown'} pickerStyleType>
-                    <Picker.Item label='Categoria' value='0' />
+                <Picker selectedValue={ category} style={{color: '#000'}} mode={'dropdown'} pickerStyleType>
+                    <Picker.Item label='Filtrar por categoria' value='0' />
                     <Picker.Item label='Pintura' value='1'/>
                     <Picker.Item label='Construção' value='2'/>
                 </Picker>
@@ -20,8 +20,6 @@ export default props => {
 const styles = StyleSheet.create({
     filters: {
         flex: 1,
-        backgroundColor: 'rgb(36, 41, 46)',
-
     },
     search: {
         flex: 1,
@@ -48,8 +46,20 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     dropDown: {
-        backgroundColor: 'rgba(36,41,46,0.76)',
+        backgroundColor: '#FFF',
         padding: 4,
+        width: "100%",
+        height: 45,
+        justifyContent: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
+
     },
 
 })
