@@ -129,7 +129,6 @@ export default class Auth extends Component {
 
     render() {
         const { auth } = this.state
-        console.log('Login auth'+JSON.stringify(auth))
         return (
             <UserConsumer>
                 { value => {
@@ -140,6 +139,7 @@ export default class Auth extends Component {
                                     {this.state.stageNew &&
                                         <View style={styles.inputContainer}>
                                             <Input
+                                                style={styles.input}
                                                 placeholder="Nome"
                                                 leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                                                 onChangeText={name => this.setState({ name }) }
@@ -150,6 +150,7 @@ export default class Auth extends Component {
                                     }
                                     <View style={styles.inputContainer}>
                                         <Input
+                                            style={styles.input}
                                             placeholder="E-mail"
                                             leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
                                             onChangeText={email => this.setState({ email }) }
@@ -159,6 +160,7 @@ export default class Auth extends Component {
                                     </View>
                                     <View style={styles.inputContainer}>
                                         <Input
+                                            style={styles.input}
                                             placeholder="Senha"
                                             leftIcon={{ type: 'react-native-vector-icons', name: 'lock-outline'}}
                                             onChangeText={password => this.setState({ password }) } secureTextEntry={true}
@@ -170,6 +172,7 @@ export default class Auth extends Component {
                                     {this.state.stageNew &&
                                         <View style={styles.inputContainer}>
                                             <Input
+                                                style={styles.input}
                                                 placeholder="Confirme sua senha"
                                                 leftIcon={{ type: 'react-native-vector-icons', name: 'lock-outline' }}
                                                 onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}
@@ -181,6 +184,7 @@ export default class Auth extends Component {
                                     {this.state.stageNew &&
                                         <View style={styles.inputContainer}>
                                             <Input
+                                                style={styles.input}
                                                 placeholder="Celular"
                                                 leftIcon={{ type: 'font-awesome', name: 'mobile-phone' }}
                                                 onChangeText={mobile => this.setState({ mobile }) }
@@ -189,7 +193,6 @@ export default class Auth extends Component {
                                             />
                                         </View>
                                     }
-
                                     {this.state.stageNew &&
                                     <View style={styles.dropDown}>
                                         <Picker selectedValue={ this.state.typeAccount}
@@ -260,17 +263,15 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     input: {
-        marginTop: 10,
-        backgroundColor: '#FFF',
-        padding: 10,
-        borderRadius: 10
+        fontFamily: "Montserrat-Regular",
     },
     inputContainer: {
         marginTop: 10,
         backgroundColor: '#FFF',
         padding: 0,
         marginLeft: 0,
-        borderRadius: 10
+        borderRadius: 10,
+
     },
     userInfoSection: {
         paddingLeft: 20,
@@ -301,5 +302,10 @@ const styles = StyleSheet.create({
     leftIconContainerStyle: {
         marginLeft: 0,
         padding: 0
-    }
+    },
+    fieldStyle: {
+        fontFamily: "Montserrat-Regular",
+        fontWeight: "400"
+    },
+
 })

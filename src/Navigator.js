@@ -11,6 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
+import ProgressOfWorks from './screens/provider/ProgressOfWorks';
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import {server} from './common'
@@ -63,7 +64,7 @@ export default class Navigator extends Component{
         return (
             <NavigationContainer>
                 <UserProvider value={{auth}}>
-                    <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
+                    <Stack.Navigator initialRouteName="ProgressOfWorksPage" headerMode='screen'>
                         <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
                         <Stack.Screen name="Offer" component={ Offer }/>
                         <Stack.Screen name="OffersList" component={ OffersList }/>
@@ -72,6 +73,7 @@ export default class Navigator extends Component{
                         <Stack.Screen name="SolicitationsStatusPage" component={ Solicitations } options={{ headerShown: true, headerTitle: 'Andamento das solicitações' }}/>
                         <Stack.Screen name="SolicitationStatusPage" component={ Solicitation } options={{ headerShown: true }}/>
                         <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true, headerTitle: 'Chamados de serviços' }}/>
+                        <Stack.Screen name="ProgressOfWorksPage" component={ ProgressOfWorks } options={{ headerShown: true, headerTitle: 'Meus seviços' }}/>
                         <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
                         <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
                     </Stack.Navigator>

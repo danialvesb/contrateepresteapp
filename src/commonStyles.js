@@ -1,5 +1,5 @@
 export default {
-    fontFamily: 'Lato',
+    fontFamily: "Montserrat-Regular",
     colors: {
         secondary: "#FFF"
     }
