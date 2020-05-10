@@ -15,8 +15,8 @@ export default props => {
                         </View>
                         :
                         <TouchableOpacity>
-                            <Icon name="wechat" color='#50B767' size={40}/>
-                            <Caption style={styles.caption}>Iniciar conversa</Caption>
+                            <Icon name="send-o" color='#50B767' size={40}/>
+                            <Caption style={styles.caption}>Enviar mensagem</Caption>
                         </TouchableOpacity>
                     }
                 </View>
@@ -39,6 +39,12 @@ export default props => {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
+            <View style={styles.timeLineContainer}>
+                <View style={styles.timeLine}>
+                    <Text style={{ fontSize: 15, color: '#000'}}>Time line-------------------------------------></Text>
+                </View>
+            </View>
+
             <View style={styles.buttons}>
                 <TouchableOpacity style={styles.buttonStyle}>
                     <Text style={{ fontSize: 15, color: '#FFF'}}>Cancelar solicitação</Text>
@@ -106,6 +112,17 @@ const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 10,
         width: '50%'
+    },
+    timeLineContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        width: '100%',
+        margin: 4,
+        borderBottomWidth: 1,
+        borderColor: 'rgba(26,21,21,0.23)',
+    },
+    timeLine: {
+        flex: 1
     },
     buttons: {
 

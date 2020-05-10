@@ -50,16 +50,19 @@ export default class Menu extends Component {
                                 />
                             </View>
                         }
-                        <Drawer.Section style={styles.drawerSection}>
-                            <DrawerItem
-                                icon={({ color, size, }) => (
-                                    <Icon name="wechat" color={color} size={size}/>
-                                )}
-                                label="Conversas" onPress={() => {}}/>
-                            <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
-                            <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
-                            <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
-                        </Drawer.Section>
+                        { isLogged &&
+                            <Drawer.Section style={styles.drawerSection}>
+                                <DrawerItem
+                                    icon={({ color, size, }) => (
+                                        <Icon name="wechat" color={color} size={size}/>
+                                    )}
+                                    label="Conversas" onPress={() => {}}/>
+                                <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                                <DrawerItem label="Criar oferta de Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                                <DrawerItem label="Serviços em andamento" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                                <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
+                            </Drawer.Section>
+                        }
 
                         <Drawer.Section title="Preferências">
                             <TouchableRipple onPress={() => {}}>

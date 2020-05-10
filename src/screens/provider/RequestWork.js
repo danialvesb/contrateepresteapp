@@ -44,10 +44,10 @@ export default props => {
                         </View>
                     </View>
                     <View style={styles.footer}>
-                        <TouchableOpacity style={styles.buttonStyleAcept}>
+                        <TouchableOpacity style={styles.buttonStyleAcept} onPress={()=> props.accept(props.data.id)}>
                             <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Aceitar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonStyleRecuse}>
+                        <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => props.refuse(props.data.id)}>
                             <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Negar</Text>
                         </TouchableOpacity>
                     </View>
