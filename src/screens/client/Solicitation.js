@@ -21,15 +21,15 @@ export default props => {
                     }
                 </View>
                 <View style={styles.rigth}>
-                    <Text>{props.data.type_service}</Text>
-                    <Text>{props.data.amount}</Text>
+                    <Text style={styles.fieldStyleBold}>{props.data.type_service}</Text>
+                    <Text style={styles.fieldStyleBold}>{props.data.amount}</Text>
                 </View>
             </View>
             <View style={styles.footer}>
-                <Text>{props.data.solicitation_message}</Text>
+                <Text style={styles.fieldStyle}>{props.data.solicitation_message}</Text>
             </View>
             <View style={styles.files}>
-                <Text>Arquivos</Text>
+                <Text style={styles.fieldStyleFielGroup}>Arquivos</Text>
                 <ScrollView horizontal={true}>
                     <TouchableOpacity style={styles.itemFIleScrool}>
                         <Icon name="clock-o" color='#FFC925' size={80}/>
@@ -41,14 +41,17 @@ export default props => {
             </View>
             <View style={styles.timeLineContainer}>
                 <View style={styles.timeLine}>
-                    <Text style={{ fontSize: 15, color: '#000'}}>Time line-------------------------------------></Text>
+                    <Text style={styles.fieldStyle}>Time line-------------------------------------></Text>
                 </View>
             </View>
 
             <View style={styles.buttons}>
-                <TouchableOpacity style={styles.buttonStyle}>
-                    <Text style={{ fontSize: 15, color: '#FFF'}}>Cancelar solicitação</Text>
-                </TouchableOpacity>
+                {props.data.status === "pending" &&
+                    <TouchableOpacity style={styles.buttonStyle}>
+                        <Text style={styles.buttonText}>Cancelar</Text>
+                    </TouchableOpacity>
+
+                }
             </View>
         </View>
     )
@@ -111,7 +114,10 @@ const styles = StyleSheet.create({
         padding: 4,
         margin: 5,
         borderRadius: 10,
-        width: '50%'
+        width: '45%',
+        height: "70%",
+        justifyContent: "center",
+        alignItems: "center"
     },
     timeLineContainer: {
         flex: 1,
@@ -125,6 +131,28 @@ const styles = StyleSheet.create({
         flex: 1
     },
     buttons: {
+        flex: 1
+    },
+    buttonText: {
+        fontFamily: "Montserrat-Regular",
+        fontWeight: "400",
+        color: "#FFF"
+    },
+    fieldStyle: {
+        fontFamily: "Montserrat-Regular",
+        fontWeight: "400"
+    },
+    fieldStyleBold: {
+        fontFamily: "Montserrat-SemiBold",
+        fontWeight: "400"
 
+    },
+    fieldStyleFielGroup: {
+        fontFamily: "Montserrat-Regular",
+        fontWeight: "400",
+    },
+    caption: {
+        fontFamily: "Montserrat-Regular",
+        fontWeight: "400",
     }
 })

@@ -53,6 +53,7 @@ export  default class OffersList extends Component {
                 <Spinner
                     visible={this.state.spinner}
                     textStyle={styles.spinnerTextStyle}
+
                 />
                 <View style={styles.scrollview}>
                     <ScrollView
