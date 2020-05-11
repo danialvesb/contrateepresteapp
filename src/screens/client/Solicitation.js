@@ -72,7 +72,7 @@ export default props => {
             }
             <View style={styles.buttons}>
                 {props.data.status === "pending" &&
-                    <TouchableOpacity style={styles.buttonStyle}>
+                    <TouchableOpacity style={styles.buttonStyle} onPress={() => props.closeCalled(props.data.id)}>
                         <Text style={styles.buttonText}>Cancelar</Text>
                     </TouchableOpacity>
 

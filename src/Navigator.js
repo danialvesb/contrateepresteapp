@@ -64,7 +64,7 @@ export default class Navigator extends Component{
         return (
             <NavigationContainer>
                 <UserProvider value={{auth}}>
-                    <Stack.Navigator initialRouteName="ProgressOfWorksPage" headerMode='screen'>
+                    <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
                         <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
                         <Stack.Screen name="Offer" component={ Offer }/>
                         <Stack.Screen name="OffersList" component={ OffersList }/>

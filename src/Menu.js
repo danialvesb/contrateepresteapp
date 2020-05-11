@@ -59,7 +59,7 @@ export default class Menu extends Component {
                                     label="Conversas" onPress={() => {}}/>
                                 <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
                                 <DrawerItem label="Criar oferta de Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
-                                <DrawerItem label="Serviços em andamento" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                                <DrawerItem label="Serviços em andamento" onPress={() => { props.navigation.navigate('ProgressOfWorksPage') }}/>
                                 <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
                             </Drawer.Section>
                         }

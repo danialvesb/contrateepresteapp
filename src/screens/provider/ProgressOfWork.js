@@ -51,7 +51,7 @@ export default props => {
                         </View>
                     </View>
                     <View style={styles.footer}>
-                        <TouchableOpacity style={styles.buttonStyleAcept} onPress={()=> props.endService(props.data.id)}>
+                        <TouchableOpacity style={styles.buttonStyleAcept} onPress={()=> props.endCalled(props.data.id)}>
                             <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Finalizar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => props.closeCalled(props.data.id)}>

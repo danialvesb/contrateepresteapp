@@ -22,19 +22,45 @@ export default class ProgressOfWorks extends Component{
             <ScrollView style={styles.container}>
                 {this.state.data &&
                 this.state.data.map((item, index) => (
-                        <ProgressOfWork key={item.id} data={item} endService={ (id)=> this.endService(id) } closeCalled={ (id) => this.closeCalled(id) }/>
+                        <ProgressOfWork key={item.id} data={item} endCalled={ (id)=> this.endCalled(id) } closeCalled={ (id) => this.closeCalled(id) }/>
                     )
                 )
                 }
             </ScrollView>
         )
     }
-    async endService(id) {
-
+    async endCalled(id) {
+        try {
+            const access_token = await AsyncStorage.getItem('access_token')
+            const responseRec = await axios({
+                method: 'post',
+                url: `${server}/services/offers/calleds/end/${id}`,
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
+                timeout: 5000
+            })
+            await this.me()
+        }catch(err) {
+            console.log(err)
+        }
     }
 
     async closeCalled(id) {
-
+        try {
+            const access_token = await AsyncStorage.getItem('access_token')
+            const responseRec = await axios({
+                method: 'post',
+                url: `${server}/services/offers/calleds/close/${id}`,
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
+                timeout: 5000
+            })
+            await this.me()
+        }catch(err) {
+            console.log(err)
+        }
     }
 
     async me() {
@@ -42,7 +68,7 @@ export default class ProgressOfWorks extends Component{
             const access_token = await AsyncStorage.getItem('access_token')
             const responseRec = await axios({
                 method: 'get',
-                url: `${server}/services/offers/calleds`,
+                url: `${server}/services/offers/calleds/management`,
                 headers: {
                     'Authorization': `bearer ${access_token}`
                 },
