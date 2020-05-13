@@ -144,7 +144,7 @@ export default class RequestOfferConfirm extends Component {
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.buttonStyle}
+                                    <TouchableOpacity style={styles.buttonStyleCancell}
                                                       onPress={() => {
                                                           this.setModalVisible(!this.state.modalVisible)
                                                       }}>
@@ -162,7 +162,7 @@ export default class RequestOfferConfirm extends Component {
                         this.setModalVisible(true);
                     }}
                     style={styles.buttonStyle}>
-                    <Text style={{fontSize: 15, color: '#FFF'}}>Solicite</Text>
+                    <Text style={{fontSize: 15, color: '#FFF'}}>Solicite já</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -244,10 +244,17 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     buttonStyle: {
-        backgroundColor: 'rgba(36,41,46,0.76)',
+        backgroundColor: 'rgba(28,116,72,0.76)',
+        padding: 10,
+        margin: 5,
+        borderRadius: 10
+    },
+    buttonStyleCancell: {
+        backgroundColor: 'rgba(191,12,48,0.76)',
         padding: 10,
         margin: 5,
         borderRadius: 10
     }
+
 
 })

@@ -15,6 +15,8 @@ import ProgressOfWorks from './screens/provider/ProgressOfWorks';
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import {server} from './common'
+import Chat from './components/chat/Chat';
+import Chats from './components/chat/Chats';
 
 
 const Stack = createStackNavigator()
@@ -76,6 +78,8 @@ export default class Navigator extends Component{
                         <Stack.Screen name="ProgressOfWorksPage" component={ ProgressOfWorks } options={{ headerShown: true, headerTitle: 'Meus seviços' }}/>
                         <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
                         <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
+                        <Stack.Screen name="ChatPage" component={ Chat } options={{ headerShown: true, headerTitle: 'Conversa' }}/>
+                        <Stack.Screen name="ChatsPage" component={ Chats } options={{ headerShown: true, headerTitle: 'Conversas' }}/>
                     </Stack.Navigator>
               </UserProvider>
             </NavigationContainer>

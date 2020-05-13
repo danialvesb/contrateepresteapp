@@ -56,7 +56,7 @@ export default class Menu extends Component {
                                     icon={({ color, size, }) => (
                                         <Icon name="wechat" color={color} size={size}/>
                                     )}
-                                    label="Conversas" onPress={() => {}}/>
+                                    label="Conversas" onPress={() => { props.navigation.navigate('ChatsPage') }}/>
                                 <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
                                 <DrawerItem label="Criar oferta de Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
                                 <DrawerItem label="Serviços em andamento" onPress={() => { props.navigation.navigate('ProgressOfWorksPage') }}/>
