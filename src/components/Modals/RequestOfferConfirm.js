@@ -162,7 +162,7 @@ export default class RequestOfferConfirm extends Component {
                         this.setModalVisible(true);
                     }}
                     style={styles.buttonStyle}>
-                    <Text style={{fontSize: 15, color: '#FFF'}}>Solicite já</Text>
+                    <Text style={{fontSize: 15, color: '#FFF', textAlign: 'center'}}>Solicitar</Text>
                 </TouchableOpacity>
             </View>
         );
