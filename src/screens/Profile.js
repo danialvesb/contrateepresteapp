@@ -5,6 +5,7 @@ import axios from 'axios'
 import {server, showError} from '../common'
 import AsyncStorage from '@react-native-community/async-storage'
 import { UserConsumer } from '../Navigator'
+import commonStyles from '../commonStyles';
 
 const initialState = {
     name: 'Daniel Alves',
@@ -28,7 +29,7 @@ export default class Profile extends Component{
         ...initialState
     }
     componentDidMount = async () => {
-        await this.me()
+        // await this.me()
     }
 
     logout = async (value) => {
@@ -56,31 +57,33 @@ export default class Profile extends Component{
         return (
             <UserConsumer>
                 {value => {
+                    console.log(value.auth.user)
+                    const {auth} = value
                     return (
                         <View style={styles.containerStyle}>
                             <ScrollView>
                                 <View style={styles.headerStyle}>
-                                    <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg'}} size={80}/>
+                                    <Avatar.Image source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}} size={80}/>
                                 </View>
                                 <View style={styles.contentStyle}>
                                     <View style={styles.containerStyleText}>
-                                        <Text style={styles.labelStyleText}>{ this.state.user.name }</Text>
+                                        <Text style={styles.labelStyleText}>{ auth.user.name }</Text>
                                     </View>
                                     <View style={styles.containerStyleCaption}>
-                                        <Caption style={styles.labelStyleCaption}>{ this.state.user.email }</Caption>
-                                        <Caption style={styles.labelStyleCaption}>{ this.state.user.mobile }</Caption>
-                                        <Caption style={styles.labelStyleCaption}>{ this.state.user.city }</Caption>
-                                        <Caption style={styles.labelStyleCaption}>{ this.state.user.uf }</Caption>
-                                        <Caption style={styles.labelStyleCaption}>{ this.state.user.district }</Caption>
-                                        <Caption style={styles.labelStyleCaption}>{ this.state.user.group }</Caption>
+                                        <Caption style={styles.labelStyleCaption}>{ auth.user.email }</Caption>
+                                        <Caption style={styles.labelStyleCaption}>{ auth.user.mobile }</Caption>
+                                        <Caption style={styles.labelStyleCaption}>{ auth.user.city }</Caption>
+                                        <Caption style={styles.labelStyleCaption}>{ auth.user.uf }</Caption>
+                                        <Caption style={styles.labelStyleCaption}>{ auth.user.district }</Caption>
+                                        <Caption style={styles.labelStyleCaption}>{ auth.user.group }</Caption>
                                     </View>
                                 </View>
                                 <View style={styles.footer}>
                                     <TouchableOpacity style={styles.buttonStyleAcept}>
-                                        <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Editar informações</Text>
+                                        <Text style={ commonStyles.textButtonsStyle }>Editar informações</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => { this.logout(value) }}>
-                                        <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Sair</Text>
+                                        <Text style={ commonStyles.textButtonsStyle }>Sair</Text>
                                     </TouchableOpacity>
                                 </View>
                             </ScrollView>

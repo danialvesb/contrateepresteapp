@@ -45,7 +45,6 @@ export default class Navigator extends Component{
                 isLogged: auth.isLogged,
                 user: auth.user,
                 setNewContext: setNewContext
-
             }
 
             this.setState({

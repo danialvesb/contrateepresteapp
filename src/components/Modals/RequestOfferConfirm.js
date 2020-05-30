@@ -7,6 +7,7 @@ import axios from 'axios'
 import PhotoCamera from '../Camera/PhotoCamera';
 import {server, showError, showSuccessRequest, showMessage} from '../../common';
 import AsyncStorage from '@react-native-community/async-storage';
+import commonStyles from '../../commonStyles';
 
 const initialState = {
     me: {},
@@ -162,7 +163,7 @@ export default class RequestOfferConfirm extends Component {
                         this.setModalVisible(true);
                     }}
                     style={styles.buttonStyle}>
-                    <Text style={{fontSize: 15, color: '#FFF', textAlign: 'center'}}>Solicitar</Text>
+                    <Text style={ commonStyles.textButtonsStyle }>Solicitar</Text>
                 </TouchableOpacity>
             </View>
         );

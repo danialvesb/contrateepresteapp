@@ -12,7 +12,7 @@ import { UserConsumer } from '../Navigator'
 
 const initialState = {
     name: 'Teste',
-    email: 'bschaden@example.net',
+    email: 'daniel@gmail.com',
     password: '12345678',
     confirmPassword: '12345678',
     mobile: '12345678',
@@ -80,7 +80,7 @@ export default class Auth extends Component {
                     },
                 })
 
-                showSuccess('Usuário cadastrado!')
+                showSuccess('Cadastro concluído!')
                 this.setState({stageNew: false})
             } catch(err) {
                 const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
@@ -205,13 +205,13 @@ export default class Auth extends Component {
                                     }
                                     <TouchableOpacity onPress={ () => { this.signinOrSignup(value) } }>
                                         <View style={styles.button}>
-                                            <Text style={styles.buttonText}>
+                                            <Text style={commonStyles.textButtonsStyle}>
                                                 { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
-                                        <Text style={styles.buttonText}>
+                                        <Text style={ commonStyles.textButtonsStyle }>
                                             { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
                                         </Text>
                                     </TouchableOpacity>
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     input: {
-        fontFamily: "Montserrat-Regular",
+        fontFamily: commonStyles.fontFamily,
     },
     inputContainer: {
         marginTop: 10,
@@ -289,11 +289,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10
     },
-    buttonText: {
-        fontFamily: commonStyles.fontFamily,
-        color: '#FFF',
-        fontSize: 20,
-    },
     hr: {
         borderBottomColor: '#FFF',
         borderBottomWidth: 1,
@@ -304,7 +299,7 @@ const styles = StyleSheet.create({
         padding: 0
     },
     fieldStyle: {
-        fontFamily: "Montserrat-Regular",
+        fontFamily: commonStyles.fontFamily,
         fontWeight: "400"
     },
 
