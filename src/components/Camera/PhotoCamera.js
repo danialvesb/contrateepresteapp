@@ -30,25 +30,27 @@ class PhotoCamera extends React.PureComponent {
     render() {
         const { type } = this.state;
         return (
-            <View style={styles.container}>
                 <RNCamera
                     ref={cam => {
                         this.camera = cam;
                     }}
                     type={type}
                     style={styles.preview}
-                />
-                <View style={styles.topButtons}>
-                    <TouchableOpacity onPress={this.flipCamera} style={styles.flipButton}>
-                        <Icon name="refresh" size={35} color="orange" />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.bottomButtons}>
-                    <TouchableOpacity onPress={this.takePhoto} style={styles.recordingButton}>
-                        <Icon name="camera" size={50} color="orange" />
-                    </TouchableOpacity>
-                </View>
-            </View>
+                >
+                    <View style={styles.container}>
+                        <View style={styles.bottomButtons}>
+                            <TouchableOpacity onPress={this.flipCamera} style={styles.flipButton}>
+                                <Icon name="refresh" size={35} color="white"/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.bottomButtons}>
+                            <TouchableOpacity onPress={this.takePhoto} style={styles.recordingButton}>
+                                <Icon name="camera" size={50} color="white" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </RNCamera>
+
         );
     }
 }
@@ -57,25 +59,18 @@ export default PhotoCamera;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: 'black',
+        height: 80,
+        width: Dimensions.get('window').width,
+        justifyContent: 'center',
     },
     preview: {
         flex: 1,
-        justifyContent: 'flex-end',
         alignItems: 'center',
-    },
-    topButtons: {
-        flex: 1,
-        width: Dimensions.get('window').width,
-        alignItems: 'flex-start',
+        justifyContent: 'flex-end'
     },
     bottomButtons: {
-        flex: 1,
-        width: Dimensions.get('window').width,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
     },
 
@@ -84,6 +79,14 @@ const styles = StyleSheet.create({
         marginTop: 20,
         right: 20,
         alignSelf: 'flex-end',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
     },
     recordingButton: {
         marginBottom: 10,

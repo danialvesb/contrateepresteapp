@@ -71,16 +71,18 @@ export default class Profile extends Component{
                                             source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
                                             size={80}/>
                                             :
-                                        <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', margin: 3}}>
+                                        <View style={{justifyContent: 'center', alignItems: 'center', margin: 3}}>
                                             <Avatar.Image
                                                 source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
                                                 size={60}/>
-                                                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', borderRadius: 5, padding: 2}}>
+                                                <TouchableOpacity
+                                                    style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', borderRadius: 5, padding: 2}}
+                                                    onPress={ () => this.props.navigation.navigate('Camera')}>
                                                     <Text style={ commonStyles.textButtonsStyle }>
                                                         Carregar imagem
                                                     </Text>
-                                                </View>
-                                        </TouchableOpacity>
+                                                </TouchableOpacity>
+                                        </View>
                                     }
                                 </View>
                                 <View style={styles.contentStyle}>
