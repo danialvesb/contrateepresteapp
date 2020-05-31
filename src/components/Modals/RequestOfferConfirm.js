@@ -87,9 +87,7 @@ export default class RequestOfferConfirm extends Component {
             this.props.navigation.navigate('AuthPage')
         }
     }
-    confirmRequest() {
-        this.setModalVisible({modalVisible: false})
-    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -98,7 +96,7 @@ export default class RequestOfferConfirm extends Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
+                        this.setModalVisible(!this.state.modalVisible)
                     }}
                     style={{flex: 1}}
                     onBackdropPress={() => this.setState({modalVisible: false})}>

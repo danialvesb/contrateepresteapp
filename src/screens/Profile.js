@@ -9,6 +9,7 @@ import commonStyles from '../commonStyles';
 import { Divider, Text } from 'react-native-paper';
 import { List } from 'react-native-paper';
 import {Input} from 'react-native-elements';
+import TakeOrChoosePhoto from '../components/Modals/TakeOrChoosePhoto';
 
 const initialState = {
     name: 'Daniel Alves',
@@ -75,13 +76,7 @@ export default class Profile extends Component{
                                             <Avatar.Image
                                                 source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
                                                 size={60}/>
-                                                <TouchableOpacity
-                                                    style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', borderRadius: 5, padding: 2}}
-                                                    onPress={ () => this.props.navigation.navigate('Camera')}>
-                                                    <Text style={ commonStyles.textButtonsStyle }>
-                                                        Carregar imagem
-                                                    </Text>
-                                                </TouchableOpacity>
+                                            <TakeOrChoosePhoto navigation={this.props.navigation}/>
                                         </View>
                                     }
                                 </View>
@@ -186,12 +181,12 @@ export default class Profile extends Component{
                                     }
                                     {!this.state.stageUpdate &&
                                         <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => { this.logout(value) }}>
-                                            <Text style={ commonStyles.textButtonsStyle }>Sair</Text>
+                                            <Text style={commonStyles.textButtonsStyle}>Sair</Text>
                                         </TouchableOpacity>
                                     }
                                     {this.state.stageUpdate &&
                                     <TouchableOpacity style={styles.buttonStyleSave} onPress={() => { this.setState({stageUpdate: false}) }}>
-                                        <Text style={ commonStyles.textButtonsStyle }>Salvar</Text>
+                                        <Text style={commonStyles.textButtonsStyle}>Salvar</Text>
                                     </TouchableOpacity>
                                     }
                                 </View>
@@ -242,6 +237,7 @@ const styles = StyleSheet.create({
     labelStyleText: {
         fontSize: 24,
         width: '50%',
+        fontFamily: commonStyles.fontFamily
     },
     labelStyleCaption: {
         fontSize: 20,
@@ -260,12 +256,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(36, 41, 46)',
         padding: 10,
         margin: 1,
+        borderRadius: 10
     },
     buttonStyleRecuse: {
         width: '50%',
         backgroundColor: 'rgba(191,12,48,0.76)',
         padding: 10,
         margin: 1,
+        borderRadius: 10
     },
     buttonStyleSave: {
         width: 300,

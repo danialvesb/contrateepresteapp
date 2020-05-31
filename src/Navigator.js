@@ -69,7 +69,7 @@ export default class Navigator extends Component{
                     <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
                         <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
                         <Stack.Screen name="Offer" component={ Offer }/>
-                        <Stack.Screen name="Camera" component={ PhotoCamera }/>
+                        <Stack.Screen name="Camera" component={ PhotoCamera } options={{ headerShown: false }}/>
                         <Stack.Screen name="OffersList" component={ OffersList }/>
                         <Stack.Screen name="OfferInfosPage" component={ OfferInfos } options={{ headerTitle:'Informações'}}/>
                         <Stack.Screen name="CreateOfferPage" component={ CreateOffer } options={{ headerShown: true, headerTitle: 'Criar oferta de serviço'}}/>
