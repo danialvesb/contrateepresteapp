@@ -76,7 +76,7 @@ export default class Profile extends Component{
                                             <Avatar.Image
                                                 source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
                                                 size={60}/>
-                                            <TakeOrChoosePhoto navigation={this.props.navigation}/>
+                                            <TakeOrChoosePhoto navigation={this.props.navigation} title={'Foto de perfil'}/>
                                         </View>
                                     }
                                 </View>

@@ -6,7 +6,6 @@ import commonStyles from '../../commonStyles';
 const initialState = {
     modalVisible: false,
 }
-
 export default class TakeOrChoosePhoto extends Component {
     state = {
         ...initialState,
@@ -36,7 +35,7 @@ export default class TakeOrChoosePhoto extends Component {
                     onBackdropPress={() => this.setState({modalVisible: false})}>
                     <ScrollView>
                         <View style={styles.modalStyle}>
-                            <Headline style={styles.titleStyle}>Foto de perfil</Headline>
+                            <Headline style={styles.titleStyle}>{ this.props.title }</Headline>
                             <TouchableOpacity>
                                 <List.Item
                                     title="Galeria"

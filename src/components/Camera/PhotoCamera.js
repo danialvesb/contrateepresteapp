@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
-import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
+import {View, TouchableOpacity, StyleSheet, Dimensions, ImageBackground} from 'react-native';
 import { RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 class PhotoCamera extends PureComponent {
     state = {
         type: RNCamera.Constants.Type.back,
+        imageUri: null
     }
 
     flipCamera = () =>
@@ -17,40 +18,74 @@ class PhotoCamera extends PureComponent {
         })
 
     takePhoto = async () => {
-        const { onTakePhoto } = this.props
+        // const { onTakePhoto } = this.props
         const options = {
             quality: 0.5,
             base64: true,
             width: 300,
             height: 300,
+            pauseAfterCapture: true
         }
-        const data = await this.camera.takePictureAsync(options)
-        console.log(data.uri)
+        const { uri  } = await this.camera.takePictureAsync(options)
+        this.setState({ imageUri: uri });
         // onTakePhoto(data.base64)
     }
+
+    remove(camera) {
+        this.setState({imageUri: null})
+        camera.resumePreview()
+    }
+
+    changePhoto() {
+
+    }
+
     render() {
-        const { type } = this.state
+        const { type, imageUri } = this.state
+        console.log(imageUri)
         return (
+            <View style={{flex: 1}}>
                 <RNCamera
                     ref={ref => {
                         this.camera = ref
                     }}
+                    useNativeZoom={true}
                     type={type}
                     style={styles.preview}
                 >
                     <View style={styles.container}>
-                        <View style={styles.bottomButtons}>
-                            <TouchableOpacity onPress={ () => this.takePhoto() } style={styles.recordingButton}>
-                                <Icon name="camera" size={50} color="white" />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.bottomButtons}>
+                        {!this.state.imageUri &&
+                            <View style={styles.bottomButtons}>
+                                <TouchableOpacity onPress={() => this.takePhoto()} style={styles.recordingButton}>
+                                    <Icon name="camera" size={35} color="white"/>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                        {!this.state.imageUri &&
+                            <View style={styles.bottomButtons}>
                             <TouchableOpacity onPress={ () => this.flipCamera() } style={styles.flipButton}>
-                                <Icon name="refresh" size={35} color="white"/>
+                            <Icon name="refresh" size={35} color="white"/>
+                            </TouchableOpacity>
+                            </View>
+                        }
+                        {this.state.imageUri &&
+                            <View style={styles.bottomButtons}>
+                                <TouchableOpacity onPress={() => this.remove(this.camera) }>
+                                    <Icon name="remove" size={35} color="white"/>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                        {this.state.imageUri &&
+                        <View style={styles.bottomButtons}>
+                            <TouchableOpacity onPress={() => this.changePhoto() }>
+                                <Icon name="check" size={35} color="white"/>
                             </TouchableOpacity>
                         </View>
+                        }
                     </View>
                 </RNCamera>
+            </View>
+
 
         )
     }
@@ -65,8 +100,17 @@ const styles = StyleSheet.create({
         height: 80,
         width: Dimensions.get('window').width,
         justifyContent: 'center',
-        marginLeft: 80
-
+        marginLeft: 80,
+        alignItems: 'center',
+    },
+    containerViewImage: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center"
     },
     preview: {
         flex: 1,
@@ -76,6 +120,7 @@ const styles = StyleSheet.create({
     bottomButtons: {
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
         width: '30%',
         marginLeft: 30
     },
