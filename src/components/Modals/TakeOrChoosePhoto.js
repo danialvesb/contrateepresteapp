@@ -9,7 +9,6 @@ const initialState = {
 export default class TakeOrChoosePhoto extends Component {
     state = {
         ...initialState,
-        isLogged: false
     }
 
     showModal(modalVisible) {
@@ -22,6 +21,7 @@ export default class TakeOrChoosePhoto extends Component {
         this.hideModal()
         this.props.navigation.navigate('Camera')
     }
+
     render() {
         return (
             <View style={styles.containerStyle}>

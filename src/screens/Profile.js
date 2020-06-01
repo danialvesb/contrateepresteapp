@@ -25,13 +25,14 @@ const initialState = {
     stageUpdate: false,
     auth: {
         isLogged: false,
-        user: {}
+        user: {},
+        photo: null
     }
 }
 
 export default class Profile extends Component{
     state = {
-        ...initialState
+        ...initialState,
     }
     componentDidMount = async () => {
         // await this.me()
@@ -58,25 +59,32 @@ export default class Profile extends Component{
         }
     }
 
+    setPhotoState(photo) {
+        this.setState({photo: photo})
+    }
+
     render() {
         return (
             <UserConsumer>
                 {value => {
                     const {auth} = value
+                    const imagePath = () => {
+                        return this.state.photo ? this.state.photo : `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`
+                    }
                     return (
                         <View style={styles.containerStyle}>
                             <ScrollView>
                                 <View style={styles.headerStyle}>
                                     {!this.state.stageUpdate ?
                                         <Avatar.Image
-                                            source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
+                                            source={{uri: imagePath(),}}
                                             size={80}/>
                                             :
                                         <View style={{justifyContent: 'center', alignItems: 'center', margin: 3}}>
                                             <Avatar.Image
                                                 source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
                                                 size={60}/>
-                                            <TakeOrChoosePhoto navigation={this.props.navigation} title={'Foto de perfil'}/>
+                                            <TakeOrChoosePhoto navigation={this.props.navigation} title={'Foto de perfil'} setPhotoState={  this.setPhotoState }/>
                                         </View>
                                     }
                                 </View>

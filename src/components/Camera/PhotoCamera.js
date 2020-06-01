@@ -36,8 +36,9 @@ class PhotoCamera extends PureComponent {
         camera.resumePreview()
     }
 
-    changePhoto() {
-
+    changePhoto(photo) {
+        const setPhotoState = this.props.navigation.getParam('setPhotoState')
+        setPhotoState(photo)
     }
 
     render() {
@@ -77,7 +78,7 @@ class PhotoCamera extends PureComponent {
                         }
                         {this.state.imageUri &&
                         <View style={styles.bottomButtons}>
-                            <TouchableOpacity onPress={() => this.changePhoto() }>
+                            <TouchableOpacity onPress={() => this.changePhoto(imageUri) }>
                                 <Icon name="check" size={35} color="white"/>
                             </TouchableOpacity>
                         </View>
