@@ -2,11 +2,15 @@ import React, { PureComponent } from 'react'
 import {View, TouchableOpacity, StyleSheet, Dimensions, ImageBackground} from 'react-native';
 import { RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
+import {server, showMessage} from '../../common';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class PhotoCamera extends PureComponent {
     state = {
         type: RNCamera.Constants.Type.back,
-        imageUri: null
+        uri: null,
+        disabled: false
     }
 
     flipCamera = () =>
@@ -19,6 +23,8 @@ class PhotoCamera extends PureComponent {
 
     takePhoto = async () => {
         // const { onTakePhoto } = this.props
+        this.setState({disabled: true})
+
         const options = {
             quality: 0.5,
             base64: true,
@@ -26,24 +32,40 @@ class PhotoCamera extends PureComponent {
             height: 300,
             pauseAfterCapture: true
         }
-        const { uri  } = await this.camera.takePictureAsync(options)
-        this.setState({ imageUri: uri });
+        const { base64  } = await this.camera.takePictureAsync(options)
+        this.setState({ uri: base64 });
         // onTakePhoto(data.base64)
     }
 
     remove(camera) {
-        this.setState({imageUri: null})
+        this.setState({uri: null, disabled: false})
         camera.resumePreview()
     }
 
-    changePhoto(photo) {
-        const setPhotoState = this.props.navigation.getParam('setPhotoState')
-        setPhotoState(photo)
+    async changePhoto(photo) {
+        const access_token = await AsyncStorage.getItem('access_token')
+        let multipartFormDt = new FormData()
+        multipartFormDt.append('photo', photo)
+
+        await axios({
+            method: 'post',
+            url: `${server}/me/update/photo`,
+            headers: {
+                'Authorization': `bearer ${access_token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+            data: multipartFormDt
+        }).then( () => {
+
+            this.props.navigation.navigate('ProfilePage')
+        }).catch( () => {
+            showMessage("Erro ao salvar imagem")
+        })
+
     }
 
     render() {
-        const { type, imageUri } = this.state
-        console.log(imageUri)
+        const { type } = this.state
         return (
             <View style={{flex: 1}}>
                 <RNCamera
@@ -55,30 +77,30 @@ class PhotoCamera extends PureComponent {
                     style={styles.preview}
                 >
                     <View style={styles.container}>
-                        {!this.state.imageUri &&
+                        {!this.state.uri &&
                             <View style={styles.bottomButtons}>
-                                <TouchableOpacity onPress={() => this.takePhoto()} style={styles.recordingButton}>
+                                <TouchableOpacity disabled={this.state.disabled} onPress={() => this.takePhoto()} style={styles.recordingButton}>
                                     <Icon name="camera" size={35} color="white"/>
                                 </TouchableOpacity>
                             </View>
                         }
-                        {!this.state.imageUri &&
+                        {!this.state.uri &&
                             <View style={styles.bottomButtons}>
                             <TouchableOpacity onPress={ () => this.flipCamera() } style={styles.flipButton}>
                             <Icon name="refresh" size={35} color="white"/>
                             </TouchableOpacity>
                             </View>
                         }
-                        {this.state.imageUri &&
+                        {this.state.uri &&
                             <View style={styles.bottomButtons}>
                                 <TouchableOpacity onPress={() => this.remove(this.camera) }>
                                     <Icon name="remove" size={35} color="white"/>
                                 </TouchableOpacity>
                             </View>
                         }
-                        {this.state.imageUri &&
+                        {this.state.uri &&
                         <View style={styles.bottomButtons}>
-                            <TouchableOpacity onPress={() => this.changePhoto(imageUri) }>
+                            <TouchableOpacity onPress={() => this.changePhoto(this.state.uri) }>
                                 <Icon name="check" size={35} color="white"/>
                             </TouchableOpacity>
                         </View>

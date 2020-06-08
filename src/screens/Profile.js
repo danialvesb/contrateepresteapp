@@ -59,10 +59,6 @@ export default class Profile extends Component{
         }
     }
 
-    setPhotoState(photo) {
-        this.setState({photo: photo})
-    }
-
     render() {
         return (
             <UserConsumer>
@@ -84,7 +80,7 @@ export default class Profile extends Component{
                                             <Avatar.Image
                                                 source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`,}}
                                                 size={60}/>
-                                            <TakeOrChoosePhoto navigation={this.props.navigation} title={'Foto de perfil'} setPhotoState={  this.setPhotoState }/>
+                                            <TakeOrChoosePhoto navigation={this.props.navigation} title={'Foto de perfil'}/>
                                         </View>
                                     }
                                 </View>
@@ -165,17 +161,10 @@ export default class Profile extends Component{
                                         }
 
                                         <Divider />
-                                        {!this.state.stageUpdate ?
+                                        {!this.state.stageUpdate &&
                                             <List.Item
                                                 title="Tipo de perfil:"
                                                 description={auth.user.group}
-                                            />
-                                            :
-                                            <List.Item
-                                                left={props => <View {...props} style={{width: '100%'}}>
-                                                    <Text>Tipo de pefil:</Text>
-                                                    <Input inputStyle={{paddingBottom: 0, marginBottom: 0}}/>
-                                                </View>}
                                             />
                                         }
                                     </View>

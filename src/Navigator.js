@@ -113,6 +113,7 @@ export default class Navigator extends Component{
                         await AsyncStorage.removeItem('access_token')
                 }
             }
-
     }
+
 }
+
