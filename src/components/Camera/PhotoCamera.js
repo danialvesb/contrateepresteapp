@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 class PhotoCamera extends PureComponent {
     state = {
         type: RNCamera.Constants.Type.back,
-        uri: null,
+        dataCamera: null,
         disabled: false
     }
 
@@ -22,23 +22,22 @@ class PhotoCamera extends PureComponent {
         })
 
     takePhoto = async () => {
-        // const { onTakePhoto } = this.props
         this.setState({disabled: true})
 
         const options = {
             quality: 0.5,
             base64: true,
-            width: 300,
-            height: 300,
+            // width: 300,
+            // height: 300,
+            fixOrientation: true,
             pauseAfterCapture: true
         }
-        const { base64  } = await this.camera.takePictureAsync(options)
-        this.setState({ uri: base64 });
-        // onTakePhoto(data.base64)
+        const data = await this.camera.takePictureAsync(options)
+        this.setState({ dataCamera: data });
     }
 
     remove(camera) {
-        this.setState({uri: null, disabled: false})
+        this.setState({dataCamera: null, disabled: false})
         camera.resumePreview()
     }
 
@@ -55,13 +54,12 @@ class PhotoCamera extends PureComponent {
                 'Content-Type': 'multipart/form-data',
             },
             data: multipartFormDt
-        }).then( () => {
+        }).then(() => {
 
             this.props.navigation.navigate('ProfilePage')
         }).catch( () => {
             showMessage("Erro ao salvar imagem")
         })
-
     }
 
     render() {
@@ -77,30 +75,30 @@ class PhotoCamera extends PureComponent {
                     style={styles.preview}
                 >
                     <View style={styles.container}>
-                        {!this.state.uri &&
+                        {!this.state.dataCamera &&
                             <View style={styles.bottomButtons}>
                                 <TouchableOpacity disabled={this.state.disabled} onPress={() => this.takePhoto()} style={styles.recordingButton}>
                                     <Icon name="camera" size={35} color="white"/>
                                 </TouchableOpacity>
                             </View>
                         }
-                        {!this.state.uri &&
+                        {!this.state.dataCamera &&
                             <View style={styles.bottomButtons}>
                             <TouchableOpacity onPress={ () => this.flipCamera() } style={styles.flipButton}>
                             <Icon name="refresh" size={35} color="white"/>
                             </TouchableOpacity>
                             </View>
                         }
-                        {this.state.uri &&
+                        {this.state.dataCamera &&
                             <View style={styles.bottomButtons}>
                                 <TouchableOpacity onPress={() => this.remove(this.camera) }>
                                     <Icon name="remove" size={35} color="white"/>
                                 </TouchableOpacity>
                             </View>
                         }
-                        {this.state.uri &&
+                        {this.state.dataCamera &&
                         <View style={styles.bottomButtons}>
-                            <TouchableOpacity onPress={() => this.changePhoto(this.state.uri) }>
+                            <TouchableOpacity onPress={() => this.changePhoto(this.state.dataCamera.base64) }>
                                 <Icon name="check" size={35} color="white"/>
                             </TouchableOpacity>
                         </View>
