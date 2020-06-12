@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {View, StyleSheet, Text, ScrollView, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Avatar, Caption} from 'react-native-paper';
@@ -10,7 +10,7 @@ export default props => {
                 <View style={styles.content}>
                     <View style={styles.headerManager}>
                         <TouchableOpacity style={styles.buttonHeader}>
-                            <Avatar.Image source={require('../../../assets/icons/message-icon.png')} size={40}/>
+                            {/*<Avatar.Image source={require('../../../assets/icons/message-icon.png')} size={40}/>*/}
                             <Caption>Converse com seu cliente!</Caption>
                         </TouchableOpacity>
                     </View>

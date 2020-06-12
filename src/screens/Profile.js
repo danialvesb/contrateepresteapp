@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {View, StyleSheet, ScrollView,TouchableOpacity} from 'react-native'
 import {Avatar} from 'react-native-paper'
-import FastImage from 'react-native-fast-image'
+// import FastImage from 'react-native-fast-image'
 import axios from 'axios'
 import {server, showError} from '../common'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -73,7 +73,7 @@ export default class Profile extends Component{
                             <ScrollView>
                                 <View style={styles.headerStyle}>
                                     {!this.state.stageUpdate ?
-                                        <FastImage
+                                        <Avatar.Image
                                             source={{uri: imagePath(),}}
                                             size={80}/>
                                             :

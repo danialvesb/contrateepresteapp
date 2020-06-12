@@ -1,7 +1,7 @@
 import React from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {Avatar, Caption} from 'react-native-paper';
+import {Avatar, Caption} from 'react-native-paper'
 
 export default props => {
     return (
@@ -19,7 +19,7 @@ export default props => {
                         </View>
                         :
                         <TouchableOpacity>
-                            <Avatar.Image source={require('../../../assets/icons/message-icon.png')} size={40}/>
+                            {/*<Avatar.Image source={require('../../../assets/icons/message-icon.png')} size={40}/>*/}
                             <Caption>Chat</Caption>
                         </TouchableOpacity>
                     }
