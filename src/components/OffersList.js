@@ -19,26 +19,22 @@ export  default class OffersList extends Component {
     }
 
     componentDidMount = async () => {
-        let resp = await this.getData()
-        if (resp)
-            this.setState({
-                spinner: false,
-            })
+        await this.getData()
     }
 
     getData = async () => {
-        try {
-            const responseReq = await axios.get(`${server}/services/offers/`)
-            if (responseReq.data) {
-                this.setState({ offersData: responseReq.data})
-                return true
-            }else {
-                this.setState({offersData: false})
+        await axios.get(`${server}/services/offers/`)
+            .then( resp => {
+                if (resp.data){
+                    this.setState({ offersData: resp.data, spinner: false})
+
+                    return true
+                }
+            }).catch( () => {
+                this.setState({offersData: false, spinner: false})
+                showError(err)
                 return false
-            }
-        } catch(err) {
-            showError(err)
-        }
+            })
     }
     onRefresh = async () => {
         this.setState({refreshing: true})

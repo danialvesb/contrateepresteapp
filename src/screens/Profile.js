@@ -5,11 +5,11 @@ import axios from 'axios'
 import {server, showError} from '../common'
 import AsyncStorage from '@react-native-community/async-storage'
 import { UserConsumer } from '../Navigator'
-import commonStyles from '../commonStyles';
-import { Divider, Text } from 'react-native-paper';
-import { List } from 'react-native-paper';
-import {Input} from 'react-native-elements';
-import TakeOrChoosePhoto from '../components/Modals/TakeOrChoosePhoto';
+import commonStyles from '../commonStyles'
+import { Divider, Text } from 'react-native-paper'
+import { List } from 'react-native-paper'
+import {Input} from 'react-native-elements'
+import TakeOrChoosePhoto from '../components/Modals/TakeOrChoosePhoto'
 
 const initialState = {
     name: null,
@@ -26,7 +26,7 @@ const initialState = {
         isLogged: false,
         user: {},
         photo: null
-    }
+    },
 }
 
 export default class Profile extends Component{

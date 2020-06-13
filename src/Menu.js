@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity } from 'react-native'
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
 import { Avatar, Title, Caption, Drawer } from 'react-native-paper'
