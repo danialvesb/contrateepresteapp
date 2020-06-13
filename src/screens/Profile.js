@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {View, StyleSheet, ScrollView,TouchableOpacity} from 'react-native'
 import {Avatar} from 'react-native-paper'
-// import FastImage from 'react-native-fast-image'
 import axios from 'axios'
 import {server, showError} from '../common'
 import AsyncStorage from '@react-native-community/async-storage'
