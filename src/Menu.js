@@ -33,7 +33,7 @@ export default class Menu extends Component {
                     <View style={styles.profile}>
                         { isLogged ?
                             <View style={styles.userInfoSection}>
-                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), { user } }}>
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage')}}>
                                     <Avatar.Image source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${user.photo}`,}} size={80}/>
                                 </TouchableOpacity>
                                 <Title style={styles.title}>{ user.name}</Title>

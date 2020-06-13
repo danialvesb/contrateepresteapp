@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Modal, Text, TouchableOpacity, View, Alert, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {Modal, Text, TouchableOpacity, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import { List, Headline } from 'react-native-paper';
 import commonStyles from '../../commonStyles';
 
@@ -36,13 +36,13 @@ export default class TakeOrChoosePhoto extends Component {
                     <ScrollView>
                         <View style={styles.modalStyle}>
                             <Headline style={styles.titleStyle}>{ this.props.title }</Headline>
-                            <TouchableOpacity>
-                                <List.Item
-                                    title="Galeria"
-                                    titleStyle={{color: 'white', fontFamily: commonStyles.fontFamily}}
-                                    left={props => <List.Icon {...props} color={'white'} icon="folder" />}
-                                />
-                            </TouchableOpacity>
+                            {/*<TouchableOpacity>*/}
+                            {/*    <List.Item*/}
+                            {/*        title="Galeria"*/}
+                            {/*        titleStyle={{color: 'white', fontFamily: commonStyles.fontFamily}}*/}
+                            {/*        left={props => <List.Icon {...props} color={'white'} icon="folder" />}*/}
+                            {/*    />*/}
+                            {/*</TouchableOpacity>*/}
                             <TouchableOpacity onPress={ () =>  this.navigateCamera()}>
                                 <List.Item
                                     title="Camera"

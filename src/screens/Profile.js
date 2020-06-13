@@ -114,7 +114,7 @@ export default class Profile extends Component{
                                                     <Text>Celular:</Text>
                                                     <Input defaultValue={auth.user.mobile}
                                                         inputStyle={{paddingBottom: 0, marginBottom: 0}}
-                                                        onChange={ value => { this.setState({ mobile: value }) } }
+                                                        onChangeText={ value => { this.setState({ mobile: value }) } }
                                                         keyboardType='phone-pad'/>
                                                 </View>}
                                             />
@@ -131,7 +131,7 @@ export default class Profile extends Component{
                                                     <Text>Cidade:</Text>
                                                     <Input defaultValue={auth.user.city}
                                                         inputStyle={{paddingBottom: 0, marginBottom: 0}}
-                                                        onChange={ value => { this.setState({ city: value }) } }/>
+                                                        onChangeText={ value => { this.setState({ city: value }) } }/>
                                                 </View>}
                                             />
                                         }
@@ -146,8 +146,8 @@ export default class Profile extends Component{
                                                 left={props => <View {...props} style={{width: '100%'}}>
                                                     <Text>Estado:</Text>
                                                     <Input defaultValue={auth.user.uf}
-                                                        inputStyle={{paddingBottom: 0, marginBottom: 0}}
-                                                        onChange={ value => { this.setState({ uf: value }) } }/>
+                                                    inputStyle={{paddingBottom: 0, marginBottom: 0}}
+                                                    onChangeText={ value => { this.setState({ uf: value }) } }/>
                                                 </View>}
                                             />
                                         }
@@ -163,7 +163,7 @@ export default class Profile extends Component{
                                                     <Text>Bairro:</Text>
                                                     <Input defaultValue={auth.user.district}
                                                         inputStyle={{paddingBottom: 0, marginBottom: 0}}
-                                                        onChange={ value => { this.setState({ district: value }) } }/>
+                                                        onChangeText={ value => { this.setState({ district: value }) } }/>
                                                 </View>}
                                             />
                                         }
@@ -206,26 +206,34 @@ export default class Profile extends Component{
     async onClimeUpdate(data, context) {
         const access_token = await AsyncStorage.getItem('access_token')
         let multipartFormDt = new FormData()
-        multipartFormDt.append('mobile', data.mobile)
-        multipartFormDt.append('city', data.city)
-        multipartFormDt.append('uf', data.uf)
-        multipartFormDt.append('district', data.district)
 
-        await axios({
-            method: 'PUT',
-            url: `${server}/me/update`,
+
+        if (data.mobile)
+            multipartFormDt.append('mobile', data.mobile)
+        if (data.city)
+            multipartFormDt.append('city', data.city)
+
+        if (data.uf)
+            multipartFormDt.append('uf', data.uf)
+
+        if (data.district)
+            multipartFormDt.append('district', data.district)
+
+        let header = {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data;',
                 'Authorization': `bearer ${access_token}`
             },
-            data: multipartFormDt
-        }).then( response => {
-            context.auth.setNewContext(response.data)
-            this.setState({stageUpdate: false})
-        }).catch(err => {
-            showError(JSON.stringify(err))
-        })
+        }
+
+        await axios.post(`${server}/me/update`, multipartFormDt, header)
+            .then( response => {
+                context.auth.setNewContext({ isLogged: true, user: response.data })
+                this.setState({stageUpdate: false})
+            }).catch( () => {
+                this.setState({stageUpdate: false})
+            })
     }
 
     async me() {
