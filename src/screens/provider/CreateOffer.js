@@ -1,25 +1,22 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Dimensions} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Dimensions} from 'react-native'
 import axios from 'axios'
-import {server, showError, showSuccess} from '../../common'
-import {Avatar, Caption, Title} from 'react-native-paper'
-import Search from '../../components/header/Search'
+import {server, showError} from '../../common'
 import CardService from '../../components/CardService'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Textarea from 'react-native-textarea'
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage'
 
 const initialState = {
     services: [],
     selectedServiceId: 0,
     spinner: false,
-    data: {
-        service: null,
-        description: null,
-        user: null,
-        amount: null,
-    },
+    description: null,
+    user: null,
+    amount: null,
+    owner_id: null,
+    access_token: ''
 }
 
 export default class CreateOffer extends Component {
@@ -41,7 +38,33 @@ export default class CreateOffer extends Component {
                     'Authorization': `bearer ${access_token}`
                 },
             })
-            this.setState({services: resp.data});
+            const me = await axios({
+                method: 'post',
+                url: `${server}/auth/me`,
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
+            })
+            this.setState({services: resp.data, owner_id: me.data.id, access_token: access_token})
+        } catch (err) {
+            showError(err)
+        }
+    }
+    storeOffer = async () => {
+        try {
+            const resp = await axios({
+                method: 'post',
+                url: `${server}/services/offers/`,
+                headers: {
+                    'Authorization': `bearer ${this.state.access_token}`
+                },
+                data: {
+                    service_id: this.state.selectedServiceId,
+                    owner_id: this.state.owner_id,
+                    amount: this.state.amount,
+                    description: this.state.description
+                }
+            })
         } catch (err) {
             showError(err)
         }
@@ -49,7 +72,6 @@ export default class CreateOffer extends Component {
 
     render() {
         return (
-
             <View style={styles.container}>
                 <ScrollView style={styles.scrool}>
                     <View style={styles.services}>
@@ -84,7 +106,7 @@ export default class CreateOffer extends Component {
                     </View>
                     <View style={styles.amount}>
                         <View>
-                            <TextInput style={styles.textInput} placeholder='Preço'/>
+                            <TextInput style={styles.textInput} placeholder='Preço' onChangeText={amount => this.setState({ amount })}/>
                         </View>
                     </View>
                     <View style={styles.servicesHeaderText}>
@@ -94,15 +116,15 @@ export default class CreateOffer extends Component {
                         <Textarea
                             containerStyle={styles.textareaContainer}
                             style={styles.textarea}
-                            // onChangeText={this.onChange}
-                            // defaultValue={this.state.text}
+                            onChangeText={description => this.setState({description})}
+                            defaultValue={this.state.description}
                             maxLength={50}
                             placeholder={'Descrição'}
                             placeholderTextColor={'#c7c7c7'}
                             underlineColorAndroid={'transparent'}/>
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.buttonStyle}>
+                        <TouchableOpacity style={styles.buttonStyle} onPress={()=> this.storeOffer()}>
                             <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
                         </TouchableOpacity>
                     </View>

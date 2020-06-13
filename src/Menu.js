@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
 import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
 import { UserConsumer } from './Navigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const DrawerNav = createDrawerNavigator();
+const DrawerNav = createDrawerNavigator()
 
 export default class Menu extends Component {
     render() {
         return (
             <UserConsumer>
                 { value => {
-                    console.log(value)
                     return (
                         <DrawerNav.Navigator drawerContent={props => this.drawerContent({...props,  value})} >
                             <DrawerNav.Screen name="HomeScreen" title='Início' component={Home} options={{ drawerLabel: 'Início' }}/>
@@ -35,7 +34,7 @@ export default class Menu extends Component {
                         { isLogged ?
                             <View style={styles.userInfoSection}>
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('ProfilePage'), { user } }}>
-                                    <Avatar.Image source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',}} size={80}/>
+                                    <Avatar.Image source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${user.photo}`,}} size={80}/>
                                 </TouchableOpacity>
                                 <Title style={styles.title}>{ user.name}</Title>
                                 <Caption style={styles.caption}>{user.group}</Caption>
@@ -51,16 +50,19 @@ export default class Menu extends Component {
                                 />
                             </View>
                         }
-                        <Drawer.Section style={styles.drawerSection}>
-                            <DrawerItem
-                                icon={({ color, size, }) => (
-                                    <Icon name="wechat" color={color} size={size}/>
-                                )}
-                                label="Conversas" onPress={() => {}}/>
-                            <DrawerItem label="Ofertar Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
-                            <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
-                            <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
-                        </Drawer.Section>
+                        { isLogged &&
+                            <Drawer.Section style={styles.drawerSection}>
+                                <DrawerItem
+                                    icon={({ color, size, }) => (
+                                        <Icon name="wechat" color={color} size={size}/>
+                                    )}
+                                    label="Conversas" onPress={() => { props.navigation.navigate('ChatsPage') }}/>
+                                <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                                <DrawerItem label="Criar oferta de Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                                <DrawerItem label="Serviços em andamento" onPress={() => { props.navigation.navigate('ProgressOfWorksPage') }}/>
+                                <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
+                            </Drawer.Section>
+                        }
 
                         <Drawer.Section title="Preferências">
                             <TouchableRipple onPress={() => {}}>
@@ -89,7 +91,6 @@ const styles = StyleSheet.create({
     },
     title: {
         marginTop: 20,
-        fontWeight: 'bold',
     },
     caption: {
         fontSize: 14,

@@ -14,7 +14,7 @@ export  default props =>
                     </View>
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 5 }}>
+            <View style={{flex: 7 }}>
                 <Search title="Pesquisar..."></Search>
             </View>
 

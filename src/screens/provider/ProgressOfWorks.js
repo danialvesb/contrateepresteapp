@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import RequestWork from './RequestWork';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {server} from '../../common';
+import ProgressOfWork from './ProgressOfWork';
 
 const initialState = {
     data: null,
     access_token: ''
 }
-export default class RequestsWorks extends Component{
+export default class ProgressOfWorks extends Component{
     state = {
         ...initialState
     }
@@ -20,39 +21,41 @@ export default class RequestsWorks extends Component{
         return (
             <ScrollView style={styles.container}>
                 {this.state.data &&
-                    this.state.data.map((item, index) => (
-                        <RequestWork key={item.id} data={item} accept={(id)=> this.acceptRequestWork(id)} refuse={(id) => this.refuseRequestWork(id)}/>
-                        )
+                this.state.data.map((item, index) => (
+                        <ProgressOfWork key={item.id} data={item} endCalled={ (id)=> this.endCalled(id) } closeCalled={ (id) => this.closeCalled(id) }/>
                     )
+                )
                 }
             </ScrollView>
         )
     }
-    acceptRequestWork = async (idCalled) => {
+    async endCalled(id) {
         try {
+            const access_token = await AsyncStorage.getItem('access_token')
             const responseRec = await axios({
                 method: 'post',
-                url: `${server}/services/offers/calleds/accept/${idCalled}`,
+                url: `${server}/services/offers/calleds/end/${id}`,
                 headers: {
-                    'Authorization': `bearer ${this.state.access_token}`
+                    'Authorization': `bearer ${access_token}`
                 },
+                timeout: 5000
             })
             await this.me()
         }catch(err) {
             console.log(err)
         }
     }
-    refuseRequestWork = async (idCalled) => {
+
+    async closeCalled(id) {
         try {
+            const access_token = await AsyncStorage.getItem('access_token')
             const responseRec = await axios({
                 method: 'post',
-                url: `${server}/services/offers/calleds/refuse/${idCalled}`,
+                url: `${server}/services/offers/calleds/close/${id}`,
                 headers: {
-                    'Authorization': `bearer ${this.state.access_token}`
+                    'Authorization': `bearer ${access_token}`
                 },
-                data: {
-
-                }
+                timeout: 5000
             })
             await this.me()
         }catch(err) {
@@ -65,7 +68,7 @@ export default class RequestsWorks extends Component{
             const access_token = await AsyncStorage.getItem('access_token')
             const responseRec = await axios({
                 method: 'get',
-                url: `${server}/services/offers/calleds`,
+                url: `${server}/services/offers/calleds/management`,
                 headers: {
                     'Authorization': `bearer ${access_token}`
                 },

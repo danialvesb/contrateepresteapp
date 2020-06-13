@@ -38,9 +38,8 @@ target 'contrateepresteapp' do
 
 
 
-  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'contrateepresteappTests' do
     inherit! :search_paths

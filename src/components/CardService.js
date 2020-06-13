@@ -1,6 +1,6 @@
-import {Text, TouchableOpacity, View, StyleSheet, Dimensions} from 'react-native';
-import {Avatar} from 'react-native-paper';
-import React, { Component } from 'react';
+import {Text, TouchableOpacity, View, StyleSheet, Dimensions} from 'react-native'
+import {Avatar} from 'react-native-paper'
+import React, { Component } from 'react'
 
 const initialState = {
     selected: false
@@ -27,7 +27,7 @@ export  default class CardService extends Component{
     }
 }
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     service: {

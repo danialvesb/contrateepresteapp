@@ -7,6 +7,7 @@ import axios from 'axios'
 import PhotoCamera from '../Camera/PhotoCamera';
 import {server, showError, showSuccessRequest, showMessage} from '../../common';
 import AsyncStorage from '@react-native-community/async-storage';
+import commonStyles from '../../commonStyles';
 
 const initialState = {
     me: {},
@@ -86,9 +87,7 @@ export default class RequestOfferConfirm extends Component {
             this.props.navigation.navigate('AuthPage')
         }
     }
-    confirmRequest() {
-        this.setModalVisible({modalVisible: false})
-    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -97,7 +96,7 @@ export default class RequestOfferConfirm extends Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
+                        this.setModalVisible(!this.state.modalVisible)
                     }}
                     style={{flex: 1}}
                     onBackdropPress={() => this.setState({modalVisible: false})}>
@@ -144,7 +143,7 @@ export default class RequestOfferConfirm extends Component {
                                                       }}>
                                         <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.buttonStyle}
+                                    <TouchableOpacity style={styles.buttonStyleCancell}
                                                       onPress={() => {
                                                           this.setModalVisible(!this.state.modalVisible)
                                                       }}>
@@ -162,7 +161,7 @@ export default class RequestOfferConfirm extends Component {
                         this.setModalVisible(true);
                     }}
                     style={styles.buttonStyle}>
-                    <Text style={{fontSize: 15, color: '#FFF'}}>Solicite</Text>
+                    <Text style={ commonStyles.textButtonsStyle }>Solicitar</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -244,10 +243,17 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     buttonStyle: {
-        backgroundColor: 'rgba(36,41,46,0.76)',
+        backgroundColor: 'rgba(28,116,72,0.76)',
+        padding: 10,
+        margin: 5,
+        borderRadius: 10
+    },
+    buttonStyleCancell: {
+        backgroundColor: 'rgba(191,12,48,0.76)',
         padding: 10,
         margin: 5,
         borderRadius: 10
     }
+
 
 })

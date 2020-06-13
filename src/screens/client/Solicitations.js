@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import {ScrollView, View, StyleSheet} from 'react-native';
-import Solicitation from './Solicitation';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import {server} from '../../common';
+import {ScrollView, View, StyleSheet} from 'react-native'
+import Solicitation from './Solicitation'
+import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios'
+import {server} from '../../common'
 
 const initialState = {
     me: {},
@@ -25,17 +25,32 @@ export default class Solicitations extends Component {
                     <ScrollView>
                         {this.state.data &&
                             this.state.data.map((item, index) => (
-                                    <Solicitation key={item.id} data={item}/>
+                                    <Solicitation key={item.id} data={item} closeCalled={(id) => this.closeCalled(id)}/>
                                 )
                             )
-
                         }
-
                     </ScrollView>
                 </View>
             </View>
         )
     }
+    async closeCalled(id) {
+        try {
+            const access_token = await AsyncStorage.getItem('access_token')
+            const responseRec = await axios({
+                method: 'post',
+                url: `${server}/services/offers/calleds/close/${id}`,
+                headers: {
+                    'Authorization': `bearer ${access_token}`
+                },
+                timeout: 5000
+            })
+            await this.loadData()
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
     async loadData() {
         const access_token = await AsyncStorage.getItem('access_token')
         const responseRec = await axios({

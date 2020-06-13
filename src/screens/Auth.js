@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker, ScrollView} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Picker, ScrollView} from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
-import { Input } from 'react-native-elements';
+import { Input } from 'react-native-elements'
 
 import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
@@ -12,7 +12,7 @@ import { UserConsumer } from '../Navigator'
 
 const initialState = {
     name: 'Teste',
-    email: 'bschaden@example.net',
+    email: 'daniel@gmail.com',
     password: '12345678',
     confirmPassword: '12345678',
     mobile: '12345678',
@@ -45,9 +45,9 @@ export default class Auth extends Component {
             if (password.length > 7)
                 return true
 
-            showError('A senha deve conter pelo menos 8 caracteres');
+            showError('A senha deve conter pelo menos 8 caracteres')
         }else {
-            showError('Senhas não coincidem');
+            showError('Senhas não coincidem')
         }
     }
     async me() {
@@ -80,7 +80,7 @@ export default class Auth extends Component {
                     },
                 })
 
-                showSuccess('Usuário cadastrado!');
+                showSuccess('Cadastro concluído!')
                 this.setState({stageNew: false})
             } catch(err) {
                 const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
@@ -123,13 +123,12 @@ export default class Auth extends Component {
 
      handleChangeOption = (val) => {
         if (val !== '0') {
-            this.setState({typeAccount: val});
+            this.setState({typeAccount: val})
         }
     }
 
     render() {
         const { auth } = this.state
-        console.log('Login auth'+JSON.stringify(auth))
         return (
             <UserConsumer>
                 { value => {
@@ -140,6 +139,7 @@ export default class Auth extends Component {
                                     {this.state.stageNew &&
                                         <View style={styles.inputContainer}>
                                             <Input
+                                                style={styles.input}
                                                 placeholder="Nome"
                                                 leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                                                 onChangeText={name => this.setState({ name }) }
@@ -150,6 +150,7 @@ export default class Auth extends Component {
                                     }
                                     <View style={styles.inputContainer}>
                                         <Input
+                                            style={styles.input}
                                             placeholder="E-mail"
                                             leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
                                             onChangeText={email => this.setState({ email }) }
@@ -159,6 +160,7 @@ export default class Auth extends Component {
                                     </View>
                                     <View style={styles.inputContainer}>
                                         <Input
+                                            style={styles.input}
                                             placeholder="Senha"
                                             leftIcon={{ type: 'react-native-vector-icons', name: 'lock-outline'}}
                                             onChangeText={password => this.setState({ password }) } secureTextEntry={true}
@@ -170,6 +172,7 @@ export default class Auth extends Component {
                                     {this.state.stageNew &&
                                         <View style={styles.inputContainer}>
                                             <Input
+                                                style={styles.input}
                                                 placeholder="Confirme sua senha"
                                                 leftIcon={{ type: 'react-native-vector-icons', name: 'lock-outline' }}
                                                 onChangeText={confirmPassword => this.setState({ confirmPassword }) } secureTextEntry={true}
@@ -181,6 +184,7 @@ export default class Auth extends Component {
                                     {this.state.stageNew &&
                                         <View style={styles.inputContainer}>
                                             <Input
+                                                style={styles.input}
                                                 placeholder="Celular"
                                                 leftIcon={{ type: 'font-awesome', name: 'mobile-phone' }}
                                                 onChangeText={mobile => this.setState({ mobile }) }
@@ -189,7 +193,6 @@ export default class Auth extends Component {
                                             />
                                         </View>
                                     }
-
                                     {this.state.stageNew &&
                                     <View style={styles.dropDown}>
                                         <Picker selectedValue={ this.state.typeAccount}
@@ -202,13 +205,13 @@ export default class Auth extends Component {
                                     }
                                     <TouchableOpacity onPress={ () => { this.signinOrSignup(value) } }>
                                         <View style={styles.button}>
-                                            <Text style={styles.buttonText}>
+                                            <Text style={commonStyles.textButtonsStyle}>
                                                 { this.state.stageNew ? 'Cadastre-se' : 'Entrar' }
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
-                                        <Text style={styles.buttonText}>
+                                        <Text style={ commonStyles.textButtonsStyle }>
                                             { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
                                         </Text>
                                     </TouchableOpacity>
@@ -260,17 +263,15 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     input: {
-        marginTop: 10,
-        backgroundColor: '#FFF',
-        padding: 10,
-        borderRadius: 10
+        fontFamily: commonStyles.fontFamily,
     },
     inputContainer: {
         marginTop: 10,
         backgroundColor: '#FFF',
         padding: 0,
         marginLeft: 0,
-        borderRadius: 10
+        borderRadius: 10,
+
     },
     userInfoSection: {
         paddingLeft: 20,
@@ -288,11 +289,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10
     },
-    buttonText: {
-        fontFamily: commonStyles.fontFamily,
-        color: '#FFF',
-        fontSize: 20,
-    },
     hr: {
         borderBottomColor: '#FFF',
         borderBottomWidth: 1,
@@ -301,5 +297,10 @@ const styles = StyleSheet.create({
     leftIconContainerStyle: {
         marginLeft: 0,
         padding: 0
-    }
+    },
+    fieldStyle: {
+        fontFamily: commonStyles.fontFamily,
+        fontWeight: "400"
+    },
+
 })

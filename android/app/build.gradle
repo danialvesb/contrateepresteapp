@@ -82,10 +82,9 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-project.ext.vectoricons = [
-        iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
-]
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+//project.ext.vectoricons = [
+//        apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"  iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
+//]
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -186,8 +185,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-vector-icons')
-    implementation project(':react-native-camera')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
@@ -208,5 +205,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

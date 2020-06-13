@@ -11,9 +11,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import {server} from './common';
+import ProgressOfWorks from './screens/provider/ProgressOfWorks';
+import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios'
+import {server} from './common'
+import Chat from './components/chat/Chat';
+import Chats from './components/chat/Chats';
+import PhotoCamera from './components/Camera/PhotoCamera';
+import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto';
 
 
 const Stack = createStackNavigator()
@@ -42,7 +47,6 @@ export default class Navigator extends Component{
                 isLogged: auth.isLogged,
                 user: auth.user,
                 setNewContext: setNewContext
-
             }
 
             this.setState({
@@ -66,14 +70,19 @@ export default class Navigator extends Component{
                     <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
                         <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
                         <Stack.Screen name="Offer" component={ Offer }/>
+                        <Stack.Screen name="Camera" component={ PhotoCamera } options={{ headerShown: false }}/>
+                        <Stack.Screen name="TakeOrChoosePhoto" component={ TakeOrChoosePhoto } options={{ headerShown: false }}/>
                         <Stack.Screen name="OffersList" component={ OffersList }/>
                         <Stack.Screen name="OfferInfosPage" component={ OfferInfos } options={{ headerTitle:'Informações'}}/>
                         <Stack.Screen name="CreateOfferPage" component={ CreateOffer } options={{ headerShown: true, headerTitle: 'Criar oferta de serviço'}}/>
-                        <Stack.Screen name="SolicitationsStatusPage" component={ Solicitations } options={{ headerShown: true, headerTitle: 'Status das solicitações' }}/>
+                        <Stack.Screen name="SolicitationsStatusPage" component={ Solicitations } options={{ headerShown: true, headerTitle: 'Andamento das solicitações' }}/>
                         <Stack.Screen name="SolicitationStatusPage" component={ Solicitation } options={{ headerShown: true }}/>
                         <Stack.Screen name="RequestsWorksPage" component={ RequestsWorks } options={{ headerShown: true, headerTitle: 'Chamados de serviços' }}/>
+                        <Stack.Screen name="ProgressOfWorksPage" component={ ProgressOfWorks } options={{ headerShown: true, headerTitle: 'Meus seviços' }}/>
                         <Stack.Screen name="AuthPage" component={ Auth } options={{ headerShown: true, headerTitle: 'Entre ou Cadastre-se' }}/>
                         <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
+                        <Stack.Screen name="ChatPage" component={ Chat } options={{ headerShown: true, headerTitle: 'Conversa' }}/>
+                        <Stack.Screen name="ChatsPage" component={ Chats } options={{ headerShown: true, headerTitle: 'Conversas' }}/>
                     </Stack.Navigator>
               </UserProvider>
             </NavigationContainer>
@@ -104,6 +113,7 @@ export default class Navigator extends Component{
                         await AsyncStorage.removeItem('access_token')
                 }
             }
-
     }
+
 }
+

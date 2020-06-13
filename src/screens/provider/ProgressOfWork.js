@@ -1,15 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {View, StyleSheet, Text, ScrollView, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Avatar, Caption} from 'react-native-paper';
 
 export default props => {
     return(
         <View style={styles.container}>
             <ScrollView style={styles.scrool}>
                 <View style={styles.content}>
+                    <View style={styles.headerManager}>
+                        <TouchableOpacity style={styles.buttonHeader}>
+                            {/*<Avatar.Image source={require('../../../assets/icons/message-icon.png')} size={40}/>*/}
+                            <Caption>Converse com seu cliente!</Caption>
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.header}>
                         <View style={styles.details}>
-                            <Text>Nome do cliente: {props.data.customer}</Text>
+                            <Text>Cliente: {props.data.customer}</Text>
                         </View>
                         <View style={styles.details}>
                             <Text>{props.data.city_customer}/{props.data.uf_customer}</Text>
@@ -44,11 +51,11 @@ export default props => {
                         </View>
                     </View>
                     <View style={styles.footer}>
-                        <TouchableOpacity style={styles.buttonStyleAcept} onPress={()=> props.accept(props.data.id)}>
-                            <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Aceitar</Text>
+                        <TouchableOpacity style={styles.buttonStyleAcept} onPress={()=> props.endCalled(props.data.id)}>
+                            <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Finalizar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => props.refuse(props.data.id)}>
-                            <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Negar</Text>
+                        <TouchableOpacity style={styles.buttonStyleRecuse} onPress={() => props.closeCalled(props.data.id)}>
+                            <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Fechar chamado</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -66,6 +73,17 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: 100,
+    },
+    headerManager: {
+        flex: 1,
+        width: '100%',
+        height: 70,
+        borderBottomWidth: 1,
+        borderColor: "rgba(0,0,0,0.09)"
+    },
+    buttonHeader: {
+        marginLeft: 10,
+        marginTop: 5
     },
     details: {
         flex: 1,
