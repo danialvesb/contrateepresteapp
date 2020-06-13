@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import Home from './screens/Home'
-import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
+import { Avatar, Title, Caption, Drawer } from 'react-native-paper'
 import { UserConsumer } from './Navigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -57,23 +57,47 @@ export default class Menu extends Component {
                                         <Icon name="wechat" color={color} size={size}/>
                                     )}
                                     label="Conversas" onPress={() => { props.navigation.navigate('ChatsPage') }}/>
-                                <DrawerItem label="Solicitações Feitas" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
-                                <DrawerItem label="Criar oferta de Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
-                                <DrawerItem label="Serviços em andamento" onPress={() => { props.navigation.navigate('ProgressOfWorksPage') }}/>
-                                <DrawerItem label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
+                                {user.group === 'Cliente' &&
+                                    <DrawerItem
+                                        icon={({ color, size, }) => (
+                                            <Icon name="rocket" color={color} size={size}/>
+                                        )}
+                                        label="Minhas solicitações" onPress={() => { props.navigation.navigate('SolicitationsStatusPage') }}/>
+                                }
+                                {user.group === 'Prestador' &&
+                                    <DrawerItem
+                                        icon={({ color, size, }) => (
+                                            <Icon name="plus" color={color} size={size}/>
+                                        )}
+                                        label="Cadastrar oferta de Serviço" onPress={() => { props.navigation.navigate('CreateOfferPage') }}/>
+                                }
+                                {user.group === 'Prestador' &&
+                                    <DrawerItem
+                                        icon={({ color, size, }) => (
+                                            <Icon name="suitcase" color={color} size={size}/>
+                                        )}
+                                        label="Serviços em andamento" onPress={() => { props.navigation.navigate('ProgressOfWorksPage') }}/>
+                                }
+                                {user.group === 'Prestador' &&
+                                    <DrawerItem
+                                        icon={({ color, size, }) => (
+                                            <Icon name="info-circle" color={color} size={size}/>
+                                        )}
+                                        label="Chamados" onPress={() => { props.navigation.navigate('RequestsWorksPage') }}/>
+                                }
                             </Drawer.Section>
                         }
 
-                        <Drawer.Section title="Preferências">
-                            <TouchableRipple onPress={() => {}}>
-                                <View style={styles.preference}>
-                                    <Text>Notificações</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={false} />
-                                    </View>
-                                </View>
-                            </TouchableRipple>
-                        </Drawer.Section>
+                        {/*<Drawer.Section title="Preferências">*/}
+                        {/*    <TouchableRipple onPress={() => {}}>*/}
+                        {/*        <View style={styles.preference}>*/}
+                        {/*            <Text>Notificações</Text>*/}
+                        {/*            <View pointerEvents="none">*/}
+                        {/*                <Switch value={false} />*/}
+                        {/*            </View>*/}
+                        {/*        </View>*/}
+                        {/*    </TouchableRipple>*/}
+                        {/*</Drawer.Section>*/}
                     </View>
                     <DrawerItemList {...props} />
                 </View>

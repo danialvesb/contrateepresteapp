@@ -12,14 +12,13 @@ import {Input} from 'react-native-elements';
 import TakeOrChoosePhoto from '../components/Modals/TakeOrChoosePhoto';
 
 const initialState = {
-    name: 'Daniel Alves',
-    email: 'daniel@gmail.com',
-    password: '12345678',
-    mobile: '9229292929',
-    city: 'Goiânia',
-    uf: 'Goiás',
-    district: 'Parque tremendão',
-    typeAccount: 'Prestador',
+    name: null,
+    email: null,
+    mobile: null,
+    city: null,
+    uf: null,
+    district: null,
+    typeAccount: null,
     isLogged: false,
     user: {},
     stageUpdate: false,
@@ -113,7 +112,10 @@ export default class Profile extends Component{
                                             <List.Item
                                                 left={props => <View {...props} style={{width: '100%'}}>
                                                     <Text>Celular:</Text>
-                                                    <Input value={auth.user.mobile} inputStyle={{paddingBottom: 0, marginBottom: 0}}/>
+                                                    <Input defaultValue={auth.user.mobile}
+                                                        inputStyle={{paddingBottom: 0, marginBottom: 0}}
+                                                        onChange={ value => { this.setState({ mobile: value }) } }
+                                                        keyboardType='phone-pad'/>
                                                 </View>}
                                             />
                                         }
@@ -127,7 +129,9 @@ export default class Profile extends Component{
                                             <List.Item
                                                 left={props => <View {...props} style={{width: '100%'}}>
                                                     <Text>Cidade:</Text>
-                                                    <Input value={auth.user.city} inputStyle={{paddingBottom: 0, marginBottom: 0}}/>
+                                                    <Input defaultValue={auth.user.city}
+                                                        inputStyle={{paddingBottom: 0, marginBottom: 0}}
+                                                        onChange={ value => { this.setState({ city: value }) } }/>
                                                 </View>}
                                             />
                                         }
@@ -141,7 +145,9 @@ export default class Profile extends Component{
                                             <List.Item
                                                 left={props => <View {...props} style={{width: '100%'}}>
                                                     <Text>Estado:</Text>
-                                                    <Input value={auth.user.uf} inputStyle={{paddingBottom: 0, marginBottom: 0}}/>
+                                                    <Input defaultValue={auth.user.uf}
+                                                        inputStyle={{paddingBottom: 0, marginBottom: 0}}
+                                                        onChange={ value => { this.setState({ uf: value }) } }/>
                                                 </View>}
                                             />
                                         }
@@ -155,7 +161,9 @@ export default class Profile extends Component{
                                             <List.Item
                                                 left={props => <View {...props} style={{width: '100%'}}>
                                                     <Text>Bairro:</Text>
-                                                    <Input value={auth.user.district} inputStyle={{paddingBottom: 0, marginBottom: 0}}/>
+                                                    <Input defaultValue={auth.user.district}
+                                                        inputStyle={{paddingBottom: 0, marginBottom: 0}}
+                                                        onChange={ value => { this.setState({ district: value }) } }/>
                                                 </View>}
                                             />
                                         }
@@ -182,7 +190,7 @@ export default class Profile extends Component{
                                         </TouchableOpacity>
                                     }
                                     {this.state.stageUpdate &&
-                                    <TouchableOpacity style={styles.buttonStyleSave} onPress={() => { this.setState({stageUpdate: false}) }}>
+                                    <TouchableOpacity style={styles.buttonStyleSave} onPress={ () => { this.onClimeUpdate({mobile: this.state.mobile, city: this.state.city, uf: this.state.uf, district: this.state.district }, value) } }>
                                         <Text style={commonStyles.textButtonsStyle}>Salvar</Text>
                                     </TouchableOpacity>
                                     }
@@ -195,6 +203,31 @@ export default class Profile extends Component{
             </UserConsumer>
         )
     }
+    async onClimeUpdate(data, context) {
+        const access_token = await AsyncStorage.getItem('access_token')
+        let multipartFormDt = new FormData()
+        multipartFormDt.append('mobile', data.mobile)
+        multipartFormDt.append('city', data.city)
+        multipartFormDt.append('uf', data.uf)
+        multipartFormDt.append('district', data.district)
+
+        await axios({
+            method: 'PUT',
+            url: `${server}/me/update`,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data;',
+                'Authorization': `bearer ${access_token}`
+            },
+            data: multipartFormDt
+        }).then( response => {
+            context.auth.setNewContext(response.data)
+            this.setState({stageUpdate: false})
+        }).catch(err => {
+            showError(JSON.stringify(err))
+        })
+    }
+
     async me() {
         const access_token = await AsyncStorage.getItem('access_token')
         const responseRec = await axios({
