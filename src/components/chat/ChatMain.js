@@ -6,6 +6,7 @@ import SlackMessage from './SlackMessage'
 
 import Pusher from 'pusher-js/react-native'
 import {server} from '../../common';
+import {UserConsumer} from '../../Navigator';
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true
@@ -20,24 +21,24 @@ const pusherConfig = {
 }
 
 export default class ChatMain extends React.Component {
-    constructor(props) {
-        super(props)
-        this.pusher = new Pusher(pusherConfig.key, pusherConfig); // (1)
-        this.chatChannel = this.pusher.subscribe('chat'); // (2)
-        this.chatChannel.bind('pusher:subscription_succeeded', () => { // (3)
-            this.chatChannel.bind('join', (data) => { // (4)
-                this.handleJoin(data.name)
-            })
-            this.chatChannel.bind('part', (data) => { // (5)
-                this.handlePart(data.name)
-            })
-            this.chatChannel.bind('message', (data) => { // (6)
-                this.handleMessage(data.name, data.message)
-            })
-        })
-
-        this.handleSendMessage = this.onSendMessage.bind(this) // (9)
-    }
+    // constructor(props) {
+    //     super(props)
+    //     this.pusher = new Pusher(pusherConfig.key, pusherConfig); // (1)
+    //     this.chatChannel = this.pusher.subscribe('chat'); // (2)
+    //     this.chatChannel.bind('pusher:subscription_succeeded', () => { // (3)
+    //         this.chatChannel.bind('join', (data) => { // (4)
+    //             this.handleJoin(data.name)
+    //         })
+    //         this.chatChannel.bind('part', (data) => { // (5)
+    //             this.handlePart(data.name)
+    //         })
+    //         this.chatChannel.bind('message', (data) => { // (6)
+    //             this.handleMessage(data.name, data.message)
+    //         })
+    //     })
+    //
+    //     this.handleSendMessage = this.onSendMessage.bind(this) // (9)
+    // }
     state = {
         messages: [],
     }
@@ -78,20 +79,9 @@ export default class ChatMain extends React.Component {
     //     })
     // }
     //
-    onSendMessage(text) { // (9)
-        const payload = {
-            message: text
-        }
-        fetch(`${server}/chat/messages`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-    }
-
     componentDidMount() {
+
+        console.log(JSON.stringify(this.props.route.params))
         this.setState({
             messages: [
                 {
@@ -109,12 +99,26 @@ export default class ChatMain extends React.Component {
         })
     }
 
+    onSendMessage(text) { // (9)
+        const payload = {
+            message: text
+        }
+        fetch(`${server}/chat/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+    }
     onSend(messages = []) {
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
+        console.log(this.state.messages)
+        // console.log(JSON.stringify(messages))
     }
-
+    [{"text":"Ssd","user":{"_id":1},"createdAt":"2020-06-14T18:29:44.300Z","_id":"0484edae-2d13-427c-8606-db85ff90864c"}]
     renderMessage(props) {
         const {
             currentMessage: { text: currText },
@@ -126,24 +130,31 @@ export default class ChatMain extends React.Component {
         if (currText && emojiUtils.isPureEmojiString(currText)) {
             messageTextStyle = {
                 fontSize: 28,
-                // Emoji get clipped if lineHeight isn't increased; make it consistent across platforms.
                 lineHeight: Platform.OS === 'android' ? 34 : 30,
             }
         }
-
         return <SlackMessage {...props} messageTextStyle={messageTextStyle} />
     }
 
     render() {
         return (
-            <GiftedChat
-                messages={this.state.messages}
-                onSend={messages => this.onSend(messages)}
-                user={{
-                    _id: 1,
-                }}
-                renderMessage={this.renderMessage}
-            />
+            <UserConsumer>
+                {value => {
+                    return (
+                        <GiftedChat
+                            messages={this.state.messages}
+                            onSend={messages => this.onSend(messages)}
+                            user={{
+                                _id: 1,
+                            }}
+                            placeholder='Mensagem'
+                            multiline={false}
+                            renderMessage={this.renderMessage}
+                        />
+                    )
+                }
+                }
+            </UserConsumer>
         )
     }
 }

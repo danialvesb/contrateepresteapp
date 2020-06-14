@@ -212,8 +212,6 @@ export default class Bubble extends React.Component {
     }
 }
 
-// Note: Everything is forced to be "left" positioned with this component.
-// The "right" position is only used in the default Bubble.
 const styles = StyleSheet.create({
     standardFont: {
         fontSize: 15,
