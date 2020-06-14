@@ -3,10 +3,11 @@ import { Platform } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import emojiUtils from 'emoji-utils'
 import SlackMessage from './SlackMessage'
-
+import axios from 'axios'
 import Pusher from 'pusher-js/react-native'
-import {server} from '../../common';
+import {server, showError, showMessage} from '../../common';
 import {UserConsumer} from '../../Navigator';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true
@@ -67,11 +68,6 @@ export default class ChatMain extends React.Component {
         })
     }
 
-    // componentDidMount() { // (7)
-    //     fetch(`${server.restServer}/users/${this.props.name}`, {
-    //         method: 'PUT'
-    //     })
-    // }
     //
     // componentWillUnmount() { // (8)
     //     fetch(`${pusherConfig.restServer}/users/${this.props.name}`, {
@@ -82,20 +78,46 @@ export default class ChatMain extends React.Component {
     componentDidMount() {
 
         console.log(JSON.stringify(this.props.route.params))
-        this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: 'Hello developer!!!',
-                    createdAt: new Date(),
-                    user: {
-                        _id: 2,
-                        name: 'React Native',
-                        avatar: 'https://placeimg.com/140/140/any',
-                    },
-                },
 
-            ],
+        this.loadMensages(this.props.route.params.item.id)
+        // this.setState({
+        //     messages: [
+        //         {
+        //             _id: 1,
+        //             text: 'Hello developer!!!',
+        //             createdAt: new Date(),
+        //             user: {
+        //                 _id: 2,
+        //                 name: 'React Native',
+        //                 avatar: 'https://placeimg.com/140/140/any',
+        //             },
+        //         },
+        //     ],
+        // })
+    }
+
+    async loadMensages(solicitationId) {
+        const access_token = await AsyncStorage.getItem('access_token')
+        await axios.get(`${server}/chat/messages/${solicitationId}`, {
+            headers: {
+                'Authorization': `bearer ${access_token}`
+            }
+        }).then(response => {
+            const messages = response.data.map((item, index) => (
+                 {
+                    _id: item.id,
+                    text: item.text,
+                    createdAt: item.created_at,
+                    user: {
+                        _id: item.from_user,
+                        name: item.from_user_name,
+                        avatar: `http://192.168.3.103:8000/api/me/_image/profile/${item.from_user_avatar}`
+                    }
+                }
+            ))
+            this.setState({messages})
+        }).catch(err => {
+            showError(JSON.stringify(err))
         })
     }
 
