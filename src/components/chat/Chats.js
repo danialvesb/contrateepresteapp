@@ -1,34 +1,10 @@
 import React from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
 import {TouchableOpacity, View, Text} from 'react-native';
 
 export default class Chats extends React.Component {
     state = {
         messages: [],
 
-    }
-
-    componentDidMount() {
-        this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: 'Hello developer',
-                    createdAt: new Date(),
-                    user: {
-                        _id: 2,
-                        name: 'React Native',
-                        avatar: 'https://placeimg.com/140/140/any',
-                    },
-                },
-            ],
-        })
-    }
-
-    onSend(messages = []) {
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, messages),
-        }))
     }
 
     render() {

@@ -11,15 +11,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
-import ProgressOfWorks from './screens/provider/ProgressOfWorks';
+import ProgressOfWorks from './screens/provider/ProgressOfWorks'
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import {server} from './common'
-import Chat from './components/chat/Chat';
-import Chats from './components/chat/Chats';
-import PhotoCamera from './components/Camera/PhotoCamera';
-import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto';
-
+import Chat from './components/chat/ChatMain'
+import Chats from './components/chat/Chats'
+import PhotoCamera from './components/Camera/PhotoCamera'
+import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto'
 
 const Stack = createStackNavigator()
 const initialState = {
@@ -113,4 +112,5 @@ export default class Navigator extends Component{
         }
     }
 }
+
 
