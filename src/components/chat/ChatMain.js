@@ -41,6 +41,7 @@ export default class ChatMain extends React.Component {
     }
     state = {
         messages: [],
+        authUser: [],
     }
 
     handleJoin(name) { // (4)
@@ -59,27 +60,26 @@ export default class ChatMain extends React.Component {
         })
     }
 
-    handleMessage(data) { // (6)
-        console.log(JSON.stringify(data))
+    handleMessage({ message }) { // (6)
 
-        // const messages = this.state.messages.slice()
-        // messages.push({action: 'message', name: name, message: message})
-        // this.setState({
-        //     messages: messages
-        // })
-        // if ()
-        // const messages = response.data.map((item, index) => (
-        //     {
-        //         _id: item.id,
-        //         text: item.text,
-        //         createdAt: item.created_at,
-        //         user: {
-        //             _id: item.from_user,
-        //             name: item.from_user_name,
-        //             avatar: `http://192.168.3.103:8000/api/me/_image/profile/${item.from_user_avatar}`
-        //         }
-        //     }
-        // ))
+        if (message.to_user == this.state.authUser.id) {
+            const messageNew =
+                {
+                    _id: message.id,
+                    text: message.text,
+                    createdAt: message.created_at,
+                    user: {
+                        _id: message.from_user,
+                        name: message.from_user_name,
+                        avatar: `http://192.168.3.103:8000/api/me/_image/profile/${message.from_user_avatar}`
+                    }
+                }
+            const messages = this.state.messages.slice()
+            messages.unshift(messageNew)
+            this.setState({
+                messages: messages
+            })
+        }
     }
 
     //
@@ -90,8 +90,27 @@ export default class ChatMain extends React.Component {
     // }
     //
     componentDidMount() {
+        this.meValidateToken()
         this.loadMensages(this.props.route.params.item.id)
+    }
 
+    async meValidateToken() {
+        const access_token = await AsyncStorage.getItem('access_token')
+        if (access_token) {
+            try {
+                const responseRec = await axios({
+                    method: 'post',
+                    url: `${server}/auth/me`,
+                    headers: {
+                        'Authorization': `bearer ${access_token}`
+                    },
+                })
+                this.setState({authUser: responseRec.data})
+            }catch(err) {
+                if (access_token)
+                    await AsyncStorage.removeItem('access_token')
+            }
+        }
     }
 
     async loadMensages(solicitationId) {
