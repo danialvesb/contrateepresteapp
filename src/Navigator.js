@@ -11,15 +11,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Solicitation from './screens/client/Solicitation'
 import Profile from './screens/Profile'
 import RequestsWorks from './screens/provider/RequestsWorks'
-import ProgressOfWorks from './screens/provider/ProgressOfWorks';
+import ProgressOfWorks from './screens/provider/ProgressOfWorks'
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import {server} from './common'
-import Chat from './components/chat/Chat';
-import Chats from './components/chat/Chats';
-import PhotoCamera from './components/Camera/PhotoCamera';
-import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto';
-
+import Chat from './components/chat/ChatMain'
+import Chats from './components/chat/Chats'
+import PhotoCamera from './components/Camera/PhotoCamera'
+import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto'
 
 const Stack = createStackNavigator()
 const initialState = {
@@ -34,7 +33,6 @@ export const UserContext = React.createContext()
 
 export const UserProvider = UserContext.Provider
 export const UserConsumer = UserContext.Consumer
-
 
 export default class Navigator extends Component{
     state = {
@@ -58,7 +56,6 @@ export default class Navigator extends Component{
         this.setState({auth: auth})
 
         await this.meValidateToken(setNewContext)
-
     }
 
     render() {
@@ -84,36 +81,36 @@ export default class Navigator extends Component{
                         <Stack.Screen name="ChatPage" component={ Chat } options={{ headerShown: true, headerTitle: 'Conversa' }}/>
                         <Stack.Screen name="ChatsPage" component={ Chats } options={{ headerShown: true, headerTitle: 'Conversas' }}/>
                     </Stack.Navigator>
-              </UserProvider>
+                </UserProvider>
             </NavigationContainer>
         )
     }
 
     async meValidateToken(setNewContext) {
         const access_token = await AsyncStorage.getItem('access_token')
-            if (access_token) {
-                try {
-                    const responseRec = await axios({
-                        method: 'post',
-                        url: `${server}/auth/me`,
-                        headers: {
-                            'Authorization': `bearer ${access_token}`
-                        },
-                    })
-                    const authNew = {
-                        isLogged: true,
-                        user: responseRec.data,
-                        setNewContext: setNewContext
-                    }
-                    this.setState({
-                        auth: authNew
-                    })
-                }catch(err) {
-                    if (access_token)
-                        await AsyncStorage.removeItem('access_token')
+        if (access_token) {
+            try {
+                const responseRec = await axios({
+                    method: 'post',
+                    url: `${server}/auth/me`,
+                    headers: {
+                        'Authorization': `bearer ${access_token}`
+                    },
+                })
+                const authNew = {
+                    isLogged: true,
+                    user: responseRec.data,
+                    setNewContext: setNewContext
                 }
+                this.setState({
+                    auth: authNew
+                })
+            }catch(err) {
+                if (access_token)
+                    await AsyncStorage.removeItem('access_token')
             }
+        }
     }
-
 }
+
 

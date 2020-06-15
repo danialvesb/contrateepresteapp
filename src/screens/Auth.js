@@ -128,7 +128,6 @@ export default class Auth extends Component {
     }
 
     render() {
-        const { auth } = this.state
         return (
             <UserConsumer>
                 { value => {
