@@ -2,8 +2,11 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Avatar, Caption} from 'react-native-paper'
+import EvaluateService from '../../components/Modals/EvaluateService';
 
-export default props => {
+export default  props => {
+    const { navigation } = props
+
     return (
         <View style={styles.containerStyle}>
             <View style={styles.bodyStyle}>
@@ -75,12 +78,11 @@ export default props => {
                     <TouchableOpacity style={styles.buttonStyle} onPress={() => props.closeCalled(props.data.id)}>
                         <Text style={styles.buttonText}>Cancelar</Text>
                     </TouchableOpacity>
-
                 }
                 {props.data.status === "finished" &&
-                    <TouchableOpacity style={styles.buttonStyleFinished}>
-                        <Text style={styles.buttonText}>Avaliar serviço</Text>
-                    </TouchableOpacity>
+                    <View style={styles.modal}>
+                        <EvaluateService navigation={navigation}/>
+                    </View>
                 }
             </View>
         </View>
@@ -143,16 +145,6 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         backgroundColor: '#E75B65',
-        padding: 4,
-        margin: 5,
-        borderRadius: 10,
-        width: '45%',
-        height: "70%",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    buttonStyleFinished: {
-        backgroundColor: '#187FF5',
         padding: 4,
         margin: 5,
         borderRadius: 10,
@@ -226,5 +218,8 @@ const styles = StyleSheet.create({
         color: "#FFF",
         fontFamily: "Montserrat-Italic",
         textAlign: "center",
+    },
+    modal: {
+        flex: 1
     }
 })

@@ -19,6 +19,7 @@ import Chat from './components/chat/ChatMain'
 import Chats from './components/chat/Chats'
 import PhotoCamera from './components/Camera/PhotoCamera'
 import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto'
+import EvaluateService from './components/Modals/EvaluateService';
 
 const Stack = createStackNavigator()
 const initialState = {
@@ -80,6 +81,7 @@ export default class Navigator extends Component{
                         <Stack.Screen name="ProfilePage" component={ Profile } options={{ headerShown: true, headerTitle: 'Perfil' }}/>
                         <Stack.Screen name="ChatPage" component={ Chat } options={{ headerShown: true, headerTitle: 'Conversa' }}/>
                         <Stack.Screen name="ChatsPage" component={ Chats } options={{ headerShown: true, headerTitle: 'Conversas' }}/>
+                        <Stack.Screen name="EvaluateServicePage" component={ EvaluateService } options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </UserProvider>
             </NavigationContainer>

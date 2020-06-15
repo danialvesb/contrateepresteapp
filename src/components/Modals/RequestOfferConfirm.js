@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Modal, Text, TextInput, TouchableOpacity, View, Alert, StyleSheet, ScrollView} from 'react-native';
+import React, {Component} from 'react'
+import {Modal, Text, TextInput, TouchableOpacity, View, Alert, StyleSheet, ScrollView} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Textarea from 'react-native-textarea';
+import Textarea from 'react-native-textarea'
 import axios from 'axios'
 
 import PhotoCamera from '../Camera/PhotoCamera';
-import {server, showError, showSuccessRequest, showMessage} from '../../common';
-import AsyncStorage from '@react-native-community/async-storage';
-import commonStyles from '../../commonStyles';
+import {server, showError, showSuccessRequest, showMessage} from '../../common'
+import AsyncStorage from '@react-native-community/async-storage'
+import commonStyles from '../../commonStyles'
 
 const initialState = {
     me: {},
@@ -164,7 +164,7 @@ export default class RequestOfferConfirm extends Component {
                     <Text style={ commonStyles.textButtonsStyle }>Solicitar</Text>
                 </TouchableOpacity>
             </View>
-        );
+        )
     }
 }
 

@@ -25,7 +25,7 @@ export default class Solicitations extends Component {
                     <ScrollView>
                         {this.state.data &&
                             this.state.data.map((item, index) => (
-                                    <Solicitation key={item.id} data={item} closeCalled={(id) => this.closeCalled(id)}/>
+                                    <Solicitation key={item.id} data={item} closeCalled={(id) => this.closeCalled(id)} navigation={this.props.navigation}/>
                                 )
                             )
                         }
