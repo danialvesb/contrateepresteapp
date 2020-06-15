@@ -207,7 +207,6 @@ export default class Profile extends Component{
         const access_token = await AsyncStorage.getItem('access_token')
         let multipartFormDt = new FormData()
 
-
         if (data.mobile)
             multipartFormDt.append('mobile', data.mobile)
         if (data.city)

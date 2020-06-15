@@ -23,19 +23,19 @@ const pusherConfig = {
 export default class ChatMain extends React.Component {
     constructor(props) {
         super(props)
-        this.pusher = new Pusher(pusherConfig.key, pusherConfig) // (1)
-        this.chatChannel = this.pusher.subscribe('chat') // (2)
-        this.chatChannel.bind('pusher:subscription_succeeded', () => { // (3)
-            this.chatChannel.bind('join', (data) => { // (4)
-                this.handleJoin(data.name)
-            })
-            this.chatChannel.bind('part', (data) => { // (5)
-                this.handlePart(data.name)
-            })
-            this.chatChannel.bind('App\\Events\\MessageSent', (data) => { // (6)
-                this.handleMessage(data)
-            })
-        })
+        // this.pusher = new Pusher(pusherConfig.key, pusherConfig) // (1)
+        // this.chatChannel = this.pusher.subscribe('chat') // (2)
+        // this.chatChannel.bind('pusher:subscription_succeeded', () => { // (3)
+        //     this.chatChannel.bind('join', (data) => { // (4)
+        //         this.handleJoin(data.name)
+        //     })
+        //     this.chatChannel.bind('part', (data) => { // (5)
+        //         this.handlePart(data.name)
+        //     })
+        //     this.chatChannel.bind('App\\Events\\MessageSent', (data) => { // (6)
+        //         this.handleMessage(data)
+        //     })
+        // })
 
         this.handleSendMessage = this.onSendMessage.bind(this) // (9)
     }
@@ -139,26 +139,41 @@ export default class ChatMain extends React.Component {
         })
     }
 
-    onSendMessage(text) { // (9)
-        const payload = {
-            message: text
-        }
-        fetch(`${server}/chat/messages`, {
-            method: 'POST',
+    async onSendMessage(payload) { // (9)
+        let multipartFormDt = new FormData()
+        const access_token = await AsyncStorage.getItem('access_token')
+
+        multipartFormDt.append('solicitation_id', payload.solicitation_id)
+        multipartFormDt.append('text', payload.text)
+        multipartFormDt.append('from_user', payload.from_user)
+        multipartFormDt.append('to_user', payload.to_user)
+
+        let header = {
             headers: {
-                'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data;',
+                'Authorization': `bearer ${access_token}`
             },
-            body: JSON.stringify(payload)
-        })
+        }
+        await axios.post(`${server}/chat/messages`, payload, header).catch( err => {
+            showMessage(JSON.stringify(err))
+        } )
     }
     onSend(messages = []) {
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
-        console.log(this.state.messages)
-        // console.log(JSON.stringify(messages))
+
+        const dataSend = {
+            solicitation_id: this.props.route.params.item.id,
+            text: messages[0].text,
+            from_user: this.state.authUser.id,
+            to_user: this.props.route.params.item.owner_offer_id,
+        }
+
+        this.onSendMessage(dataSend)
     }
-    // [{"text":"Ssd","user":{"_id":1},"createdAt":"2020-06-14T18:29:44.300Z","_id":"0484edae-2d13-427c-8606-db85ff90864c"}]
+
     renderMessage(props) {
         const {
             currentMessage: { text: currText },
@@ -182,7 +197,9 @@ export default class ChatMain extends React.Component {
                 messages={this.state.messages}
                 onSend={messages => this.onSend(messages)}
                 user={{
-                    _id: 1,
+                    _id: this.state.authUser.id,
+                    name: this.state.authUser.name,
+                    avatar: `http://192.168.3.103:8000/api/me/_image/profile/${this.state.authUser.photo}`
                 }}
                 placeholder='Mensagem'
                 multiline={false}
