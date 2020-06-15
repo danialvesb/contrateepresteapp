@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform } from 'react-native'
+import {Platform, View} from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
 import emojiUtils from 'emoji-utils'
 import SlackMessage from './SlackMessage'
@@ -23,19 +23,19 @@ const pusherConfig = {
 export default class ChatMain extends React.Component {
     constructor(props) {
         super(props)
-        // this.pusher = new Pusher(pusherConfig.key, pusherConfig) // (1)
-        // this.chatChannel = this.pusher.subscribe('chat') // (2)
-        // this.chatChannel.bind('pusher:subscription_succeeded', () => { // (3)
-        //     this.chatChannel.bind('join', (data) => { // (4)
-        //         this.handleJoin(data.name)
-        //     })
-        //     this.chatChannel.bind('part', (data) => { // (5)
-        //         this.handlePart(data.name)
-        //     })
-        //     this.chatChannel.bind('App\\Events\\MessageSent', (data) => { // (6)
-        //         this.handleMessage(data)
-        //     })
-        // })
+        this.pusher = new Pusher(pusherConfig.key, pusherConfig) // (1)
+        this.chatChannel = this.pusher.subscribe('chat') // (2)
+        this.chatChannel.bind('pusher:subscription_succeeded', () => { // (3)
+            this.chatChannel.bind('join', (data) => { // (4)
+                this.handleJoin(data.name)
+            })
+            this.chatChannel.bind('part', (data) => { // (5)
+                this.handlePart(data.name)
+            })
+            this.chatChannel.bind('App\\Events\\MessageSent', (data) => { // (6)
+                this.handleMessage(data)
+            })
+        })
 
         this.handleSendMessage = this.onSendMessage.bind(this) // (9)
     }
@@ -62,7 +62,7 @@ export default class ChatMain extends React.Component {
 
     handleMessage({ message }) { // (6)
 
-        if (message.to_user == this.state.authUser.id) {
+        if (message.to_user === this.state.authUser.id) {
             const messageNew =
                 {
                     _id: message.id,
@@ -96,22 +96,20 @@ export default class ChatMain extends React.Component {
 
     async meValidateToken() {
         const access_token = await AsyncStorage.getItem('access_token')
-        if (access_token) {
-            try {
-                const responseRec = await axios({
+                await axios({
                     method: 'post',
                     url: `${server}/auth/me`,
                     headers: {
                         'Authorization': `bearer ${access_token}`
                     },
+                }).then( response => {
+                    this.setState({authUser: response.data})
+                }).catch(err => {
+                    showError(JSON.stringify(err))
                 })
-                this.setState({authUser: responseRec.data})
-            }catch(err) {
-                if (access_token)
-                    await AsyncStorage.removeItem('access_token')
-            }
-        }
+
     }
+
 
     async loadMensages(solicitationId) {
         const access_token = await AsyncStorage.getItem('access_token')
@@ -155,7 +153,7 @@ export default class ChatMain extends React.Component {
                 'Authorization': `bearer ${access_token}`
             },
         }
-        await axios.post(`${server}/chat/messages`, payload, header).catch( err => {
+        await axios.post(`${server}/chat/messages`, multipartFormDt, header).catch( err => {
             showMessage(JSON.stringify(err))
         } )
     }
