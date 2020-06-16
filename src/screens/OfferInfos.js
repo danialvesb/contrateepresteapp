@@ -36,6 +36,25 @@ export  default class OfferInfos extends React.Component{
         this.setState({reply: text})
     }
     async sendReply(evaluation) {
+        const { data } = this.props.route.params
+        let multipartFormDt = new FormData()
+        const access_token = await AsyncStorage.getItem('access_token')
+
+        multipartFormDt.append('evaluation_id', evaluation)
+        multipartFormDt.append('reply', this.state.reply)
+
+        let header = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data;',
+                'Authorization': `bearer ${access_token}`
+            },
+        }
+        await axios.post(`${server}/services/offers/solicitations/reply`, multipartFormDt, header).then(() => {
+            this.getInteractions(data.id)
+        }).catch( err => {
+            showMessage(JSON.stringify(err))
+        })
 
 
     }
