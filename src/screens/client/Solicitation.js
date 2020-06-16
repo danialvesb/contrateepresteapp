@@ -81,7 +81,7 @@ export default  props => {
                 }
                 {props.data.status === "finished" &&
                     <View style={styles.modal}>
-                        <EvaluateService navigation={navigation}/>
+                        <EvaluateService navigation={navigation} solicitationId={props.data.id}/>
                     </View>
                 }
             </View>

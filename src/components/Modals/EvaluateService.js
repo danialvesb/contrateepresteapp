@@ -2,10 +2,11 @@ import React from 'react'
 import {Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Textarea from 'react-native-textarea';
-import {server, showMessage} from '../../common';
+import {server, showError, showMessage} from '../../common';
 import commonStyles from '../../commonStyles';
 import { CheckBox } from 'react-native-elements'
 import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
     me: {},
@@ -32,13 +33,29 @@ export default class EvaluateService extends React.Component {
         if (this.state.message === null || this.state.rating === null) {
             showMessage('For favor preencha os campos da avaliação')
         }else {
+            const access_token = await AsyncStorage.getItem('access_token')
+            let multipartFormDt = new FormData()
 
+            multipartFormDt.append('comment', this.state.message)
+            multipartFormDt.append('rating', this.state.rating)
+            multipartFormDt.append('solicitation_id', this.props.solicitationId)
 
-            await axios.post(`${server}/services/offers/solicitations/evaluate`, )
+            let header = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data;',
+                    'Authorization': `bearer ${access_token}`
+                },
+            }
 
-            this.setModalVisible(false)
-            this.props.navigation.navigate('Menu')
-            showMessage('Obrigado por avaliar')
+            await axios.post(`${server}/services/offers/solicitations/evaluate`, multipartFormDt, header).then(() => {
+                this.setModalVisible(false)
+                this.props.navigation.navigate('Menu')
+                showMessage('Obrigado por avaliar')
+            }).catch(() => {
+                showError('Não foi possível enviar   avaliação')
+            })
+
         }
     }
     render() {
