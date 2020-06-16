@@ -3,14 +3,12 @@ import {View} from 'react-native';
 import Comment from './Comment';
 
 export default props => {
-
     return (
         <View style={{flex: 1}}>
             {props.interations.map((item, index) => (
-                <Comment data={item} key={item.evaluations_id} reply={item.reply} owner={isOwnwe(props.userAuth, item.offer_owner)} qtdRating={item.rating} />
+                <Comment sendReply={ (evaluation) => props.sendReply(evaluation) } setStateReply={ (text) => props.setStateReply(text) } data={item} key={item.evaluations_id} reply={item.reply} owner={isOwnwe(props.userAuth, item.offer_owner)} qtdRating={item.rating} />
                 )
             )
-
             }
         </View>
     )

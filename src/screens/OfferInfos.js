@@ -1,16 +1,18 @@
 import React from 'react'
-import {View, Text, StyleSheet, ScrollView, ActivityIndicator, ViewComponent} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator, ViewComponent, TouchableOpacity} from 'react-native';
 import RequestOfferConfirm from '../components/Modals/RequestOfferConfirm';
 import axios from 'axios'
 import {server, showMessage} from '../common';
 import {CheckBox} from 'react-native-elements';
 import Comments from '../components/Comment/Comments';
 import { UserConsumer } from '../Navigator'
+import AsyncStorage from '@react-native-community/async-storage';
 
 export  default class OfferInfos extends React.Component{
     state = {
         interactions: [],
         spinner: true,
+        reply: '',
     }
     componentDidMount() {
         const { data } = this.props.route.params
@@ -30,7 +32,13 @@ export  default class OfferInfos extends React.Component{
             showMessage('Não foi possível carregar avaliações')
         })
     }
+    setStateReply(text) {
+        this.setState({reply: text})
+    }
+    async sendReply(evaluation) {
 
+
+    }
 
     render() {
         const { data } = this.props.route.params
@@ -99,7 +107,7 @@ export  default class OfferInfos extends React.Component{
                                     </View>
 
                                     <View style={{flex: 1, width: '94%'}}>
-                                        <Comments userAuth={value.auth.user} interations={this.state.interactions}/>
+                                        <Comments sendReply={ (evaluation) => this.sendReply(evaluation) } setStateReply={(text) => this.setStateReply(text)} userAuth={value.auth.user} interations={this.state.interactions}/>
                                     </View>
                                 </View>
                             }

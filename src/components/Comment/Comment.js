@@ -9,15 +9,14 @@ export default props => {
 
     return (
         <View style={styles.container}>
-
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={{color: 'rgb(0,0,0)', fontSize: 15, fontFamily: commonStyles.fontFamily, fontWeight:'bold'}}>{props.data.customer_name}</Text>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={{color: 'rgb(0,0,0)', fontSize: 15, fontFamily: commonStyles.fontFamily, fontWeight:'bold'}}>{props.data.customer_name}</Text>
                 {
                     components.map((item, index) => (
-                    <CheckBox containerStyle={{padding: 1, margin: 1}} key={item.id} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                      <CheckBox containerStyle={{padding: 1, margin: 1}} key={item.id} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
                     ))
                 }
-                </View>
+            </View>
             <Text style={{fontFamily: commonStyles.fontFamily}}>{props.data.comment}</Text>
 
             <View>
@@ -25,9 +24,9 @@ export default props => {
                     <View>
                         <Textarea
                             maxLength={30}
-                            onChangeText={ value => props.setValueTextState(value)}
+                            onChangeText={ value => props.setStateReply(value)}
                         />
-                        <TouchableOpacity style={{backgroundColor: 'green', width: '50%', margin: 5, padding: 4, borderRadius: 3}} onPress={() => props.sendReply()}>
+                        <TouchableOpacity style={{backgroundColor: 'green', width: '50%', margin: 5, padding: 4, borderRadius: 3}} onPress={() => props.sendReply(props.data.evaluations_id)}>
                             <Text style={{fontFamily: commonStyles.fontFamily, color: 'white'}}>Enviar resposta</Text>
                         </TouchableOpacity>
                     </View>
@@ -35,7 +34,6 @@ export default props => {
                     <View style={styles.responseStyle}>
                         <Text style={{color: 'white'}}>{props.data.reply}</Text>
                     </View>
-
                 }
             </View>
 
