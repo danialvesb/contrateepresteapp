@@ -5,7 +5,6 @@ import axios from 'axios'
 import {server, showMessage} from '../common';
 import {CheckBox} from 'react-native-elements';
 import Comments from '../components/Comment/Comments';
-import Textarea from 'react-native-textarea'
 
 export  default class OfferInfos extends React.Component{
     state = {
@@ -98,7 +97,6 @@ export  default class OfferInfos extends React.Component{
 
                         <View style={{flex: 1, width: '94%'}}>
                             <Comments />
-
                         </View>
                     </View>
                 }
@@ -120,7 +118,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'rgb(36, 41, 46)',
         width: '98%',
-        height: 550,
+        minHeight: 550,
         margin: 5,
         borderRadius: 4,
         flexWrap: 'wrap',

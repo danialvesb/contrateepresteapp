@@ -25,8 +25,9 @@ export default props => {
                     <View>
                         <Textarea
                             maxLength={30}
+                            onChangeText={ value => props.setValueTextState(value)}
                         />
-                        <TouchableOpacity style={{backgroundColor: 'green', width: '50%', margin: 5, padding: 4, borderRadius: 3}}>
+                        <TouchableOpacity style={{backgroundColor: 'green', width: '50%', margin: 5, padding: 4, borderRadius: 3}} onPress={() => props.sendReply()}>
                             <Text style={{fontFamily: commonStyles.fontFamily, color: 'white'}}>Enviar resposta</Text>
                         </TouchableOpacity>
                     </View>
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(36,100,173,0.26)',
         borderRadius: 5,
         padding: 3,
+        marginTop: 5
     },
     responseStyle: {
         minHeight: 50,
