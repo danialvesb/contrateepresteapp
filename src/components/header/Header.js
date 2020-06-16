@@ -4,25 +4,29 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Filters from '../Filters'
 import Search from './Search'
 
-export  default props =>
-    <View style={styles.container}>
-        <View style={styles.menu}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                <TouchableOpacity onPress={() => props.navigation.openDrawer()} >
-                    <View style={{margin: 10, }}>
-                        <Icon name="bars" size={30} color="#FFF" />
-                    </View>
-                </TouchableOpacity>
-            </View>
-            <View style={{flex: 7 }}>
-                <Search title="Pesquisar..."></Search>
-            </View>
+export  default props => {
+    return (
+        <View style={styles.container}>
+            <View style={styles.menu}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                    <TouchableOpacity onPress={() => props.navigation.openDrawer()} >
+                        <View style={{margin: 10, }}>
+                            <Icon name="bars" size={30} color="#FFF" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flex: 7 }}>
+                    <Search filterListPerText={ (value) => props.filterListPerText(value) } title="Pesquisar..."
+                            textSearchValue={props.textSearchValue}/>
+                </View>
 
+            </View>
+            <View style={styles.searchs}>
+                <Filters/>
+            </View>
         </View>
-        <View style={styles.searchs}>
-            <Filters></Filters>
-        </View>
-    </View>
+        )
+}
 
 const styles = StyleSheet.create({
     container: {

@@ -20,6 +20,7 @@ import Chats from './components/chat/Chats'
 import PhotoCamera from './components/Camera/PhotoCamera'
 import TakeOrChoosePhoto from './components/Modals/TakeOrChoosePhoto'
 import EvaluateService from './components/Modals/EvaluateService';
+import Home from './screens/Home';
 
 const Stack = createStackNavigator()
 const initialState = {
@@ -68,6 +69,7 @@ export default class Navigator extends Component{
                     <Stack.Navigator initialRouteName="Menu" headerMode='screen'>
                         <Stack.Screen name="Menu" component={ Menu } initialParams={{ isLogged: this.state.isLogged, user: this.state.user }} options={{ headerShown: false }}/>
                         <Stack.Screen name="Offer" component={ Offer }/>
+                        <Stack.Screen name="HomePage" component={ Home }/>
                         <Stack.Screen name="Camera" component={ PhotoCamera } options={{ headerShown: false }}/>
                         <Stack.Screen name="TakeOrChoosePhoto" component={ TakeOrChoosePhoto } options={{ headerShown: false }}/>
                         <Stack.Screen name="OffersList" component={ OffersList }/>
