@@ -13,10 +13,10 @@ export default props => {
                         <Text style={styles.textHeader}> { props.locale } </Text>
                         <Text style={styles.textHeader}> { props.district } </Text>
                     </View>
-                    <Text style={styles.textHeaderIcon}>
-                        <Icon name="star" size={25} color="rgb(240, 208, 13)" />
-                        { props.rating }
-                    </Text>
+                    {/*<Text style={styles.textHeaderIcon}>*/}
+                    {/*    <Icon name="star" size={25} color="rgb(240, 208, 13)" />*/}
+                    {/*    { props.rating }*/}
+                    {/*</Text>*/}
                 </View>
                 <View style={styles.content}>
                     <Text style={styles.textContent}> { props.typeOffer } </Text>

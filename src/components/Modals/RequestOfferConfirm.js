@@ -13,7 +13,7 @@ const initialState = {
     me: {},
     modalVisible: false,
     status: "pending",
-    message: 'Descrição aqui',
+    message: '',
     owner_id: '',
     offer_id: '',
     files: "/"
@@ -51,31 +51,35 @@ export default class RequestOfferConfirm extends Component {
     }
 
     async requestOffer() {
-        try {
-            const access_token = await AsyncStorage.getItem('access_token')
-            const req = await axios({
-                method: 'post',
-                data: {
-                    status: this.state.status,
-                    message: this.state.message,
-                    owner_id: this.state.owner_id,
-                    offer_id: this.state.offer_id,
-                    files: this.state.files
-                },
-                headers: {
-                    'Authorization': `bearer ${access_token}`
-                },
-                url: `${server}/services/offers/solicitations`,
-                timeout: 5000,
-            })
+        if (this.state.message) {
+            try {
+                const access_token = await AsyncStorage.getItem('access_token')
+                const req = await axios({
+                    method: 'post',
+                    data: {
+                        status: this.state.status,
+                        message: this.state.message,
+                        owner_id: this.state.owner_id,
+                        offer_id: this.state.offer_id,
+                        files: this.state.files
+                    },
+                    headers: {
+                        'Authorization': `bearer ${access_token}`
+                    },
+                    url: `${server}/services/offers/solicitations`,
+                    timeout: 5000,
+                })
 
-            this.setModalVisible(!this.state.modalVisible);
-            showSuccessRequest('Serviço solicitado com sucesso!', 'Aguarde o retorno do profissional requisitado.')
-            this.props.navigation.navigate('Menu')
+                this.setModalVisible(!this.state.modalVisible);
+                showSuccessRequest('Serviço solicitado com sucesso!', 'Aguarde o retorno do profissional requisitado.')
+                this.props.navigation.navigate('Menu')
 
-        }catch(err) {
-            const error = err.message
-            showError(error)
+            }catch(err) {
+                const error = err.message
+                showError(error)
+            }
+        }else {
+            showMessage('Insira uma mensagem')
         }
     }
 
@@ -107,22 +111,22 @@ export default class RequestOfferConfirm extends Component {
                             </View>
                             <View style={styles.contentModal}>
                                 <View style={styles.dataRequest}>
-                                    <View style={styles.photosList}>
-                                        <View>
-                                            <Text style={styles.servicesHeaderText}>Inserir Imagens</Text>
-                                        </View>
-                                        <View>
-                                            <ScrollView horizontal={true} style={styles.scroolServices}>
-                                                <View style={styles.photo}>
-                                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                                        <Icon name="camera" size={80} color='#ddd'/>
-                                                    </TouchableOpacity>
-                                                </View>
+                                    {/*<View style={styles.photosList}>*/}
+                                    {/*    <View>*/}
+                                    {/*        <Text style={styles.servicesHeaderText}>Inserir Imagens</Text>*/}
+                                    {/*    </View>*/}
+                                    {/*    <View>*/}
+                                    {/*        <ScrollView horizontal={true} style={styles.scroolServices}>*/}
+                                    {/*            <View style={styles.photo}>*/}
+                                    {/*                <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>*/}
+                                    {/*                    <Icon name="camera" size={80} color='#ddd'/>*/}
+                                    {/*                </TouchableOpacity>*/}
+                                    {/*            </View>*/}
 
-                                            </ScrollView>
-                                        </View>
+                                    {/*        </ScrollView>*/}
+                                    {/*    </View>*/}
 
-                                    </View>
+                                    {/*</View>*/}
                                     <View style={styles.description}>
                                         <Text>Se for preciso pode especificar melhor</Text>
                                         <Textarea

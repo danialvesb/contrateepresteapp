@@ -55,8 +55,7 @@ export  default class OfferInfos extends React.Component{
         }).catch( err => {
             showMessage(JSON.stringify(err))
         })
-
-
+        this.setState({reply: ''})
     }
 
     render() {
@@ -71,14 +70,11 @@ export  default class OfferInfos extends React.Component{
                                 <View style={styles.data}>
                                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ data.service_title }</Text>
                                     <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ `${data.city} / ${data.uf} ` }</Text>
-                                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Qualificações</Text>
-                                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>V/H: { data.amount }</Text>
-
+                                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Valor por hora: { data.amount }</Text>
                                     <View style={styles.description}>
                                         <Text style={{marginBottom: 5, marginLeft: 3}}>Descrição:</Text>
                                         <Text style={{fontSize: 15 , color: 'rgba(36,41,46,0.76)', flex: 5, margin: 4}}>{data.description}</Text>
                                     </View>
-
                                 </View>
                                 <View style={styles.buttonsData}>
                                     <RequestOfferConfirm navigation={this.props.navigation} data={data}></RequestOfferConfirm>
@@ -90,36 +86,7 @@ export  default class OfferInfos extends React.Component{
                                     <View style={styles.headerComments}>
                                         <View>
                                             <View style={{marginRight: 40}}>
-                                                <Text style={{fontSize: 40}}>4.7</Text>
-                                            </View>
-
-                                            <View style={{flexDirection: 'row', marginTop: 20}}>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked ={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <Text>5</Text>
-                                            </View>
-                                            <View style={{flexDirection: 'row', marginTop: 20}}>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <Text>5</Text>
-                                            </View>
-                                            <View style={{flexDirection: 'row', marginTop: 20}}>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <Text>5</Text>
-                                            </View>
-                                            <View style={{flexDirection: 'row', marginTop: 20}}>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <Text>5</Text>
-                                            </View>
-                                            <View style={{flexDirection: 'row', marginTop: 20}}>
-                                                <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
-                                                <Text>5</Text>
+                                                <Text style={{fontSize: 20}}>Avaliações do profissional</Text>
                                             </View>
                                         </View>
                                         <View style={{width: '95%', borderWidth: 0.5, borderColor: 'rgba(36,41,46,0.76)', margin: 4}} />
@@ -152,7 +119,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'rgb(36, 41, 46)',
         width: '98%',
-        minHeight: 550,
+        minHeight: 500,
         margin: 5,
         borderRadius: 4,
         flexWrap: 'wrap',
@@ -190,7 +157,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgb(36, 41, 46)',
         width: '97%',
         height: 200,
-        marginTop: 100,
+        marginTop: 50,
         borderRadius: 4,
     },
     headerComments: {
