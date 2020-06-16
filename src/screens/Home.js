@@ -4,10 +4,11 @@ import Header from '../components/header/Header'
 import axios from 'axios'
 import {server, showError} from '../common'
 import OffersList from '../components/OffersList';
+import { createFilter } from 'react-native-search-filter';
 
 const { height } = Dimensions.get('window')
 const initialState = {
-    offersData: null,
+    offersData: [],
     spinner: true,
     refreshing: false,
     setRefreshing: 0,
@@ -44,14 +45,12 @@ export default class Home extends React.Component{
 
     filterListPerText(value) {
         this.setState({textSearchValue: value})
-        const offersDataNew = this.state.offersData.filter( item => {
-            return item.service_title === value
-        })
-        this.setState({offersData: offersDataNew})
     }
 
 
     render() {
+        const offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
+
         return (
             <View style={{ height: height }}>
                 <View style={styles.header}>
@@ -62,7 +61,7 @@ export default class Home extends React.Component{
 
                 <View style={styles.content}>
                     <OffersList
-                        offersData={this.state.offersData}
+                        offersData={offersDataNew}
                         spinner={this.state.spinner}
                         refreshing={ () => this.onRefresh() }
                         refreshingState={this.state.refreshing}
