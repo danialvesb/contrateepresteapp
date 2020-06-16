@@ -4,6 +4,8 @@ import RequestOfferConfirm from '../components/Modals/RequestOfferConfirm';
 import axios from 'axios'
 import {server, showMessage} from '../common';
 import {CheckBox} from 'react-native-elements';
+import Comments from '../components/Comment/Comments';
+import Textarea from 'react-native-textarea'
 
 export  default class OfferInfos extends React.Component{
     state = {
@@ -95,11 +97,7 @@ export  default class OfferInfos extends React.Component{
                         </View>
 
                         <View style={{flex: 1, width: '94%'}}>
-                            {
-                                // this.state.interactions.map((item, index) => (
-                                //
-                                // ))
-                            }
+                            <Comments />
 
                         </View>
                     </View>
