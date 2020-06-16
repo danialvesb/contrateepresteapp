@@ -6,21 +6,21 @@ import commonStyles from '../../commonStyles';
 import Textarea from 'react-native-textarea';
 export default props => {
     const components = renderCheckbox(props.qtdRating)
+
     return (
         <View style={styles.container}>
 
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={{color: 'rgb(0,0,0)', fontSize: 15, fontFamily: commonStyles.fontFamily, fontWeight:'bold'}}>Nome do cliente</Text>
+                    <Text style={{color: 'rgb(0,0,0)', fontSize: 15, fontFamily: commonStyles.fontFamily, fontWeight:'bold'}}>{props.data.customer_name}</Text>
                 {
                     components.map((item, index) => (
                     <CheckBox containerStyle={{padding: 1, margin: 1}} key={item.id} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
                     ))
                 }
                 </View>
-            <Text style={{fontFamily: commonStyles.fontFamily}}>ComentárioComentárioComentárioComentárioComentárioComentário</Text>
+            <Text style={{fontFamily: commonStyles.fontFamily}}>{props.data.comment}</Text>
 
-            <View style={styles.responseStyle}>
-
+            <View>
                 {props.reply == 0 && props.owner ?
                     <View>
                         <Textarea
@@ -32,8 +32,8 @@ export default props => {
                         </TouchableOpacity>
                     </View>
                     :
-                    <View>
-                        <Text style={{color: 'white'}}>ReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplicaReplica</Text>
+                    <View style={styles.responseStyle}>
+                        <Text style={{color: 'white'}}>{props.data.reply}</Text>
                     </View>
 
                 }
