@@ -1,12 +1,14 @@
 import React from 'react'
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator, ViewComponent} from 'react-native';
 import RequestOfferConfirm from '../components/Modals/RequestOfferConfirm';
 import axios from 'axios'
 import {server, showMessage} from '../common';
+import {CheckBox} from 'react-native-elements';
 
 export  default class OfferInfos extends React.Component{
     state = {
-        interactions: []
+        interactions: [],
+        spinner: true,
     }
     componentDidMount() {
         const { data } = this.props.route.params
@@ -51,34 +53,62 @@ export  default class OfferInfos extends React.Component{
                     </View>
                 </View>
 
-                {this.state.interactions &&
+                {this.state.interactions.length > 0 &&
                     <View style={styles.content}>
                         <View style={styles.headerComments}>
-                            <View style={{marginRight: 40}}>
-                                <Text style={{fontSize: 40}}>4.7</Text>
-                            </View>
                             <View>
-                                <Text>5 estrelas</Text>
-                                <Text>4 estrelas</Text>
-                                <Text>3 estrelas</Text>
-                                <Text>2 estrelas</Text>
-                                <Text>1 estrelas</Text>
-                            </View>
-                            <View style={{width: '100%', borderWidth: 1, marginTop: 10}}>
+                                <View style={{marginRight: 40}}>
+                                    <Text style={{fontSize: 40}}>4.7</Text>
+                                </View>
 
+                                <View style={{flexDirection: 'row', marginTop: 20}}>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked ={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <Text>5</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 20}}>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <Text>5</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 20}}>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <Text>5</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 20}}>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <Text>5</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 20}}>
+                                    <CheckBox containerStyle={{margin:0, padding: 5}} checked={true} uncheckedIcon='star-o' checkedIcon='star' checkedColor={'rgb(240, 208, 13)'} size={12}/>
+                                    <Text>5</Text>
+                                </View>
                             </View>
+
+                            <View style={{width: '95%', borderWidth: 0.5, borderColor: 'rgba(36,41,46,0.76)', margin: 4}} />
                         </View>
-                        <View>
-                            <Text>Filano </Text>
-                            <Text>Filano </Text>
-                            <Text>Filano </Text>
-                            <Text>Filano </Text>
-                            <Text>Filano </Text>
+
+                        <View style={{flex: 1, width: '94%'}}>
+                            {
+                                // this.state.interactions.map((item, index) => (
+                                //
+                                // ))
+                            }
 
                         </View>
                     </View>
                 }
-
+                {this.state.interactions.length == 0 &&
+                <View style={styles.contentActivityIndicator}>
+                    <ActivityIndicator size='large'/>
+                </View>
+                }
             </ScrollView>
         )
     }
@@ -97,6 +127,13 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         flexWrap: 'wrap',
         alignItems: 'center'
+    },
+    contentActivityIndicator: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '98%',
+        height: 80,
+        margin: 5,
     },
     data: {
         borderColor: 'rgb(36, 41, 46)',
