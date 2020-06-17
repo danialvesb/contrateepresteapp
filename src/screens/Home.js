@@ -66,11 +66,6 @@ export default class Home extends React.Component{
         this.setState({selectedValueCategory: value})
     }
 
-    filterListPerCategory(value) {
-        this.setState({category: value})
-    }
-
-
     render() {
         let offersDataNew
 
@@ -79,7 +74,7 @@ export default class Home extends React.Component{
         if (this.state.selectedValueCategory > 1) {
             offersDataNew = this.state.offersData.filter(createFilter(this.state.selectedValueCategory.toString(), ['category_id']))
         }
-        // console.log(this.state.selectedValueCategory)
+
         return (
             <View style={{ height: height }}>
                 <View style={styles.header}>
