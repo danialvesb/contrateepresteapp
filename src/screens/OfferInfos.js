@@ -7,6 +7,8 @@ import {CheckBox} from 'react-native-elements';
 import Comments from '../components/Comment/Comments';
 import { UserConsumer } from '../Navigator'
 import AsyncStorage from '@react-native-community/async-storage';
+import {Divider} from 'react-native-paper';
+import commonStyles from '../commonStyles';
 
 export  default class OfferInfos extends React.Component{
     state = {
@@ -68,9 +70,10 @@ export  default class OfferInfos extends React.Component{
                         <ScrollView style={ styles.container }>
                             <View style={styles.content}>
                                 <View style={styles.data}>
-                                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ data.service_title }</Text>
-                                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>{ `${data.city} / ${data.uf} ` }</Text>
-                                    <Text style={{fontSize: 20, color: 'rgba(36,41,46,0.76)'}}>Valor por hora: { data.amount }</Text>
+                                    <Text style={styles.infors}>{ data.service_title }</Text>
+                                    <Text style={styles.inforsLocation}>{`Cidade: ${data.city} / ${data.uf} ` }</Text>
+                                    <Text style={styles.inforsLocation}>Valor por hora: { data.amount }</Text>
+                                    <Divider/>
                                     <View style={styles.description}>
                                         <Text style={{marginBottom: 5, marginLeft: 3}}>Descrição:</Text>
                                         <Text style={{fontSize: 15 , color: 'rgba(36,41,46,0.76)', flex: 5, margin: 4}}>{data.description}</Text>
@@ -135,9 +138,18 @@ const styles = StyleSheet.create({
     data: {
         borderColor: 'rgb(36, 41, 46)',
         width: '100%',
-        height: 480,
+        minHeight: 480,
         margin: 5,
         borderRadius: 4,
+    },
+    infors: {
+        fontSize: 30,
+        color: 'white',
+        fontFamily: commonStyles.fontFamily,
+        backgroundColor: 'rgba(79,93,182,0.28)'
+    },
+    inforsLocation: {
+        color: 'rgba(36,41,46,0.76)',
     },
     buttonsData: {
         width: '95%',
@@ -153,12 +165,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     description: {
-        borderWidth: 0.5,
-        borderColor: 'rgb(36, 41, 46)',
         width: '97%',
-        height: 200,
-        marginTop: 50,
-        borderRadius: 4,
+        minHeight: 200,
+        marginTop: 4,
     },
     headerComments: {
         width: '100%',

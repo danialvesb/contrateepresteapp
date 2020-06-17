@@ -102,9 +102,11 @@ export default class Home extends React.Component{
 const styles = StyleSheet.create({
     header: {
         flex: 1,
+        backgroundColor:'rgba(66,75,255,0.06)'
     },
     content: {
-        marginBottom: 30,
+        marginBottom: 5,
         flex: 5,
+        backgroundColor:'rgba(66,75,255,0.06)'
     }
 })

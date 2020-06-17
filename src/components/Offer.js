@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import commonStyles from '../commonStyles'
+import {Divider} from 'react-native-paper';
 
 export default props => {
     return (
@@ -9,17 +10,21 @@ export default props => {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headerInfors}>
-                        <Text style={styles.textHeader}> { props.name } </Text>
-                        <Text style={styles.textHeader}> { props.locale } </Text>
-                        <Text style={styles.textHeader}> { props.district } </Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={styles.textContent}> { props.typeOffer } </Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={styles.textHeader}> { props.locale } / { props.district }</Text>
+                        </View>
+                        <Divider />
                     </View>
-                    {/*<Text style={styles.textHeaderIcon}>*/}
-                    {/*    <Icon name="star" size={25} color="rgb(240, 208, 13)" />*/}
-                    {/*    { props.rating }*/}
-                    {/*</Text>*/}
+                    <Text style={styles.textHeaderIcon}>
+                        <Icon name="star" size={25} color="rgb(240, 208, 13)" />
+                        { props.rating }
+                    </Text>
                 </View>
                 <View style={styles.content}>
-                    <Text style={styles.textContent}> { props.typeOffer } </Text>
+                    <Text style={styles.textHeader}> { `${props.name}` }<Text style={{fontSize: 10, fontWeight: 'bold'}}>(Nome do profissional)</Text></Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -29,7 +34,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        borderColor: '#AAA',
+        borderColor: '#556686',
         borderBottomWidth: 1,
         alignItems: 'center',
         paddingVertical: 10,
@@ -59,8 +64,8 @@ const styles = StyleSheet.create({
     },
     textHeader: {
         flex: 1,
+        fontSize: 15,
         flexDirection: 'row',
-        // backgroundColor: '#FFF',
         fontFamily: commonStyles.fontFamily,
     },
     textHeaderIcon: {

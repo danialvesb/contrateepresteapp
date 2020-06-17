@@ -107,7 +107,7 @@ export default class RequestOfferConfirm extends Component {
                     <ScrollView>
                         <View  style={styles.modal}>
                             <View style={styles.headerModal}>
-                                <Text style={{margin: 5, fontSize: 20}}>Solicitação de serviço</Text>
+                                <Text style={{margin: 5, fontSize: 20, color: 'white', fontFamily: commonStyles.fontFamily}}>Solicitação de serviço</Text>
                             </View>
                             <View style={styles.contentModal}>
                                 <View style={styles.dataRequest}>
@@ -128,13 +128,13 @@ export default class RequestOfferConfirm extends Component {
 
                                     {/*</View>*/}
                                     <View style={styles.description}>
-                                        <Text>Se for preciso pode especificar melhor</Text>
+                                        <Text style={{color: 'white', fontFamily: commonStyles.fontFamily}}>Se for preciso pode especificar melhor</Text>
                                         <Textarea
                                             containerStyle={styles.textareaContainer}
                                             style={styles.textarea}
                                             onChangeText={message => this.setState({ message }) }
                                             defaultValue={this.state.message}
-                                            maxLength={50}
+                                            maxLength={200}
                                             placeholder={'Descrição'}
                                             placeholderTextColor={'#c7c7c7'}
                                             underlineColorAndroid={'transparent'}/>
@@ -145,13 +145,13 @@ export default class RequestOfferConfirm extends Component {
                                                       onPress={() => {
                                                           this.requestOffer()
                                                       }}>
-                                        <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
+                                        <Text style={{ fontSize: 15, color: '#FFF', fontFamily: commonStyles.fontFamily}}>Confirmar</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.buttonStyleCancell}
                                                       onPress={() => {
                                                           this.setModalVisible(!this.state.modalVisible)
                                                       }}>
-                                        <Text style={{ fontSize: 15, color: '#FFF'}}>Cancelar</Text>
+                                        <Text style={{ fontSize: 15, color: '#FFF', fontFamily: commonStyles.fontFamily}}>Cancelar</Text>
                                     </TouchableOpacity>
                                 </View>
 
@@ -174,7 +174,7 @@ export default class RequestOfferConfirm extends Component {
 
 const styles = StyleSheet.create({
     headerModal: {
-        backgroundColor: 'rgb(201,203,211)',
+        backgroundColor: 'rgb(49,63,95)',
         alignItems: 'flex-start',
         flex: 1,
         borderTopLeftRadius: 15,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 30,
         borderRadius: 15,
-        backgroundColor: 'rgb(237, 239, 247)',
+        backgroundColor: 'rgb(49,63,95)',
         elevation:4,
     },
     contentModal: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     description: {
         flex: 1,
         margin: 10,
-        backgroundColor: '#FFF',
+
     },
     photosList: {
         flex: 1,
@@ -244,7 +244,8 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',  // hack android
         height: 170,
         fontSize: 14,
-        color: '#333',
+        color: 'rgb(49,63,95)',
+        fontFamily: commonStyles.fontFamily
     },
     buttonStyle: {
         backgroundColor: 'rgba(28,116,72,0.76)',
