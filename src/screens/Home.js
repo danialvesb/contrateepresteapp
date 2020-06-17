@@ -9,10 +9,12 @@ import { createFilter } from 'react-native-search-filter';
 const { height } = Dimensions.get('window')
 const initialState = {
     offersData: [],
+    categoriesData: [],
     spinner: true,
     refreshing: false,
     setRefreshing: 0,
-    textSearchValue: ''
+    textSearchValue: '',
+    category: 0
 }
 export default class Home extends React.Component{
     state = {
@@ -24,19 +26,33 @@ export default class Home extends React.Component{
     }
 
     getData = async () => {
+        await this.getCategories()
         await axios.get(`${server}/services/offers/`)
             .then( resp => {
+
                 if (resp.data){
                     this.setState({ offersData: resp.data, spinner: false})
-
                     return true
                 }
             }).catch( () => {
                 this.setState({offersData: false, spinner: false})
-                showError(err)
+                showError('Não foi possível ofertas')
                 return false
             })
     }
+
+    getCategories = async () => {
+        await axios.get(`${server}/services/categories`)
+            .then( resp => {
+                if (resp.data){
+                    this.setState({ categoriesData: resp.data})
+                }
+            }).catch( () => {
+                this.setState({categoriesData: 0})
+                showError('Não foi possível carregar filtros')
+            })
+    }
+
     onRefresh = async () => {
         this.setState({refreshing: true})
         await this.getData()
@@ -46,17 +62,27 @@ export default class Home extends React.Component{
     filterListPerText(value) {
         this.setState({textSearchValue: value})
     }
+    filterListPerCategory(value) {
+        this.setState({category: value})
+    }
 
 
     render() {
-        const offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
+        let offersDataNew;
+        offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
+
+        if (this.state.category > 0) {
+            offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
+        }
+
 
         return (
             <View style={{ height: height }}>
                 <View style={styles.header}>
                     <Header filterListPerText={(value) => this.filterListPerText(value)}
                         textSearchValue={this.state.textSearchValue}
-                        navigation={this.props.navigation}/>
+                        navigation={this.props.navigation}
+                        categoriesData={this.state.categoriesData}/>
                 </View>
 
                 <View style={styles.content}>

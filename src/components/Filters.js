@@ -8,9 +8,12 @@ export default props => {
         <View style={styles.filters} >
             <View style={styles.dropDown}>
                 <Picker selectedValue={ category} style={{color: '#000'}} mode={'dropdown'} pickerStyleType>
-                    <Picker.Item label='Filtrar por categoria' value='0' />
-                    <Picker.Item label='Pintura' value='1'/>
-                    <Picker.Item label='Construção' value='2'/>
+                    {props.categoriesData &&
+                        props.categoriesData.map((item, index) => (
+                            <Picker.Item key={item.id} label={item.title} value={item.id} />
+                        )
+                        )
+                    }
                 </Picker>
             </View>
         </View >

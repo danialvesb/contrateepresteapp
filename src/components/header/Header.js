@@ -22,7 +22,7 @@ export  default props => {
 
             </View>
             <View style={styles.searchs}>
-                <Filters/>
+                <Filters categoriesData={props.categoriesData}/>
             </View>
         </View>
         )
