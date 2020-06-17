@@ -22,7 +22,9 @@ export  default props => {
 
             </View>
             <View style={styles.searchs}>
-                <Filters categoriesData={props.categoriesData}/>
+                <Filters categoriesData={props.categoriesData}
+                         selectedValueCategory={props.selectedValueCategory}
+                         setSelectedValueCategory={(itemValue) => props.setSelectedValueCategory(itemValue)}/>
             </View>
         </View>
         )

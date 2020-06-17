@@ -14,7 +14,7 @@ const initialState = {
     refreshing: false,
     setRefreshing: 0,
     textSearchValue: '',
-    category: 0
+    selectedValueCategory: 0
 }
 export default class Home extends React.Component{
     state = {
@@ -62,27 +62,33 @@ export default class Home extends React.Component{
     filterListPerText(value) {
         this.setState({textSearchValue: value})
     }
+    setSelectedValueCategory(value) {
+        this.setState({selectedValueCategory: value})
+    }
+
     filterListPerCategory(value) {
         this.setState({category: value})
     }
 
 
     render() {
-        let offersDataNew;
+        let offersDataNew
+
         offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
 
-        if (this.state.category > 0) {
-            offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
+        if (this.state.selectedValueCategory > 1) {
+            offersDataNew = this.state.offersData.filter(createFilter(this.state.selectedValueCategory.toString(), ['category_id']))
         }
-
-
+        // console.log(this.state.selectedValueCategory)
         return (
             <View style={{ height: height }}>
                 <View style={styles.header}>
                     <Header filterListPerText={(value) => this.filterListPerText(value)}
                         textSearchValue={this.state.textSearchValue}
                         navigation={this.props.navigation}
-                        categoriesData={this.state.categoriesData}/>
+                        categoriesData={this.state.categoriesData}
+                        selectedValueCategory={this.state.selectedValueCategory}
+                        setSelectedValueCategory={(itemValue) => this.setSelectedValueCategory(itemValue)}/>
                 </View>
 
                 <View style={styles.content}>
