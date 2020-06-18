@@ -64,7 +64,7 @@ export default class Profile extends Component{
                 {value => {
                     const {auth} = value
                     const imagePath = () => {
-                        return this.state.photo ? this.state.photo : `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}`
+                        return this.state.photo ? this.state.photo : `http://192.168.3.103:8000/api/me/_image/profile/${auth.user.photo}?122`
                     }
                     return (
                         <View style={styles.containerStyle}>

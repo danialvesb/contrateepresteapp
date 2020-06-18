@@ -7,7 +7,7 @@ import { Input } from 'react-native-elements'
 import backgroundImage from '../../assets/imgs/login.jpg'
 import commonStyles from '../commonStyles'
 
-import { server, showError, showSuccess } from '../common'
+import {server, showError, showMessage, showSuccess} from '../common';
 import { UserConsumer } from '../Navigator'
 
 const initialState = {
@@ -64,60 +64,73 @@ export default class Auth extends Component {
     }
 
     signup = async () => {
-        if (this.validatePassword(this.state.password, this.state.confirmPassword) ){
-            try {
-                await axios({
-                    method: 'post',
-                    url: `${server}/auth/signup`,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        name: this.state.name,
-                        email: this.state.email,
-                        password: this.state.password,
-                        groups_id: this.state.typeAccount
-                    },
-                })
+        if (this.state.typeAccount == null
+            || this.state.email.length === 0 || this.state.mobile.length === 0
+            || this.state.name .length === 0) {
+            showMessage('Revise as informações')
+        }else {
+            if (this.validatePassword(this.state.password, this.state.confirmPassword) ){
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${server}/auth/signup`,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            name: this.state.name,
+                            email: this.state.email,
+                            password: this.state.password,
+                            groups_id: this.state.typeAccount
+                        },
+                    })
 
-                showSuccess('Cadastro concluído!')
-                this.setState({stageNew: false})
-            } catch(err) {
-                const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
-                showError(error)
+                    showSuccess('Cadastro concluído!')
+                    this.setState({stageNew: false})
+                } catch(err) {
+                    const error = err.message+`Nome:${this.state.name} \n Email: ${this.state.email} \n Senha:${this.state.password}`
+                    showError(error)
+                }
             }
         }
     }
 
+
+
     signin = async value => {
-        try {
-            const resAuth = await axios({
-                method: 'post',
-                url: `${server}/auth/login`,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    email: this.state.email,
-                    password: this.state.password
-                },
-            })
-            await AsyncStorage.setItem('access_token', resAuth.data.access_token)
-            await this.me()
+        if (this.state.email.length === 0
+            || this.state.password === 0) {
+            showMessage('Revise as informações')
+        }else {
+            try {
+                const resAuth = await axios({
+                    method: 'post',
+                    url: `${server}/auth/login`,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        email: this.state.email,
+                        password: this.state.password
+                    },
+                })
+                await AsyncStorage.setItem('access_token', resAuth.data.access_token)
+                await this.me()
 
-            const authNew = {
-                isLogged: true,
-                user: this.state.user,
+                const authNew = {
+                    isLogged: true,
+                    user: this.state.user,
+                }
+
+                this.setState({
+                    auth: authNew
+                })
+                value.auth.setNewContext(this.state.auth)
+                await this.props.navigation.navigate('Menu')
+
+            }catch(err) {
+                showError(err.message)
             }
-
-            this.setState({
-                auth: authNew
-            })
-            value.auth.setNewContext(this.state.auth)
-            await this.props.navigation.navigate('Menu')
-
-        }catch(err) {
-            showError(err.message)
         }
     }
 
@@ -125,6 +138,16 @@ export default class Auth extends Component {
         if (val !== '0') {
             this.setState({typeAccount: val})
         }
+    }
+
+    resetState() {
+        this.setState({name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            mobile: '',
+            typeAccount: null,})
+        this.setState({ stageNew: !this.state.stageNew })
     }
 
     render() {
@@ -209,7 +232,7 @@ export default class Auth extends Component {
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.setState({ stageNew: !this.state.stageNew }) }}>
+                                    <TouchableOpacity style={{ padding: 10}} onPress={ () => { this.resetState() }}>
                                         <Text style={ commonStyles.textButtonsStyle }>
                                             { this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?' }
                                         </Text>
