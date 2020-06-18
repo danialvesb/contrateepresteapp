@@ -15,7 +15,7 @@ export  default class CardService extends Component{
             <TouchableOpacity style={[this.props.selectedServiceId == this.props.data.id ? styles.serviceSelected : styles.service]} onPress={() => { this.props.setSelect() }}>
                 <View>
                     <Avatar.Image
-                        source={{uri: 'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg'}}
+                        source={{uri: `http://192.168.3.103:8000/api/services/_image/services/${this.props.data.image_path}`}}
                         size={80}/>
                 </View>
                 <View>

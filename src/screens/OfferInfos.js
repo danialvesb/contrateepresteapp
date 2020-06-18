@@ -15,6 +15,7 @@ export  default class OfferInfos extends React.Component{
         interactions: [],
         spinner: true,
         reply: '',
+        activityIndicator: true
     }
     componentDidMount() {
         const { data } = this.props.route.params
@@ -29,7 +30,7 @@ export  default class OfferInfos extends React.Component{
             },
         }
         await axios.get(`${server}/services/offers/interactions/${id}`, header).then(response => {
-            this.setState({interactions: response.data})
+            this.setState({interactions: response.data, activityIndicator: false})
         }).catch(() => {
             showMessage('Não foi possível carregar avaliações')
         })
@@ -72,7 +73,7 @@ export  default class OfferInfos extends React.Component{
                                 <View style={styles.data}>
                                     <Text style={styles.infors}>{ data.service_title }</Text>
                                     <Text style={styles.inforsLocation}>{`Cidade: ${data.city} / ${data.uf} ` }</Text>
-                                    <Text style={styles.inforsLocation}>Valor por hora: { data.amount }</Text>
+                                    <Text style={styles.inforsLocation}>Valor do serviço: { data.amount }</Text>
                                     <Divider/>
                                     <View style={styles.description}>
                                         <Text style={{marginBottom: 5, marginLeft: 3}}>Descrição:</Text>
@@ -100,7 +101,8 @@ export  default class OfferInfos extends React.Component{
                                     </View>
                                 </View>
                             }
-                            {this.state.interactions.length == 0 &&
+
+                            {this.state.activityIndicator &&
                                 <View style={styles.contentActivityIndicator}>
                                     <ActivityIndicator size='large'/>
                                 </View>
