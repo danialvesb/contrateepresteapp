@@ -8,6 +8,8 @@ import { TextInputMask } from 'react-native-masked-text'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Textarea from 'react-native-textarea'
 import AsyncStorage from '@react-native-community/async-storage'
+import {Divider} from 'react-native-paper';
+import commonStyles from '../../commonStyles';
 
 const initialState = {
     services: [],
@@ -92,20 +94,21 @@ export default class CreateOffer extends Component {
                         </ScrollView>
                     </View>
                     <View style={styles.servicesHeaderText}>
-                        <Text>Inserir Imagens</Text>
+                        <Divider/>
+                        {/*<Text>Inserir Imagens</Text>*/}
                     </View>
-                    <View style={styles.photosList}>
-                        <View>
-                            <ScrollView horizontal={true} style={styles.scroolServices}>
-                                <View style={styles.photo}>
-                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#ddd'/>
-                                    </TouchableOpacity>
-                                </View>
+                    {/*<View style={styles.photosList}>*/}
+                    {/*    <View>*/}
+                    {/*        <ScrollView horizontal={true} style={styles.scroolServices}>*/}
+                    {/*            <View style={styles.photo}>*/}
+                    {/*                <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>*/}
+                    {/*                    <Icon name="camera" size={80} color='#ddd'/>*/}
+                    {/*                </TouchableOpacity>*/}
+                    {/*            </View>*/}
 
-                            </ScrollView>
-                        </View>
-                    </View>
+                    {/*        </ScrollView>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
                     <View style={styles.servicesHeaderText}>
                         <Text>Definir preço do serviço</Text>
                     </View>
@@ -121,6 +124,7 @@ export default class CreateOffer extends Component {
                             />
                         </View>
                     </View>
+                    <Divider/>
                     <View style={styles.servicesHeaderText}>
                         <Text>Descrição</Text>
                     </View>
@@ -137,7 +141,7 @@ export default class CreateOffer extends Component {
                     </View>
                     <View>
                         <TouchableOpacity style={styles.buttonStyle} onPress={()=> this.storeOffer()}>
-                            <Text style={{ fontSize: 15, color: '#FFF'}}>Confirmar</Text>
+                            <Text style={{ fontSize: 15, color: '#FFF', fontFamily: commonStyles.fontFamily}}>Confirmar</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -222,8 +226,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     buttonStyle: {
-        width: 100,
-        backgroundColor: 'rgba(36,41,46,0.76)',
+        width: "50%",
+
+        backgroundColor: 'rgba(61,186,72,0.76)',
         padding: 10,
         margin: 5,
         borderRadius: 10

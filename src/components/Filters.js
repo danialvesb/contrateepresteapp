@@ -3,13 +3,13 @@ import {View, Text, StyleSheet, Picker} from 'react-native';
 import commonStyles from '../commonStyles';
 
 export default props => {
-
     return (
         <View style={styles.filters} >
             <View style={styles.dropDown}>
                 <Picker selectedValue={props.selectedValueCategory}
                         style={{color: '#000'}} mode={'dropdown'}
                         onValueChange={(selectedValue, itemIndex) => props.setSelectedValueCategory(selectedValue)}>
+                    <Picker.Item label={'Pesquisar por categoria'} value={0} />
                     {props.categoriesData &&
                         props.categoriesData.map((item, index) => (
                             <Picker.Item key={item.id} label={item.title} value={item.id} />

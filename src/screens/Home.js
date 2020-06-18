@@ -68,7 +68,6 @@ export default class Home extends React.Component{
 
     render() {
         let offersDataNew
-
         offersDataNew = this.state.offersData.filter(createFilter(this.state.textSearchValue, ['service_title']))
 
         if (this.state.selectedValueCategory > 1) {
