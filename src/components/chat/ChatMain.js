@@ -19,6 +19,7 @@ const pusherConfig = {
     encrypted:true,
     cluster: 'us2',
 }
+console.disableYellowBox = true;
 
 export default class ChatMain extends React.Component {
     constructor(props) {
