@@ -46,23 +46,22 @@ export default class ChatMain extends React.Component {
 
     handleJoin(name) { // (4)
         const messages = this.state.messages.slice()
-        messages.push({action: 'join', name: name})
-        this.setState({
-            messages: messages
-        })
+        // messages.push({action: 'join', name: name})
+        // this.setState({
+        //     messages: messages
+        // })
     }
 
     handlePart(name) { // (5)
-        const messages = this.state.messages.slice()
-        messages.push({action: 'part', name: name})
-        this.setState({
-            messages: messages
-        })
+        // const messages = this.state.messages.slice()
+        // messages.push({action: 'part', name: name})
+        // this.setState({
+        //     messages: messages
+        // })
     }
 
     handleMessage({ message }) { // (6)
-
-        if (message.to_user === this.state.authUser.id) {
+        if (message.to_user == this.state.authUser.id) {
             const messageNew =
                 {
                     _id: message.id,
@@ -74,11 +73,14 @@ export default class ChatMain extends React.Component {
                         avatar: `http://192.168.3.103:8000/api/me/_image/profile/${message.from_user_avatar}`
                     }
                 }
-            const messages = this.state.messages.slice()
-            messages.unshift(messageNew)
-            this.setState({
-                messages: messages
-            })
+            this.setState(previousState => ({
+                messages: GiftedChat.append(previousState.messages, messageNew),
+            }))
+            // const messages = this.state.messages.slice()
+            // messages.unshift(messageNew)
+            // this.setState({
+            //     messages: messages
+            // })
         }
     }
 
@@ -154,19 +156,26 @@ export default class ChatMain extends React.Component {
             },
         }
         await axios.post(`${server}/chat/messages`, multipartFormDt, header).catch( err => {
-            showMessage(JSON.stringify(err))
         } )
     }
     onSend(messages = []) {
+        // const messages = this.state.messages.slice()
+        // messages.unshift(messageNew)
+        // this.setState({
+        //     messages: messages
+        // })
+        // showMessage(JSON.stringify(this.props.route.params.item))
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
+        const toUser = this.props.route.params.item.owner_offer_id === this.state.authUser.id ?
+            this.props.route.params.item.owner_solicitation_id : this.props.route.params.item.owner_offer_id
 
         const dataSend = {
             solicitation_id: this.props.route.params.item.id,
             text: messages[0].text,
             from_user: this.state.authUser.id,
-            to_user: this.props.route.params.item.owner_offer_id,
+            to_user: toUser,
         }
 
         this.onSendMessage(dataSend)

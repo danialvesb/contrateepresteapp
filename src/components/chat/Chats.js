@@ -57,16 +57,15 @@ export default class Chats extends React.Component {
                                     this.state.chats.map((item, index) => (
                                         <TouchableOpacity style={styles.chats} key={item.id} onPress={ () => navigate('ChatPage', {item:item})}>
                                             <View style={{alignItems: 'center', justifyContent: 'center', width: '100%',}}>
-                                                {value.auth.user.name === item.owner_solicitation_name &&
+                                                {value.auth.user.name === item.owner_solicitation_name ?
                                                 <View style={{ flexDirection: 'row', width: '90%'}}>
                                                     <Avatar.Image source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${item.owner_offer_photo}`,}} size={40}/>
                                                     <View style={{flexDirection: 'row', width: '80%', alignItems: 'center', justifyContent: 'center'}}>
                                                         <Text style={styles.userName}>{item.owner_offer_name}</Text>
                                                     </View>
                                                 </View>
-                                                }
-                                                {value.auth.user.name === item.owner_offer_name &&
-                                                   <View style={{ flexDirection: 'row'}}>
+                                                    :
+                                                    <View style={{ flexDirection: 'row'}}>
                                                         <Avatar.Image source={{uri: `http://192.168.3.103:8000/api/me/_image/profile/${item.owner_solicitation_photo}`,}} size={40}/>
                                                         <View style={{flexDirection: 'row', width: '80%', alignItems: 'center', justifyContent: 'center'}}>
                                                             <Text style={styles.userName}>{item.owner_solicitation_name}</Text>
