@@ -32,17 +32,17 @@ export default  props => {
             <View style={styles.footer}>
                 <Text style={styles.fieldStyle}>{props.data.solicitation_message}</Text>
             </View>
-            <View style={styles.files}>
-                <Text style={styles.fieldStyleFielGroup}>Arquivos</Text>
-                <ScrollView horizontal={true}>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemFIleScrool}>
-                        <Icon name="clock-o" color='#FFC925' size={80}/>
-                    </TouchableOpacity>
-                </ScrollView>
-            </View>
+            {/*<View style={styles.files}>*/}
+            {/*    <Text style={styles.fieldStyleFielGroup}>Arquivos</Text>*/}
+            {/*    <ScrollView horizontal={true}>*/}
+            {/*        <TouchableOpacity style={styles.itemFIleScrool}>*/}
+            {/*            <Icon name="clock-o" color='#FFC925' size={80}/>*/}
+            {/*        </TouchableOpacity>*/}
+            {/*        <TouchableOpacity style={styles.itemFIleScrool}>*/}
+            {/*            <Icon name="clock-o" color='#FFC925' size={80}/>*/}
+            {/*        </TouchableOpacity>*/}
+            {/*    </ScrollView>*/}
+            {/*</View>*/}
             {props.data.status === "pending" &&
                 <View style={styles.timeLineContainer}>
                     <View style={styles.timeLineStepOne}>

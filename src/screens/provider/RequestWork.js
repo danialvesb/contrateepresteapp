@@ -28,21 +28,21 @@ export default props => {
                             </Text>
                         </View>
                     </View>
-                    <View style={styles.photosList}>
-                        <View>
-                            <Text style={styles.servicesHeaderText}>Detalhes adicionais com fotos</Text>
-                        </View>
-                        <View>
-                            <ScrollView horizontal={true} style={styles.scroolServices}>
-                                <View style={styles.photo}>
-                                    <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>
-                                        <Icon name="camera" size={80} color='#ddd'/>
-                                    </TouchableOpacity>
-                                </View>
+                    {/*<View style={styles.photosList}>*/}
+                    {/*    <View>*/}
+                    {/*        <Text style={styles.servicesHeaderText}>Detalhes adicionais com fotos</Text>*/}
+                    {/*    </View>*/}
+                    {/*    <View>*/}
+                    {/*        <ScrollView horizontal={true} style={styles.scroolServices}>*/}
+                    {/*            <View style={styles.photo}>*/}
+                    {/*                <TouchableOpacity onPress={() => console.log('press')} style={styles.photo}>*/}
+                    {/*                    <Icon name="camera" size={80} color='#ddd'/>*/}
+                    {/*                </TouchableOpacity>*/}
+                    {/*            </View>*/}
 
-                            </ScrollView>
-                        </View>
-                    </View>
+                    {/*        </ScrollView>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
                     <View style={styles.footer}>
                         <TouchableOpacity style={styles.buttonStyleAcept} onPress={()=> props.accept(props.data.id)}>
                             <Text style={{ fontSize: 15, color: '#FFF', textAlign: 'center'}}>Aceitar</Text>
